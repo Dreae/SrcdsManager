@@ -48,6 +48,12 @@
             this.crashes = new System.Windows.Forms.Label();
             this.uptime = new System.Windows.Forms.Label();
             this.newServ = new System.Windows.Forms.Button();
+            this.deleteServ = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.addr = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.port = new System.Windows.Forms.TextBox();
+            this.restart = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ServerList
@@ -70,7 +76,7 @@
             // 
             // name
             // 
-            this.name.Location = new System.Drawing.Point(183, 123);
+            this.name.Location = new System.Drawing.Point(183, 63);
             this.name.Name = "name";
             this.name.Size = new System.Drawing.Size(100, 20);
             this.name.TabIndex = 3;
@@ -78,7 +84,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(180, 107);
+            this.label2.Location = new System.Drawing.Point(180, 47);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 4;
@@ -118,7 +124,7 @@
             // 
             // browseExe
             // 
-            this.browseExe.Location = new System.Drawing.Point(223, 214);
+            this.browseExe.Location = new System.Drawing.Point(158, 214);
             this.browseExe.Name = "browseExe";
             this.browseExe.Size = new System.Drawing.Size(60, 20);
             this.browseExe.TabIndex = 9;
@@ -226,11 +232,69 @@
             this.newServ.UseVisualStyleBackColor = true;
             this.newServ.Click += new System.EventHandler(this.newServ_Click);
             // 
+            // deleteServ
+            // 
+            this.deleteServ.Location = new System.Drawing.Point(96, 231);
+            this.deleteServ.Name = "deleteServ";
+            this.deleteServ.Size = new System.Drawing.Size(56, 23);
+            this.deleteServ.TabIndex = 21;
+            this.deleteServ.Text = "Delete";
+            this.deleteServ.UseVisualStyleBackColor = true;
+            this.deleteServ.Click += new System.EventHandler(this.deleteServ_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(93, 92);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(61, 13);
+            this.label8.TabIndex = 22;
+            this.label8.Text = "IP Address:";
+            // 
+            // addr
+            // 
+            this.addr.Location = new System.Drawing.Point(97, 108);
+            this.addr.Name = "addr";
+            this.addr.Size = new System.Drawing.Size(90, 20);
+            this.addr.TabIndex = 23;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(183, 92);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(29, 13);
+            this.label9.TabIndex = 24;
+            this.label9.Text = "Port:";
+            // 
+            // port
+            // 
+            this.port.Location = new System.Drawing.Point(193, 108);
+            this.port.Name = "port";
+            this.port.Size = new System.Drawing.Size(90, 20);
+            this.port.TabIndex = 25;
+            // 
+            // restart
+            // 
+            this.restart.Location = new System.Drawing.Point(223, 231);
+            this.restart.Name = "restart";
+            this.restart.Size = new System.Drawing.Size(59, 23);
+            this.restart.TabIndex = 26;
+            this.restart.Text = "Restart";
+            this.restart.UseVisualStyleBackColor = true;
+            this.restart.Click += new System.EventHandler(this.restart_Click);
+            // 
             // Manager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(295, 294);
+            this.Controls.Add(this.restart);
+            this.Controls.Add(this.port);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.addr);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.deleteServ);
             this.Controls.Add(this.newServ);
             this.Controls.Add(this.uptime);
             this.Controls.Add(this.crashes);
@@ -256,6 +320,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ManagerClosing);
 
         }
 
@@ -281,6 +346,12 @@
         private System.Windows.Forms.Label crashes;
         private System.Windows.Forms.Label uptime;
         private System.Windows.Forms.Button newServ;
+        private System.Windows.Forms.Button deleteServ;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox addr;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox port;
+        private System.Windows.Forms.Button restart;
 
     }
 }

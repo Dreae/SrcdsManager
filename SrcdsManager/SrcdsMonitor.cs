@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
 
 namespace SrcdsManager
 {
@@ -10,19 +12,22 @@ namespace SrcdsManager
         private String commandLine;
         private String Name;
         private String sID;
+        private IPAddress ipAddr;
+        private int port;
 
         private bool running = false;
+        private bool cleanExit = true;
 
         private Process proc = new Process();
         private ProcessStartInfo startInfo;
 
         private int crashes = 0;
 
-        Thread oThread;
+        private DateTime startTime;
 
-        DateTime startTime;
+        private SrcdsPinger pinger;
 
-        public SrcdsMonitor(String exePath, String commandLine, String Name, String sID)
+        public SrcdsMonitor(String exePath, String commandLine, String Name, String sID, String ipAddr, String port)
         {
             this.exePath = exePath;
             this.commandLine = commandLine;
@@ -30,40 +35,58 @@ namespace SrcdsManager
             this.sID = sID;
 
             startInfo = new ProcessStartInfo();
-            startInfo.Arguments = commandLine;
             startInfo.FileName = exePath;
+
+            this.ipAddr = IPAddress.Parse(ipAddr);
+            this.port = int.Parse(port);
 
             proc.StartInfo = startInfo;
         }
 
         public void Start()
         {
-            proc.Start();
-
-            WaitForExit oWait = new WaitForExit(proc, this);
-            oThread = new Thread(new ThreadStart(oWait.Waiting));
-
-            running = true;
-
-            startTime = DateTime.Now;
-        }
-        public void Restart()
-        {
-            this.crashes++;
-
+            startInfo.Arguments = commandLine + String.Format(" -ip {0} -port {1}", ipAddr, port); ;
             proc.Start();
 
             WaitForExit oWait = new WaitForExit(proc, this);
             Thread oThread = new Thread(new ThreadStart(oWait.Waiting));
+            oThread.Start();
+
+            pinger = new SrcdsPinger(this, ipAddr, port, proc);
+            pinger.StartPinging();
+
+            running = true;
+            cleanExit = false;
+
+            startTime = DateTime.Now;
+        }
+        public void Crashed()
+        {
+            this.crashes++;
+
+            startInfo.Arguments = commandLine + String.Format(" -ip {0} -port {1}", ipAddr, port); ;
+            proc.Start();
+
+            WaitForExit oWait = new WaitForExit(proc, this);
+            Thread oThread = new Thread(new ThreadStart(oWait.Waiting));
+            oThread.Start();
 
             startTime = DateTime.Now;
         }
         public void Stop()
         {
-            oThread.Abort();
+            cleanExit = true;
+            pinger.StopPinging();
             proc.Kill();
 
             running = false;
+        }
+        public void Exited()
+        {
+            if (cleanExit != true)
+            {
+                Crashed();
+            }
         }
 
         public String getCmd()
@@ -86,6 +109,24 @@ namespace SrcdsManager
             this.exePath = exePath;
 
             startInfo.FileName = exePath;
+        }
+
+        public String getAddr()
+        {
+            return ipAddr.ToString();
+        }
+        public void setIPAddr(String ipAddr)
+        {
+            this.ipAddr = IPAddress.Parse(ipAddr);
+        }
+
+        public String getPort()
+        {
+            return port.ToString();
+        }
+        public void setPort(String port)
+        {
+            this.port = int.Parse(port);
         }
 
         public String getName()
@@ -127,15 +168,153 @@ namespace SrcdsManager
     {
         private Process proc;
         private SrcdsMonitor caller;
-        public WaitForExit(Process proc, SrcdsMonitor caller)
+
+        public WaitForExit(Process proc, object caller)
         {
             this.proc = proc;
-            this.caller = caller;
+            this.caller = (SrcdsMonitor)caller;
         }
         public void Waiting()
         {
             proc.WaitForExit();
-            caller.Restart();
+            caller.Exited();
+        }
+    }
+
+    class SrcdsPinger
+    {
+        private IPEndPoint serverEP;
+        private Socket sock = new Socket(SocketType.Dgram, ProtocolType.Udp);
+        private System.Timers.Timer pingTimer;
+        private int timeouts = 0;
+        private byte[] query = {0xff, 0xff, 0xff, 0xff, 0x54, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x20, 0x45, 0x6e,
+                                  0x67, 0x69, 0x6e, 0x65, 0x20, 0x51, 0x75, 0x65, 0x72, 0x79, 0x00};
+        private SrcdsMonitor caller;
+        private Process proc;
+        private System.Timers.Timer timeoutTimer;
+
+        public SrcdsPinger(object source, IPAddress addr, int port, Process proc)
+        {
+            serverEP = new IPEndPoint(addr, port);
+            this.caller = (SrcdsMonitor)source;
+            this.proc = proc;
+            int _port = 54000;
+            while(!sock.IsBound && port < 55000)
+            {
+                try
+                {
+                    sock.Bind(new IPEndPoint(IPAddress.Any, _port));
+                }
+                catch(SocketException e)
+                {
+                    if (e.SocketErrorCode == SocketError.AddressAlreadyInUse)
+                    {
+                        port++;
+                    }
+                    else
+                    {
+                        throw e;
+                    }
+                }
+            }
+            sock.ReceiveTimeout = 1500;
+            sock.SendTimeout = 1500;
+        }
+        public void StartPinging()
+        {
+            pingTimer = new System.Timers.Timer(15000);
+            pingTimer.SynchronizingObject = null;
+            pingTimer.Elapsed += new System.Timers.ElapsedEventHandler(PingServer);
+            pingTimer.AutoReset = true;
+            pingTimer.Enabled = true;
+            pingTimer.Start();
+        }
+        public void StopPinging()
+        {
+            pingTimer.Stop();
+            pingTimer.Dispose();
+            try
+            {
+                timeoutTimer.Stop();
+                timeoutTimer.Dispose();
+            }
+            catch (Exception e)
+            {
+                if (e.GetType() != typeof(NullReferenceException))
+                {
+                    throw e;
+                }
+            }
+            sock.Dispose();
+        }
+        private void PingServer(object source, System.Timers.ElapsedEventArgs e)
+        {
+            sock.SendTo(query, serverEP);
+            byte[] rec = new byte[256];
+
+            try
+            {
+                sock.Receive(rec);
+            }
+            catch (SocketException ex)
+            {
+                if (ex.SocketErrorCode == SocketError.TimedOut)
+                {
+                    timeouts++;
+                    pingTimer.Enabled = false;
+                    pingTimer.Stop();
+
+                    timeoutTimer = new System.Timers.Timer(3000);
+                    timeoutTimer.Elapsed += new System.Timers.ElapsedEventHandler(Timedout);
+                    timeoutTimer.AutoReset = true;
+                    timeoutTimer.Enabled = true;
+                    timeoutTimer.Start();
+                }
+            }
+        }
+        private void Timedout(object source, System.Timers.ElapsedEventArgs e)
+        {
+            System.Timers.Timer timer = (System.Timers.Timer)source;
+
+            sock.SendTo(query, serverEP);
+            byte[] rec = new byte[265];
+
+            try
+            {
+                sock.Receive(rec);
+            }
+            catch (SocketException ex)
+            {
+                if ((SocketError)ex.ErrorCode == SocketError.TimedOut)
+                {
+                    timeouts++;
+
+                    if (timeouts > 3)
+                    {
+                        proc.Kill();
+                        timer.Enabled = false;
+                        timer.Stop();
+                        timer.Dispose();
+
+                        pingTimer.Enabled = true;
+                        pingTimer.AutoReset = true;
+                        pingTimer.Start();
+
+                        timeouts = 0;
+                    }
+
+                }
+                return;
+            }
+            timer.Enabled = false;
+            timer.Stop();
+            timer.Dispose();
+
+            pingTimer.Enabled = true;
+            pingTimer.AutoReset = true;
+            pingTimer.Start();
+
+            timeouts = 0;
         }
     }
 }

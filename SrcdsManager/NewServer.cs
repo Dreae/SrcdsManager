@@ -39,13 +39,17 @@ namespace SrcdsManager
         private void button1_Click(object sender, EventArgs e)
         {
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load("servers/servers.xml");
+            xmlDoc.Load("servers.xml");
             XmlAttribute id = xmlDoc.CreateAttribute("id");
             XmlAttribute name = xmlDoc.CreateAttribute("name");
+            XmlAttribute addr = xmlDoc.CreateAttribute("address");
+            XmlAttribute port = xmlDoc.CreateAttribute("port");
             XmlNode root = xmlDoc.DocumentElement;
 
             name.Value = servName.Text;
             id.Value = servID.Text;
+            addr.Value = ipAddr.Text;
+            port.Value = iPort.Text;
 
             XmlNode executable = xmlDoc.CreateElement("executable");
             executable.InnerText = servExe.Text;
@@ -53,17 +57,20 @@ namespace SrcdsManager
             XmlNode param = xmlDoc.CreateElement("params");
             param.InnerText = servParams.Text;
             
+
             XmlNode serv = xmlDoc.CreateElement("server");
             serv.Attributes.Append(id);
             serv.Attributes.Append(name);
+            serv.Attributes.Append(addr);
+            serv.Attributes.Append(port);
             serv.AppendChild(executable);
             serv.AppendChild(param);
 
             root.AppendChild(serv);
 
-            xmlDoc.Save("servers/servers.xml");
+            xmlDoc.Save("servers.xml");
 
-            SrcdsMonitor mon = new SrcdsMonitor(servExe.Text, servParams.Text, servName.Text, servID.Text);
+            SrcdsMonitor mon = new SrcdsMonitor(servExe.Text, servParams.Text, servName.Text, servID.Text, ipAddr.Text, iPort.Text);
             this.sender.addMonitor(mon);
             this.Dispose();
         }
