@@ -102,35 +102,10 @@ namespace SrcdsManager
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load("servers.xml");
-            XmlNode root = xmlDoc.DocumentElement;
-            XmlNode serv = root.SelectSingleNode(String.Format("descendant::server[@id='{0}']", monArray[ServerList.SelectedIndex].getId()));
-            ((XmlElement)serv).SetAttribute("name", name.Text);
-            ((XmlElement)serv).SetAttribute("address", addr.Text);
-            ((XmlElement)serv).SetAttribute("port", port.Text);
-            serv.SelectSingleNode("descendant::executable").InnerText = executable.Text;
-            serv.SelectSingleNode("descendant::params").InnerText = parms.Text;
-            xmlDoc.Save("servers.xml");
-
-            System.Net.IPAddress ip;
-            if (!System.Net.IPAddress.TryParse(addr.Text, out ip))
+            if (ServerList.SelectedItems.Count != 0)
             {
-                MessageBox.Show("The value enetered in the IP field is invalid", "Invalid IP");
-                return;
+                SaveServer();
             }
-            uint _port;
-            if (!uint.TryParse(port.Text, out _port))
-            {
-                MessageBox.Show("The value enetered in the port field is invalid", "Invalid port");
-                return;
-            }
-
-            monArray[ServerList.SelectedIndex].setCmd(parms.Text);
-            monArray[ServerList.SelectedIndex].setExe(executable.Text);
-            monArray[ServerList.SelectedIndex].setName(name.Text);
-            monArray[ServerList.SelectedIndex].setIPAddr(addr.Text);
-            monArray[ServerList.SelectedIndex].setPort(port.Text);
         }
   
         private void ReadXml()
@@ -257,24 +232,81 @@ namespace SrcdsManager
         }
         private void startButton_Click(object sender, EventArgs e)
         {
-            monArray[ServerList.SelectedIndex].Start();
+            if (ServerList.SelectedItems.Count != 0)
+            {
+                if (addr.Text != monArray[ServerList.SelectedIndex].getAddr() || port.Text != monArray[ServerList.SelectedIndex].getPort()
+                    || name.Text != monArray[ServerList.SelectedIndex].getName() || parms.Text != monArray[ServerList.SelectedIndex].getCmd()
+                    || executable.Text != monArray[ServerList.SelectedIndex].getExe())
+                {
+                    if (MessageBox.Show("Save changes to selected server?", "Server Modified", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        SaveServer();
+                    }
+                    else
+                    {
+                        addr.Text = monArray[ServerList.SelectedIndex].getAddr();
+                        port.Text = monArray[ServerList.SelectedIndex].getPort();
+                        name.Text = monArray[ServerList.SelectedIndex].getName();
+                        parms.Text = monArray[ServerList.SelectedIndex].getCmd();
+                        executable.Text = monArray[ServerList.SelectedIndex].getExe();
+                    }
+                }
+                monArray[ServerList.SelectedIndex].Start();
+            }
         }
         private void stopButton_Click(object sender, EventArgs e)
         {
-            monArray[ServerList.SelectedIndex].Stop();
+            if (ServerList.SelectedItems.Count != 0)
+            {
+                monArray[ServerList.SelectedIndex].Stop();
+            }
         }
         private void restart_Click(object sender, EventArgs e)
         {
-            monArray[ServerList.SelectedIndex].Stop();
-            System.Threading.Thread.Sleep(100);
-            monArray[ServerList.SelectedIndex].Start();
+            if (ServerList.SelectedItems.Count != 0)
+            {
+                monArray[ServerList.SelectedIndex].Stop();
+                System.Threading.Thread.Sleep(100);
+                monArray[ServerList.SelectedIndex].Start();
+            }
         }
         private void newServ_Click(object sender, EventArgs e)
         {
             NewServer window = new NewServer(this);
             window.Show();
         }
+        private void SaveServer()
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load("servers.xml");
+            XmlNode root = xmlDoc.DocumentElement;
+            XmlNode serv = root.SelectSingleNode(String.Format("descendant::server[@id='{0}']", monArray[ServerList.SelectedIndex].getId()));
+            ((XmlElement)serv).SetAttribute("name", name.Text);
+            ((XmlElement)serv).SetAttribute("address", addr.Text);
+            ((XmlElement)serv).SetAttribute("port", port.Text);
+            serv.SelectSingleNode("descendant::executable").InnerText = executable.Text;
+            serv.SelectSingleNode("descendant::params").InnerText = parms.Text;
+            xmlDoc.Save("servers.xml");
 
+            System.Net.IPAddress ip;
+            if (!System.Net.IPAddress.TryParse(addr.Text, out ip))
+            {
+                MessageBox.Show("The value enetered in the IP field is invalid", "Invalid IP");
+                return;
+            }
+            uint _port;
+            if (!uint.TryParse(port.Text, out _port))
+            {
+                MessageBox.Show("The value enetered in the port field is invalid", "Invalid port");
+                return;
+            }
+
+            monArray[ServerList.SelectedIndex].setCmd(parms.Text);
+            monArray[ServerList.SelectedIndex].setExe(executable.Text);
+            monArray[ServerList.SelectedIndex].setName(name.Text);
+            monArray[ServerList.SelectedIndex].setIPAddr(addr.Text);
+            monArray[ServerList.SelectedIndex].setPort(port.Text);
+        }
         internal void addMonitor(SrcdsMonitor mon)
         {
             monArray.Add(mon);
@@ -283,18 +315,21 @@ namespace SrcdsManager
 
         private void deleteServ_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("Are you sure you want to delete this server","Delete server", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (ServerList.SelectedItems.Count != 0)
             {
-                XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load("servers.xml");
-                XmlNode root = xmlDoc.DocumentElement;
-                XmlNode serv = root.SelectSingleNode(String.Format("descendant::server[@id='{0}']", monArray[ServerList.SelectedIndex].getId()));
-                root.RemoveChild(serv);
-                xmlDoc.Save("servers.xml");
+                if (MessageBox.Show("Are you sure you want to delete this server", "Delete server", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    XmlDocument xmlDoc = new XmlDocument();
+                    xmlDoc.Load("servers.xml");
+                    XmlNode root = xmlDoc.DocumentElement;
+                    XmlNode serv = root.SelectSingleNode(String.Format("descendant::server[@id='{0}']", monArray[ServerList.SelectedIndex].getId()));
+                    root.RemoveChild(serv);
+                    xmlDoc.Save("servers.xml");
 
-                monArray[ServerList.SelectedIndex].Dispose();
-                monArray.Remove(monArray[ServerList.SelectedIndex]);
-                ServerList.Items.RemoveAt(ServerList.SelectedIndex);
+                    monArray[ServerList.SelectedIndex].Dispose();
+                    monArray.Remove(monArray[ServerList.SelectedIndex]);
+                    ServerList.Items.RemoveAt(ServerList.SelectedIndex);
+                }
             }
         }
 
