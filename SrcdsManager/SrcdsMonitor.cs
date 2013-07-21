@@ -6,7 +6,7 @@ using System.Net.Sockets;
 
 namespace SrcdsManager
 {
-    class SrcdsMonitor
+    class SrcdsMonitor : IDisposable
     {
         private String exePath;
         private String commandLine;
@@ -109,7 +109,7 @@ namespace SrcdsManager
         public void Stop()
         {
             cleanExit = true;
-            pinger.StopPinging();
+            pinger.Dispose();
             proc.Kill();
 
             running = false;
@@ -195,6 +195,11 @@ namespace SrcdsManager
         {
             return crashes.ToString();
         }
+        public void Dispose()
+        {
+            proc.Dispose();
+            pinger.Dispose();
+        }
     }
 
     class WaitForExit
@@ -214,7 +219,7 @@ namespace SrcdsManager
         }
     }
 
-    class SrcdsPinger
+    class SrcdsPinger : IDisposable
     {
         private IPEndPoint serverEP;
         private Socket sock = new Socket(SocketType.Dgram, ProtocolType.Udp);
@@ -261,24 +266,6 @@ namespace SrcdsManager
             pingTimer.AutoReset = true;
             pingTimer.Enabled = true;
             pingTimer.Start();
-        }
-        public void StopPinging()
-        {
-            pingTimer.Stop();
-            pingTimer.Dispose();
-            try
-            {
-                timeoutTimer.Stop();
-                timeoutTimer.Dispose();
-            }
-            catch (Exception e)
-            {
-                if (e.GetType() != typeof(NullReferenceException))
-                {
-                    throw e;
-                }
-            }
-            sock.Dispose();
         }
         private void PingServer(object source, System.Timers.ElapsedEventArgs e)
         {
@@ -348,6 +335,24 @@ namespace SrcdsManager
             pingTimer.Start();
 
             timeouts = 0;
+        }
+        public void Dispose()
+        {
+            pingTimer.Stop();
+            pingTimer.Dispose();
+            try
+            {
+                timeoutTimer.Stop();
+                timeoutTimer.Dispose();
+            }
+            catch (Exception e)
+            {
+                if (e.GetType() != typeof(NullReferenceException))
+                {
+                    throw e;
+                }
+            }
+            sock.Dispose();
         }
     }
 }

@@ -292,6 +292,7 @@ namespace SrcdsManager
                 root.RemoveChild(serv);
                 xmlDoc.Save("servers.xml");
 
+                monArray[ServerList.SelectedIndex].Dispose();
                 monArray.Remove(monArray[ServerList.SelectedIndex]);
                 ServerList.Items.RemoveAt(ServerList.SelectedIndex);
             }
