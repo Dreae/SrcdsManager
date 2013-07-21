@@ -46,6 +46,19 @@ namespace SrcdsManager
             XmlAttribute port = xmlDoc.CreateAttribute("port");
             XmlNode root = xmlDoc.DocumentElement;
 
+            System.Net.IPAddress ip;
+            if (!System.Net.IPAddress.TryParse(ipAddr.Text, out ip))
+            {
+                MessageBox.Show("The value enetered in the IP field is invalid", "Invalid IP");
+                return;
+            }
+            uint _port;
+            if (!uint.TryParse(iPort.Text, out _port))
+            {
+                MessageBox.Show("The value enetered in the port field is invalid", "Invalid port");
+                return;
+            }
+
             name.Value = servName.Text;
             id.Value = servID.Text;
             addr.Value = ipAddr.Text;
@@ -70,7 +83,7 @@ namespace SrcdsManager
 
             xmlDoc.Save("servers.xml");
 
-            SrcdsMonitor mon = new SrcdsMonitor(servExe.Text, servParams.Text, servName.Text, servID.Text, ipAddr.Text, iPort.Text);
+            SrcdsMonitor mon = new SrcdsMonitor(servExe.Text, servParams.Text, servName.Text, servID.Text, ipAddr.Text, iPort.Text, sender);
             this.sender.addMonitor(mon);
             this.Dispose();
         }

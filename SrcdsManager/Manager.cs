@@ -16,6 +16,7 @@ namespace SrcdsManager
     {
 
         private List<SrcdsMonitor> monArray = new List<SrcdsMonitor>();
+        private String steamCmd = "";
 
         public Manager()
         {
@@ -112,6 +113,19 @@ namespace SrcdsManager
             serv.SelectSingleNode("descendant::params").InnerText = parms.Text;
             xmlDoc.Save("servers.xml");
 
+            System.Net.IPAddress ip;
+            if (!System.Net.IPAddress.TryParse(addr.Text, out ip))
+            {
+                MessageBox.Show("The value enetered in the IP field is invalid", "Invalid IP");
+                return;
+            }
+            uint _port;
+            if (!uint.TryParse(port.Text, out _port))
+            {
+                MessageBox.Show("The value enetered in the port field is invalid", "Invalid port");
+                return;
+            }
+
             monArray[ServerList.SelectedIndex].setCmd(parms.Text);
             monArray[ServerList.SelectedIndex].setExe(executable.Text);
             monArray[ServerList.SelectedIndex].setName(name.Text);
@@ -130,6 +144,15 @@ namespace SrcdsManager
                 xmlDoc.AppendChild(root);
 
                 xmlDoc.Save("servers.xml");
+            }
+            if (!System.IO.File.Exists("settings.xml"))
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                XmlElement root = xmlDoc.CreateElement("settings");
+
+                xmlDoc.AppendChild(root);
+
+                xmlDoc.Save("settings.xml");
             }
 
             using(XmlReader reader = new XmlTextReader("servers.xml"))
@@ -154,14 +177,20 @@ namespace SrcdsManager
                     reader.ReadToFollowing("params");
                     sCmd = reader.ReadElementContentAsString();
 
-                    SrcdsMonitor mon = new SrcdsMonitor(sExe, sCmd, sName, sID, sAddr, sPort);
+                    SrcdsMonitor mon = new SrcdsMonitor(sExe, sCmd, sName, sID, sAddr, sPort, this);
 
                     monArray.Add(mon);
 
                     ServerList.Items.Add(mon.getName());
                 }
             }
-
+            using (XmlReader reader = new XmlTextReader("settings.xml"))
+            {
+                if (reader.ReadToFollowing("steamcmd"))
+                {
+                    steamCmd = reader.Value;
+                }
+            }
             System.Timers.Timer status = new System.Timers.Timer(1000);
             status.SynchronizingObject = this;
             status.Elapsed += new System.Timers.ElapsedEventHandler(sUpdateStatus);
@@ -265,6 +294,115 @@ namespace SrcdsManager
 
                 monArray.Remove(monArray[ServerList.SelectedIndex]);
                 ServerList.Items.RemoveAt(ServerList.SelectedIndex);
+            }
+        }
+
+        private void steamCmdToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog2.ShowDialog();
+        }
+
+        private void openFileDialog2_FileOk(object sender, CancelEventArgs e)
+        {
+            steamCmd = openFileDialog2.FileName;
+            
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load("settings.xml");
+            XmlNode root = xmlDoc.DocumentElement;
+            XmlNode path = root.SelectSingleNode("descendant::steamcmd");
+            //There's probably a better way of doing this
+            try
+            {
+                path.InnerText = steamCmd;
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetType() == typeof(NullReferenceException))
+                {
+                    path = xmlDoc.CreateElement("steamcmd");
+                    path.InnerText = steamCmd;
+                    root.AppendChild(path);
+                }
+            }
+            xmlDoc.Save("settings.xml");
+        }
+
+        private void updateServerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ServerList.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("You must select a server","Select a server");
+                return;
+            }
+            if (monArray[ServerList.SelectedIndex].isRunning())
+            {
+                MessageBox.Show("The selected server is running, you must stop it to update","Server is running");
+                return;
+            }
+            string app_id = System.IO.File.ReadAllText(new System.IO.FileInfo(monArray[ServerList.SelectedIndex].getExe()).Directory.FullName + "/steam_appid.txt");
+            int id = int.Parse(app_id);
+            String app = "";
+            switch (id)
+            {
+                case 240:
+                    app = "232330";
+                    break;
+                case 440:
+                    app = "232250";
+                    break;
+                case 300:
+                    app = "232290";
+                    break;
+                case 550:
+                    app = "222860";
+                    break;
+                case 10:
+                    app = "90";
+                    break;
+                case 70:
+                    app = "90";
+                    break;
+                case 40:
+                    app = "90 +app_set_config \"90 mod dmc\"";
+                    break;
+                case 80:
+                    app = "90 +app_set_config \"90 mod czero\"";
+                    break;
+                case 4000:
+                    app = "4020";
+                    break;
+                case 730:
+                    app = "740";
+                    break;
+            }
+            System.Diagnostics.ProcessStartInfo startinfo = new System.Diagnostics.ProcessStartInfo();
+            startinfo.FileName = steamCmd;
+            startinfo.Arguments = String.Format("+login anonymous +force_install_dir {0} +app_update {1} validate +quit",
+                new System.IO.FileInfo(monArray[ServerList.SelectedIndex].getExe()).Directory.FullName, app);
+            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            proc.StartInfo = startinfo;
+            try
+            {
+                proc.Start();
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetType() == typeof(System.InvalidOperationException))
+                {
+                    MessageBox.Show("The path to the steamcmd executable was invalid", "SteamCMD not foud");
+                    return;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+        }
+        public void ErrorBox(int id)
+        {
+            if (id == 1)
+            {
+                MessageBox.Show("The path to the server executable was invalid", "Server path Invalid");
             }
         }
     }

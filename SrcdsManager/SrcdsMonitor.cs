@@ -14,6 +14,7 @@ namespace SrcdsManager
         private String sID;
         private IPAddress ipAddr;
         private int port;
+        private Manager caller;
 
         private bool running = false;
         private bool cleanExit = true;
@@ -27,7 +28,7 @@ namespace SrcdsManager
 
         private SrcdsPinger pinger;
 
-        public SrcdsMonitor(String exePath, String commandLine, String Name, String sID, String ipAddr, String port)
+        public SrcdsMonitor(String exePath, String commandLine, String Name, String sID, String ipAddr, String port, object caller)
         {
             this.exePath = exePath;
             this.commandLine = commandLine;
@@ -41,12 +42,29 @@ namespace SrcdsManager
             this.port = int.Parse(port);
 
             proc.StartInfo = startInfo;
+
+            this.caller = (Manager)caller;
         }
 
         public void Start()
         {
             startInfo.Arguments = commandLine + String.Format(" -ip {0} -port {1}", ipAddr, port); ;
-            proc.Start();
+            try
+            {
+                proc.Start();
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetType() == typeof(System.ComponentModel.Win32Exception))
+                {
+                    caller.ErrorBox(1);
+                    return;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
 
             WaitForExit oWait = new WaitForExit(proc, this);
             Thread oThread = new Thread(new ThreadStart(oWait.Waiting));
@@ -65,7 +83,22 @@ namespace SrcdsManager
             this.crashes++;
 
             startInfo.Arguments = commandLine + String.Format(" -ip {0} -port {1}", ipAddr, port); ;
-            proc.Start();
+            try
+            {
+                proc.Start();
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetType() == typeof(System.InvalidOperationException))
+                {
+                    caller.ErrorBox(1);
+                    return;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
 
             WaitForExit oWait = new WaitForExit(proc, this);
             Thread oThread = new Thread(new ThreadStart(oWait.Waiting));

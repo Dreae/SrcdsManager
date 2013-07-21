@@ -54,12 +54,19 @@
             this.label9 = new System.Windows.Forms.Label();
             this.port = new System.Windows.Forms.TextBox();
             this.restart = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.steamCmdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.updateServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ServerList
             // 
             this.ServerList.FormattingEnabled = true;
-            this.ServerList.Location = new System.Drawing.Point(12, 23);
+            this.ServerList.Location = new System.Drawing.Point(12, 44);
             this.ServerList.Name = "ServerList";
             this.ServerList.Size = new System.Drawing.Size(76, 238);
             this.ServerList.TabIndex = 1;
@@ -68,7 +75,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 7);
+            this.label1.Location = new System.Drawing.Point(12, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(46, 13);
             this.label1.TabIndex = 2;
@@ -76,7 +83,7 @@
             // 
             // name
             // 
-            this.name.Location = new System.Drawing.Point(183, 63);
+            this.name.Location = new System.Drawing.Point(183, 84);
             this.name.Name = "name";
             this.name.Size = new System.Drawing.Size(100, 20);
             this.name.TabIndex = 3;
@@ -84,7 +91,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(180, 47);
+            this.label2.Location = new System.Drawing.Point(180, 68);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 4;
@@ -92,7 +99,7 @@
             // 
             // parms
             // 
-            this.parms.Location = new System.Drawing.Point(94, 149);
+            this.parms.Location = new System.Drawing.Point(94, 170);
             this.parms.Name = "parms";
             this.parms.Size = new System.Drawing.Size(189, 20);
             this.parms.TabIndex = 5;
@@ -100,7 +107,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(91, 133);
+            this.label3.Location = new System.Drawing.Point(91, 154);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(45, 13);
             this.label3.TabIndex = 6;
@@ -109,7 +116,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(91, 172);
+            this.label4.Location = new System.Drawing.Point(91, 193);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 13);
             this.label4.TabIndex = 7;
@@ -117,14 +124,14 @@
             // 
             // executable
             // 
-            this.executable.Location = new System.Drawing.Point(94, 188);
+            this.executable.Location = new System.Drawing.Point(94, 209);
             this.executable.Name = "executable";
             this.executable.Size = new System.Drawing.Size(189, 20);
             this.executable.TabIndex = 8;
             // 
             // browseExe
             // 
-            this.browseExe.Location = new System.Drawing.Point(158, 214);
+            this.browseExe.Location = new System.Drawing.Point(158, 235);
             this.browseExe.Name = "browseExe";
             this.browseExe.Size = new System.Drawing.Size(60, 20);
             this.browseExe.TabIndex = 9;
@@ -134,7 +141,7 @@
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(223, 260);
+            this.startButton.Location = new System.Drawing.Point(223, 281);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(60, 23);
             this.startButton.TabIndex = 11;
@@ -144,7 +151,7 @@
             // 
             // stopButton
             // 
-            this.stopButton.Location = new System.Drawing.Point(158, 260);
+            this.stopButton.Location = new System.Drawing.Point(158, 281);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(60, 23);
             this.stopButton.TabIndex = 12;
@@ -154,7 +161,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(94, 260);
+            this.saveButton.Location = new System.Drawing.Point(94, 281);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(58, 23);
             this.saveButton.TabIndex = 13;
@@ -170,7 +177,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(94, 23);
+            this.label5.Location = new System.Drawing.Point(94, 44);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(40, 13);
             this.label5.TabIndex = 14;
@@ -180,7 +187,7 @@
             // 
             this.status.AutoSize = true;
             this.status.ForeColor = System.Drawing.Color.Chartreuse;
-            this.status.Location = new System.Drawing.Point(140, 23);
+            this.status.Location = new System.Drawing.Point(140, 44);
             this.status.Name = "status";
             this.status.Size = new System.Drawing.Size(47, 13);
             this.status.TabIndex = 15;
@@ -189,7 +196,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(94, 47);
+            this.label7.Location = new System.Drawing.Point(94, 68);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(51, 13);
             this.label7.TabIndex = 16;
@@ -198,7 +205,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(94, 70);
+            this.label6.Location = new System.Drawing.Point(94, 91);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(46, 13);
             this.label6.TabIndex = 17;
@@ -207,7 +214,7 @@
             // crashes
             // 
             this.crashes.AutoSize = true;
-            this.crashes.Location = new System.Drawing.Point(140, 47);
+            this.crashes.Location = new System.Drawing.Point(140, 68);
             this.crashes.Name = "crashes";
             this.crashes.Size = new System.Drawing.Size(13, 13);
             this.crashes.TabIndex = 18;
@@ -216,7 +223,7 @@
             // uptime
             // 
             this.uptime.AutoSize = true;
-            this.uptime.Location = new System.Drawing.Point(140, 70);
+            this.uptime.Location = new System.Drawing.Point(140, 91);
             this.uptime.Name = "uptime";
             this.uptime.Size = new System.Drawing.Size(31, 13);
             this.uptime.TabIndex = 19;
@@ -224,7 +231,7 @@
             // 
             // newServ
             // 
-            this.newServ.Location = new System.Drawing.Point(12, 267);
+            this.newServ.Location = new System.Drawing.Point(12, 288);
             this.newServ.Name = "newServ";
             this.newServ.Size = new System.Drawing.Size(75, 23);
             this.newServ.TabIndex = 20;
@@ -234,7 +241,7 @@
             // 
             // deleteServ
             // 
-            this.deleteServ.Location = new System.Drawing.Point(96, 231);
+            this.deleteServ.Location = new System.Drawing.Point(96, 252);
             this.deleteServ.Name = "deleteServ";
             this.deleteServ.Size = new System.Drawing.Size(56, 23);
             this.deleteServ.TabIndex = 21;
@@ -245,7 +252,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(93, 92);
+            this.label8.Location = new System.Drawing.Point(93, 113);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(61, 13);
             this.label8.TabIndex = 22;
@@ -253,7 +260,7 @@
             // 
             // addr
             // 
-            this.addr.Location = new System.Drawing.Point(97, 108);
+            this.addr.Location = new System.Drawing.Point(97, 129);
             this.addr.Name = "addr";
             this.addr.Size = new System.Drawing.Size(90, 20);
             this.addr.TabIndex = 23;
@@ -261,7 +268,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(183, 92);
+            this.label9.Location = new System.Drawing.Point(183, 113);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(29, 13);
             this.label9.TabIndex = 24;
@@ -269,14 +276,14 @@
             // 
             // port
             // 
-            this.port.Location = new System.Drawing.Point(193, 108);
+            this.port.Location = new System.Drawing.Point(193, 129);
             this.port.Name = "port";
             this.port.Size = new System.Drawing.Size(90, 20);
             this.port.TabIndex = 25;
             // 
             // restart
             // 
-            this.restart.Location = new System.Drawing.Point(223, 231);
+            this.restart.Location = new System.Drawing.Point(223, 252);
             this.restart.Name = "restart";
             this.restart.Size = new System.Drawing.Size(59, 23);
             this.restart.TabIndex = 26;
@@ -284,11 +291,57 @@
             this.restart.UseVisualStyleBackColor = true;
             this.restart.Click += new System.EventHandler(this.restart_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem,
+            this.toolsToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(295, 24);
+            this.menuStrip1.TabIndex = 27;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.steamCmdToolStripMenuItem});
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // steamCmdToolStripMenuItem
+            // 
+            this.steamCmdToolStripMenuItem.Name = "steamCmdToolStripMenuItem";
+            this.steamCmdToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.steamCmdToolStripMenuItem.Text = "SteamCmd";
+            this.steamCmdToolStripMenuItem.Click += new System.EventHandler(this.steamCmdToolStripMenuItem_Click);
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.updateServerToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // updateServerToolStripMenuItem
+            // 
+            this.updateServerToolStripMenuItem.Name = "updateServerToolStripMenuItem";
+            this.updateServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.updateServerToolStripMenuItem.Text = "Update Server";
+            this.updateServerToolStripMenuItem.Click += new System.EventHandler(this.updateServerToolStripMenuItem_Click);
+            // 
+            // openFileDialog2
+            // 
+            this.openFileDialog2.FileName = "steamCmdDialog";
+            this.openFileDialog2.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog2_FileOk);
+            // 
             // Manager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(295, 294);
+            this.ClientSize = new System.Drawing.Size(295, 323);
             this.Controls.Add(this.restart);
             this.Controls.Add(this.port);
             this.Controls.Add(this.label9);
@@ -314,13 +367,16 @@
             this.Controls.Add(this.name);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ServerList);
+            this.Controls.Add(this.menuStrip1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Name = "Manager";
             this.Text = "SrcdsManager";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ManagerClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ManagerClosing);
 
         }
 
@@ -352,6 +408,12 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox port;
         private System.Windows.Forms.Button restart;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem steamCmdToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFileDialog2;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem updateServerToolStripMenuItem;
 
     }
 }
