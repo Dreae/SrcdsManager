@@ -376,7 +376,13 @@ namespace SrcdsManager
                 return;
             }
             string app_id = System.IO.File.ReadAllText(new System.IO.FileInfo(monArray[ServerList.SelectedIndex].getExe()).Directory.FullName + "/steam_appid.txt");
-            int id = int.Parse(app_id);
+            int id = 0;
+            if (!int.TryParse(app_id, out id))
+            {
+                UnknownApp uApp = new UnknownApp(this);
+                uApp.Show();
+                return;
+            }
             String app = "";
             switch (id)
             {

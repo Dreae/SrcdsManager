@@ -236,25 +236,9 @@ namespace SrcdsManager
             serverEP = new IPEndPoint(addr, port);
             this.caller = (SrcdsMonitor)source;
             this.proc = proc;
-            int _port = 54000;
-            while(!sock.IsBound && port < 55000)
-            {
-                try
-                {
-                    sock.Bind(new IPEndPoint(IPAddress.Any, _port));
-                }
-                catch(SocketException e)
-                {
-                    if (e.SocketErrorCode == SocketError.AddressAlreadyInUse)
-                    {
-                        port++;
-                    }
-                    else
-                    {
-                        throw e;
-                    }
-                }
-            }
+
+            sock.Bind(new IPEndPoint(IPAddress.Any, 0));
+
             sock.ReceiveTimeout = 1500;
             sock.SendTimeout = 1500;
         }
@@ -266,6 +250,11 @@ namespace SrcdsManager
             pingTimer.AutoReset = true;
             pingTimer.Enabled = true;
             pingTimer.Start();
+
+            timeoutTimer = new System.Timers.Timer(3000);
+            timeoutTimer.Elapsed += new System.Timers.ElapsedEventHandler(Timedout);
+            timeoutTimer.AutoReset = true;
+            timeoutTimer.Enabled = false;
         }
         private void PingServer(object source, System.Timers.ElapsedEventArgs e)
         {
@@ -284,9 +273,6 @@ namespace SrcdsManager
                     pingTimer.Enabled = false;
                     pingTimer.Stop();
 
-                    timeoutTimer = new System.Timers.Timer(3000);
-                    timeoutTimer.Elapsed += new System.Timers.ElapsedEventHandler(Timedout);
-                    timeoutTimer.AutoReset = true;
                     timeoutTimer.Enabled = true;
                     timeoutTimer.Start();
                 }
@@ -338,20 +324,8 @@ namespace SrcdsManager
         }
         public void Dispose()
         {
-            pingTimer.Stop();
             pingTimer.Dispose();
-            try
-            {
-                timeoutTimer.Stop();
-                timeoutTimer.Dispose();
-            }
-            catch (Exception e)
-            {
-                if (e.GetType() != typeof(NullReferenceException))
-                {
-                    throw e;
-                }
-            }
+            timeoutTimer.Dispose();
             sock.Dispose();
         }
     }
