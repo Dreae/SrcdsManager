@@ -188,7 +188,7 @@ namespace SrcdsManager
             {
                 if (reader.ReadToFollowing("steamcmd"))
                 {
-                    steamCmd = reader.Value;
+                    steamCmd = reader.ReadElementContentAsString();
                 }
             }
             System.Timers.Timer status = new System.Timers.Timer(1000);
@@ -375,6 +375,15 @@ namespace SrcdsManager
                 case 730:
                     app = "740";
                     break;
+                default:
+                    app = "unknown";
+                    break;
+            }
+            if (app == "unknown")
+            {
+                UnknownApp uApp = new UnknownApp(this);
+                uApp.Show();
+                return;
             }
             System.Diagnostics.ProcessStartInfo startinfo = new System.Diagnostics.ProcessStartInfo();
             startinfo.FileName = steamCmd;
@@ -388,7 +397,7 @@ namespace SrcdsManager
             }
             catch (Exception ex)
             {
-                if (ex.GetType() == typeof(System.InvalidOperationException))
+                if (ex.GetType() == typeof(System.ComponentModel.Win32Exception))
                 {
                     MessageBox.Show("The path to the steamcmd executable was invalid", "SteamCMD not foud");
                     return;
@@ -398,6 +407,14 @@ namespace SrcdsManager
                     throw ex;
                 }
             }
+        }
+        public String getSteamCmd()
+        {
+            return steamCmd;
+        }
+        internal SrcdsMonitor getSelectedMon()
+        {
+            return monArray[ServerList.SelectedIndex];
         }
         public void ErrorBox(int id)
         {

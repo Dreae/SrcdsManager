@@ -72,6 +72,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UnknownApp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UnknownApp.Designer.cs">
+      <DependentUpon>UnknownApp.cs</DependentUpon>
+    </Compile>
     <Compile Include="NewServer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +93,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="UnknownApp.resx">
+      <DependentUpon>UnknownApp.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Manager.resx">
       <DependentUpon>Manager.cs</DependentUpon>
     </EmbeddedResource>

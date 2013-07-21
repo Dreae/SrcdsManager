@@ -83,7 +83,7 @@ namespace SrcdsManager
 
             xmlDoc.Save("servers.xml");
 
-            SrcdsMonitor mon = new SrcdsMonitor(servExe.Text, servParams.Text, servName.Text, servID.Text, ipAddr.Text, iPort.Text, sender);
+            SrcdsMonitor mon = new SrcdsMonitor(servExe.Text, servParams.Text, servName.Text, servID.Text, ipAddr.Text, iPort.Text, this.sender);
             this.sender.addMonitor(mon);
             this.Dispose();
         }

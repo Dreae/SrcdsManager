@@ -328,7 +328,7 @@
             // updateServerToolStripMenuItem
             // 
             this.updateServerToolStripMenuItem.Name = "updateServerToolStripMenuItem";
-            this.updateServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.updateServerToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.updateServerToolStripMenuItem.Text = "Update Server";
             this.updateServerToolStripMenuItem.Click += new System.EventHandler(this.updateServerToolStripMenuItem_Click);
             // 
