@@ -38,16 +38,15 @@ namespace SrcdsManager
                 }
             }
         }
-        private void ServerList_Clicked(object sender, MouseEventArgs e)
+        private void ServerList_NewRow(object sender, EventArgs e)
         {
-            var hti = ServerList.HitTest(e.X, e.Y);
-            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            if (ServerList.SelectedRows.Count == 0)
             {
-                if (!(hti.Type == DataGridViewHitTestType.None))
-                {
-                    ServerList.Rows[hti.RowIndex].Selected = true;
-                }
+                ServerList.Rows[ServerList.Rows.Count - 1].Selected = true;
             }
+        }
+        private void ServerList_SelectionChanged(object sender, EventArgs e)
+        {
             if (ServerList.SelectedRows.Count > 0 && ServerList.SelectedRows[0].Index >= 0 && ServerList.SelectedRows[0].Index < monArray.Count)
             {
                 parms.Text = monArray[ServerList.SelectedRows[0].Index].getCmd();
@@ -95,24 +94,33 @@ namespace SrcdsManager
                     status.ForeColor = Color.Red;
                 }
             }
-           if(e.Button == MouseButtons.Right && hti.Type != DataGridViewHitTestType.None)
-           {
-                if (monArray[hti.RowIndex].isRunning())
+        }
+        private void ServerList_Clicked(object sender, MouseEventArgs e)
+        {
+
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                var hti = ServerList.HitTest(e.X, e.Y);
+                if (hti.Type != DataGridViewHitTestType.None)
                 {
-                    dgContextStart.Enabled = false;
-                    dgContextStop.Enabled = true;
-                    dgContextRestart.Enabled = true;
-                    dgContextUpdate.Enabled = false;
+                    ServerList.Rows[hti.RowIndex].Selected = true;
+                    if (monArray[hti.RowIndex].isRunning())
+                    {
+                        dgContextStart.Enabled = false;
+                        dgContextStop.Enabled = true;
+                        dgContextRestart.Enabled = true;
+                        dgContextUpdate.Enabled = false;
+                    }
+                    else
+                    {
+                        dgContextStart.Enabled = true;
+                        dgContextStop.Enabled = false;
+                        dgContextRestart.Enabled = false;
+                        dgContextUpdate.Enabled = true;
+                    }
+                    dataGridContext.Show(new Point(Cursor.Position.X, Cursor.Position.Y));
                 }
-                else
-                {
-                    dgContextStart.Enabled = true;
-                    dgContextStop.Enabled = false;
-                    dgContextRestart.Enabled = false;
-                    dgContextUpdate.Enabled = true;
-                }
-                dataGridContext.Show(new Point(Cursor.Position.X, Cursor.Position.Y));
-           }
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -266,19 +274,6 @@ namespace SrcdsManager
                     {
                         switch (cell.ColumnIndex)
                         {
-                            case 0:
-                                if (monArray[row.Index].isRunning())
-                                {
-                                    if (cell.Value != SrcdsManager.Properties.Resources.online)
-                                    {
-                                        cell.Value = SrcdsManager.Properties.Resources.online;
-                                    }
-                                }
-                                else if(cell.Value != SrcdsManager.Properties.Resources.offline)
-                                {
-                                    cell.Value = SrcdsManager.Properties.Resources.offline;
-                                }
-                                break;
                             case 1:
                                 cell.Value = monArray[row.Index].getName();
                                 break;
@@ -336,6 +331,7 @@ namespace SrcdsManager
             if (ServerList.SelectedRows.Count != 0)
             {
                 monArray[ServerList.SelectedRows[0].Index].Stop();
+                ServerList.SelectedRows[0].Cells[0].Value = SrcdsManager.Properties.Resources.offline;
             }
         }
         private void restart_Click(object sender, EventArgs e)
@@ -491,6 +487,7 @@ namespace SrcdsManager
                     executable.Text = monArray[ServerList.SelectedRows[0].Index].getExe();
                 }
             }
+            ServerList.SelectedRows[0].Cells[0].Value = SrcdsManager.Properties.Resources.online;
             monArray[ServerList.SelectedRows[0].Index].Start();
         }
         private void UpdateServer()
@@ -601,6 +598,7 @@ namespace SrcdsManager
         private void dgContextStop_Click(object sender, EventArgs e)
         {
             monArray[ServerList.SelectedRows[0].Index].Stop();
+            ServerList.SelectedRows[0].Cells[0].Value = SrcdsManager.Properties.Resources.offline;
         }
     }
 }

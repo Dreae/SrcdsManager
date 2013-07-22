@@ -64,6 +64,11 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.ServerList = new System.Windows.Forms.DataGridView();
+            this.dataGridContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.dgContextStart = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgContextStop = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgContextRestart = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgContextUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.state = new System.Windows.Forms.DataGridViewImageColumn();
             this.ServerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,11 +76,6 @@
             this.dgCrashes = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgIPAddr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgPort = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridContext = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.dgContextStart = new System.Windows.Forms.ToolStripMenuItem();
-            this.dgContextStop = new System.Windows.Forms.ToolStripMenuItem();
-            this.dgContextRestart = new System.Windows.Forms.ToolStripMenuItem();
-            this.dgContextUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ServerList)).BeginInit();
             this.dataGridContext.SuspendLayout();
@@ -343,7 +343,7 @@
             // 
             this.updateServerToolStripMenuItem.Image = global::SrcdsManager.Properties.Resources.Custom_Icon_Design_Pretty_Office_4_Upload;
             this.updateServerToolStripMenuItem.Name = "updateServerToolStripMenuItem";
-            this.updateServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.updateServerToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.updateServerToolStripMenuItem.Text = "Update Server";
             this.updateServerToolStripMenuItem.Click += new System.EventHandler(this.updateServerToolStripMenuItem_Click);
             // 
@@ -351,7 +351,7 @@
             // 
             this.installServerToolStripMenuItem.Image = global::SrcdsManager.Properties.Resources.download_icon;
             this.installServerToolStripMenuItem.Name = "installServerToolStripMenuItem";
-            this.installServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.installServerToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.installServerToolStripMenuItem.Text = "Install Server";
             this.installServerToolStripMenuItem.Click += new System.EventHandler(this.installServerToolStripMenuItem_Click);
             // 
@@ -404,7 +404,51 @@
             this.ServerList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ServerList.Size = new System.Drawing.Size(601, 231);
             this.ServerList.TabIndex = 28;
+            this.ServerList.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.ServerList_NewRow);
+            this.ServerList.SelectionChanged += new System.EventHandler(this.ServerList_SelectionChanged);
             this.ServerList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ServerList_Clicked);
+            // 
+            // dataGridContext
+            // 
+            this.dataGridContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dgContextStart,
+            this.dgContextStop,
+            this.dgContextRestart,
+            this.dgContextUpdate});
+            this.dataGridContext.Name = "contextMenuStrip1";
+            this.dataGridContext.Size = new System.Drawing.Size(113, 92);
+            // 
+            // dgContextStart
+            // 
+            this.dgContextStart.Image = global::SrcdsManager.Properties.Resources.online;
+            this.dgContextStart.Name = "dgContextStart";
+            this.dgContextStart.Size = new System.Drawing.Size(112, 22);
+            this.dgContextStart.Text = "Start";
+            this.dgContextStart.Click += new System.EventHandler(this.dgContextStart_Click);
+            // 
+            // dgContextStop
+            // 
+            this.dgContextStop.Image = global::SrcdsManager.Properties.Resources.offline;
+            this.dgContextStop.Name = "dgContextStop";
+            this.dgContextStop.Size = new System.Drawing.Size(112, 22);
+            this.dgContextStop.Text = "Stop";
+            this.dgContextStop.Click += new System.EventHandler(this.dgContextStop_Click);
+            // 
+            // dgContextRestart
+            // 
+            this.dgContextRestart.Image = global::SrcdsManager.Properties.Resources.restart_icon_0016057b8f364cd6cbee64b83ac281de_Medium;
+            this.dgContextRestart.Name = "dgContextRestart";
+            this.dgContextRestart.Size = new System.Drawing.Size(112, 22);
+            this.dgContextRestart.Text = "Restart";
+            this.dgContextRestart.Click += new System.EventHandler(this.dgContextRestart_Click);
+            // 
+            // dgContextUpdate
+            // 
+            this.dgContextUpdate.Image = global::SrcdsManager.Properties.Resources.Custom_Icon_Design_Pretty_Office_4_Upload;
+            this.dgContextUpdate.Name = "dgContextUpdate";
+            this.dgContextUpdate.Size = new System.Drawing.Size(112, 22);
+            this.dgContextUpdate.Text = "Update";
+            this.dgContextUpdate.Click += new System.EventHandler(this.dgContextUpdate_Click);
             // 
             // state
             // 
@@ -452,48 +496,6 @@
             this.dgPort.Name = "dgPort";
             this.dgPort.ReadOnly = true;
             this.dgPort.Width = 85;
-            // 
-            // dataGridContext
-            // 
-            this.dataGridContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dgContextStart,
-            this.dgContextStop,
-            this.dgContextRestart,
-            this.dgContextUpdate});
-            this.dataGridContext.Name = "contextMenuStrip1";
-            this.dataGridContext.Size = new System.Drawing.Size(113, 92);
-            // 
-            // dgContextStart
-            // 
-            this.dgContextStart.Image = global::SrcdsManager.Properties.Resources.online;
-            this.dgContextStart.Name = "dgContextStart";
-            this.dgContextStart.Size = new System.Drawing.Size(112, 22);
-            this.dgContextStart.Text = "Start";
-            this.dgContextStart.Click += new System.EventHandler(this.dgContextStart_Click);
-            // 
-            // dgContextStop
-            // 
-            this.dgContextStop.Image = global::SrcdsManager.Properties.Resources.offline;
-            this.dgContextStop.Name = "dgContextStop";
-            this.dgContextStop.Size = new System.Drawing.Size(112, 22);
-            this.dgContextStop.Text = "Stop";
-            this.dgContextStop.Click += new System.EventHandler(this.dgContextStop_Click);
-            // 
-            // dgContextRestart
-            // 
-            this.dgContextRestart.Image = global::SrcdsManager.Properties.Resources.restart_icon_0016057b8f364cd6cbee64b83ac281de_Medium;
-            this.dgContextRestart.Name = "dgContextRestart";
-            this.dgContextRestart.Size = new System.Drawing.Size(112, 22);
-            this.dgContextRestart.Text = "Restart";
-            this.dgContextRestart.Click += new System.EventHandler(this.dgContextRestart_Click);
-            // 
-            // dgContextUpdate
-            // 
-            this.dgContextUpdate.Image = global::SrcdsManager.Properties.Resources.Custom_Icon_Design_Pretty_Office_4_Upload;
-            this.dgContextUpdate.Name = "dgContextUpdate";
-            this.dgContextUpdate.Size = new System.Drawing.Size(112, 22);
-            this.dgContextUpdate.Text = "Update";
-            this.dgContextUpdate.Click += new System.EventHandler(this.dgContextUpdate_Click);
             // 
             // Manager
             // 
