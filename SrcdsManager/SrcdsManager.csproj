@@ -191,6 +191,12 @@
   <ItemGroup>
     <None Include="Resources\Visualpharm-Ios7-Settings-2.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Deleket-Soft-Scraps-Button-Upload.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Custom-Icon-Design-Pretty-Office-4-Upload.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

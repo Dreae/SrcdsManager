@@ -325,7 +325,7 @@
             // 
             this.steamCmdToolStripMenuItem.Image = global::SrcdsManager.Properties.Resources.steam;
             this.steamCmdToolStripMenuItem.Name = "steamCmdToolStripMenuItem";
-            this.steamCmdToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.steamCmdToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.steamCmdToolStripMenuItem.Text = "SteamCmd";
             this.steamCmdToolStripMenuItem.Click += new System.EventHandler(this.steamCmdToolStripMenuItem_Click);
             // 
@@ -341,7 +341,7 @@
             // 
             // updateServerToolStripMenuItem
             // 
-            this.updateServerToolStripMenuItem.Image = global::SrcdsManager.Properties.Resources.update_icon;
+            this.updateServerToolStripMenuItem.Image = global::SrcdsManager.Properties.Resources.Custom_Icon_Design_Pretty_Office_4_Upload;
             this.updateServerToolStripMenuItem.Name = "updateServerToolStripMenuItem";
             this.updateServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.updateServerToolStripMenuItem.Text = "Update Server";
@@ -375,7 +375,8 @@
             this.ServerList.AllowUserToResizeColumns = false;
             this.ServerList.AllowUserToResizeRows = false;
             this.ServerList.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.ServerList.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.ServerList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ServerList.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.ServerList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ServerList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.state,
@@ -488,7 +489,7 @@
             // 
             // dgContextUpdate
             // 
-            this.dgContextUpdate.Image = global::SrcdsManager.Properties.Resources.update_icon;
+            this.dgContextUpdate.Image = global::SrcdsManager.Properties.Resources.Custom_Icon_Design_Pretty_Office_4_Upload;
             this.dgContextUpdate.Name = "dgContextUpdate";
             this.dgContextUpdate.Size = new System.Drawing.Size(112, 22);
             this.dgContextUpdate.Text = "Update";
@@ -498,6 +499,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(625, 407);
             this.Controls.Add(this.ServerList);
             this.Controls.Add(this.restart);
