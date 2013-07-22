@@ -379,7 +379,11 @@ namespace SrcdsManager
         internal void addMonitor(SrcdsMonitor mon)
         {
             monArray.Add(mon);
-            ServerList.Rows.Add(mon.getName());
+            ServerList.Rows.Add();
+            ServerList.Rows[ServerList.Rows.Count - 1].Cells[0].Value = SrcdsManager.Properties.Resources.offline;
+            ServerList.Rows[ServerList.Rows.Count - 1].Cells[1].Value = mon.getName();
+            ServerList.Rows[ServerList.Rows.Count - 1].Cells[5].Value = mon.getAddr();
+            ServerList.Rows[ServerList.Rows.Count - 1].Cells[6].Value = mon.getPort();
         }
 
         private void deleteServ_Click(object sender, EventArgs e)
