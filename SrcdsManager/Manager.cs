@@ -464,5 +464,17 @@ namespace SrcdsManager
                 MessageBox.Show("The path to the server executable was invalid", "Server path Invalid");
             }
         }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            About about = new About();
+            about.Show();
+        }
+
+        private void installServerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InstallServer install = new InstallServer(this);
+            install.Show();
+        }
     }
 }

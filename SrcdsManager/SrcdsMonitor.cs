@@ -44,6 +44,9 @@ namespace SrcdsManager
             proc.StartInfo = startInfo;
 
             this.caller = (Manager)caller;
+
+            pinger = new SrcdsPinger(this, this.ipAddr, this.port, proc);
+            pinger.StartPinging();
         }
 
         public void Start()
@@ -69,9 +72,6 @@ namespace SrcdsManager
             WaitForExit oWait = new WaitForExit(proc, this);
             Thread oThread = new Thread(new ThreadStart(oWait.Waiting));
             oThread.Start();
-
-            pinger = new SrcdsPinger(this, ipAddr, port, proc);
-            pinger.StartPinging();
 
             running = true;
             cleanExit = false;

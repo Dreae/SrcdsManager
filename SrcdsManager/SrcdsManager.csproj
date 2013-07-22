@@ -72,6 +72,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InstallServer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InstallServer.Designer.cs">
+      <DependentUpon>InstallServer.cs</DependentUpon>
+    </Compile>
     <Compile Include="UnknownApp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +105,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InstallServer.resx">
+      <DependentUpon>InstallServer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UnknownApp.resx">
       <DependentUpon>UnknownApp.cs</DependentUpon>
     </EmbeddedResource>
