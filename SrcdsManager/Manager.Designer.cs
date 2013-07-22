@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.name = new System.Windows.Forms.TextBox();
@@ -70,8 +71,14 @@
             this.dgCrashes = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgIPAddr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgPort = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.dgContextStart = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgContextStop = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgContextRestart = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgContextUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ServerList)).BeginInit();
+            this.dataGridContext.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -309,14 +316,16 @@
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.steamCmdToolStripMenuItem});
+            this.settingsToolStripMenuItem.Image = global::SrcdsManager.Properties.Resources.Visualpharm_Ios7_Settings;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // steamCmdToolStripMenuItem
             // 
+            this.steamCmdToolStripMenuItem.Image = global::SrcdsManager.Properties.Resources.steam;
             this.steamCmdToolStripMenuItem.Name = "steamCmdToolStripMenuItem";
-            this.steamCmdToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.steamCmdToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.steamCmdToolStripMenuItem.Text = "SteamCmd";
             this.steamCmdToolStripMenuItem.Click += new System.EventHandler(this.steamCmdToolStripMenuItem_Click);
             // 
@@ -325,28 +334,32 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.updateServerToolStripMenuItem,
             this.installServerToolStripMenuItem});
+            this.toolsToolStripMenuItem.Image = global::SrcdsManager.Properties.Resources.Visualpharm_Ios7_Settings_2;
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // updateServerToolStripMenuItem
             // 
+            this.updateServerToolStripMenuItem.Image = global::SrcdsManager.Properties.Resources.update_icon;
             this.updateServerToolStripMenuItem.Name = "updateServerToolStripMenuItem";
-            this.updateServerToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.updateServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.updateServerToolStripMenuItem.Text = "Update Server";
             this.updateServerToolStripMenuItem.Click += new System.EventHandler(this.updateServerToolStripMenuItem_Click);
             // 
             // installServerToolStripMenuItem
             // 
+            this.installServerToolStripMenuItem.Image = global::SrcdsManager.Properties.Resources.download_icon;
             this.installServerToolStripMenuItem.Name = "installServerToolStripMenuItem";
-            this.installServerToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.installServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.installServerToolStripMenuItem.Text = "Install Server";
             this.installServerToolStripMenuItem.Click += new System.EventHandler(this.installServerToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
+            this.aboutToolStripMenuItem.Image = global::SrcdsManager.Properties.Resources.Kyo_Tux_Delikate_Info;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -396,7 +409,7 @@
             // 
             this.state.HeaderText = "";
             this.state.Image = global::SrcdsManager.Properties.Resources.offline;
-            this.state.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.state.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
             this.state.Name = "state";
             this.state.ReadOnly = true;
             this.state.Width = 35;
@@ -439,6 +452,48 @@
             this.dgPort.ReadOnly = true;
             this.dgPort.Width = 85;
             // 
+            // dataGridContext
+            // 
+            this.dataGridContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dgContextStart,
+            this.dgContextStop,
+            this.dgContextRestart,
+            this.dgContextUpdate});
+            this.dataGridContext.Name = "contextMenuStrip1";
+            this.dataGridContext.Size = new System.Drawing.Size(113, 92);
+            // 
+            // dgContextStart
+            // 
+            this.dgContextStart.Image = global::SrcdsManager.Properties.Resources.online;
+            this.dgContextStart.Name = "dgContextStart";
+            this.dgContextStart.Size = new System.Drawing.Size(112, 22);
+            this.dgContextStart.Text = "Start";
+            this.dgContextStart.Click += new System.EventHandler(this.dgContextStart_Click);
+            // 
+            // dgContextStop
+            // 
+            this.dgContextStop.Image = global::SrcdsManager.Properties.Resources.offline;
+            this.dgContextStop.Name = "dgContextStop";
+            this.dgContextStop.Size = new System.Drawing.Size(112, 22);
+            this.dgContextStop.Text = "Stop";
+            this.dgContextStop.Click += new System.EventHandler(this.dgContextStop_Click);
+            // 
+            // dgContextRestart
+            // 
+            this.dgContextRestart.Image = global::SrcdsManager.Properties.Resources.restart_icon_0016057b8f364cd6cbee64b83ac281de_Medium;
+            this.dgContextRestart.Name = "dgContextRestart";
+            this.dgContextRestart.Size = new System.Drawing.Size(112, 22);
+            this.dgContextRestart.Text = "Restart";
+            this.dgContextRestart.Click += new System.EventHandler(this.dgContextRestart_Click);
+            // 
+            // dgContextUpdate
+            // 
+            this.dgContextUpdate.Image = global::SrcdsManager.Properties.Resources.update_icon;
+            this.dgContextUpdate.Name = "dgContextUpdate";
+            this.dgContextUpdate.Size = new System.Drawing.Size(112, 22);
+            this.dgContextUpdate.Text = "Update";
+            this.dgContextUpdate.Click += new System.EventHandler(this.dgContextUpdate_Click);
+            // 
             // Manager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -479,6 +534,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ServerList)).EndInit();
+            this.dataGridContext.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -520,6 +576,11 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem installServerToolStripMenuItem;
         private System.Windows.Forms.DataGridView ServerList;
+        private System.Windows.Forms.ContextMenuStrip dataGridContext;
+        private System.Windows.Forms.ToolStripMenuItem dgContextStart;
+        private System.Windows.Forms.ToolStripMenuItem dgContextStop;
+        private System.Windows.Forms.ToolStripMenuItem dgContextRestart;
+        private System.Windows.Forms.ToolStripMenuItem dgContextUpdate;
         private System.Windows.Forms.DataGridViewImageColumn state;
         private System.Windows.Forms.DataGridViewTextBoxColumn ServerName;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgStatus;

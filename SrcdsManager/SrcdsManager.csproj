@@ -167,6 +167,30 @@
   <ItemGroup>
     <None Include="Resources\offline.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\steam.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\steam1.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\restart-icon_0016057b8f364cd6cbee64b83ac281de_Medium.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\update-icon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\download-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Kyo-Tux-Delikate-Info.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Visualpharm-Ios7-Settings.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Visualpharm-Ios7-Settings-2.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

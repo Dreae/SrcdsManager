@@ -40,6 +40,14 @@ namespace SrcdsManager
         }
         private void ServerList_Clicked(object sender, MouseEventArgs e)
         {
+            var hti = ServerList.HitTest(e.X, e.Y);
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                if (!(hti.Type == DataGridViewHitTestType.None))
+                {
+                    ServerList.Rows[hti.RowIndex].Selected = true;
+                }
+            }
             if (ServerList.SelectedRows.Count > 0 && ServerList.SelectedRows[0].Index >= 0 && ServerList.SelectedRows[0].Index < monArray.Count)
             {
                 parms.Text = monArray[ServerList.SelectedRows[0].Index].getCmd();
@@ -87,7 +95,24 @@ namespace SrcdsManager
                     status.ForeColor = Color.Red;
                 }
             }
-
+           if(e.Button == MouseButtons.Right && hti.Type != DataGridViewHitTestType.None)
+           {
+                if (monArray[hti.RowIndex].isRunning())
+                {
+                    dgContextStart.Enabled = false;
+                    dgContextStop.Enabled = true;
+                    dgContextRestart.Enabled = true;
+                    dgContextUpdate.Enabled = false;
+                }
+                else
+                {
+                    dgContextStart.Enabled = true;
+                    dgContextStop.Enabled = false;
+                    dgContextRestart.Enabled = false;
+                    dgContextUpdate.Enabled = true;
+                }
+                dataGridContext.Show(new Point(Cursor.Position.X, Cursor.Position.Y));
+           }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -303,24 +328,7 @@ namespace SrcdsManager
         {
             if (ServerList.SelectedRows.Count != 0)
             {
-                if (addr.Text != monArray[ServerList.SelectedRows[0].Index].getAddr() || port.Text != monArray[ServerList.SelectedRows[0].Index].getPort()
-                    || name.Text != monArray[ServerList.SelectedRows[0].Index].getName() || parms.Text != monArray[ServerList.SelectedRows[0].Index].getCmd()
-                    || executable.Text != monArray[ServerList.SelectedRows[0].Index].getExe())
-                {
-                    if (MessageBox.Show("Save changes to selected server?", "Server Modified", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                    {
-                        SaveServer();
-                    }
-                    else
-                    {
-                        addr.Text = monArray[ServerList.SelectedRows[0].Index].getAddr();
-                        port.Text = monArray[ServerList.SelectedRows[0].Index].getPort();
-                        name.Text = monArray[ServerList.SelectedRows[0].Index].getName();
-                        parms.Text = monArray[ServerList.SelectedRows[0].Index].getCmd();
-                        executable.Text = monArray[ServerList.SelectedRows[0].Index].getExe();
-                    }
-                }
-                monArray[ServerList.SelectedRows[0].Index].Start();
+                StartServer();
             }
         }
         private void stopButton_Click(object sender, EventArgs e)
@@ -334,10 +342,14 @@ namespace SrcdsManager
         {
             if (ServerList.SelectedRows.Count != 0)
             {
-                monArray[ServerList.SelectedRows[0].Index].Stop();
-                System.Threading.Thread.Sleep(100);
-                monArray[ServerList.SelectedRows[0].Index].Start();
+                RestartServer();
             }
+        }
+        private void RestartServer()
+        {
+            monArray[ServerList.SelectedRows[0].Index].Stop();
+            System.Threading.Thread.Sleep(100);
+            monArray[ServerList.SelectedRows[0].Index].Start();
         }
         private void newServ_Click(object sender, EventArgs e)
         {
@@ -443,9 +455,49 @@ namespace SrcdsManager
                 MessageBox.Show("You must select a server","Select a server");
                 return;
             }
+            UpdateServer();
+        }
+        public String getSteamCmd()
+        {
+            return steamCmd;
+        }
+        internal SrcdsMonitor getSelectedMon()
+        {
+            return monArray[ServerList.SelectedRows[0].Index];
+        }
+        public void ErrorBox(int id)
+        {
+            if (id == 1)
+            {
+                MessageBox.Show("The path to the server executable was invalid", "Server path Invalid");
+            }
+        }
+        private void StartServer()
+        {
+            if (addr.Text != monArray[ServerList.SelectedRows[0].Index].getAddr() || port.Text != monArray[ServerList.SelectedRows[0].Index].getPort()
+                    || name.Text != monArray[ServerList.SelectedRows[0].Index].getName() || parms.Text != monArray[ServerList.SelectedRows[0].Index].getCmd()
+                    || executable.Text != monArray[ServerList.SelectedRows[0].Index].getExe())
+            {
+                if (MessageBox.Show("Save changes to selected server?", "Server Modified", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    SaveServer();
+                }
+                else
+                {
+                    addr.Text = monArray[ServerList.SelectedRows[0].Index].getAddr();
+                    port.Text = monArray[ServerList.SelectedRows[0].Index].getPort();
+                    name.Text = monArray[ServerList.SelectedRows[0].Index].getName();
+                    parms.Text = monArray[ServerList.SelectedRows[0].Index].getCmd();
+                    executable.Text = monArray[ServerList.SelectedRows[0].Index].getExe();
+                }
+            }
+            monArray[ServerList.SelectedRows[0].Index].Start();
+        }
+        private void UpdateServer()
+        {
             if (monArray[ServerList.SelectedRows[0].Index].isRunning())
             {
-                MessageBox.Show("The selected server is running, you must stop it to update","Server is running");
+                MessageBox.Show("The selected server is running, you must stop it to update", "Server is running");
                 return;
             }
             string app_id = System.IO.File.ReadAllText(new System.IO.FileInfo(monArray[ServerList.SelectedRows[0].Index].getExe()).Directory.FullName + "/steam_appid.txt");
@@ -522,32 +574,33 @@ namespace SrcdsManager
                 }
             }
         }
-        public String getSteamCmd()
-        {
-            return steamCmd;
-        }
-        internal SrcdsMonitor getSelectedMon()
-        {
-            return monArray[ServerList.SelectedRows[0].Index];
-        }
-        public void ErrorBox(int id)
-        {
-            if (id == 1)
-            {
-                MessageBox.Show("The path to the server executable was invalid", "Server path Invalid");
-            }
-        }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             About about = new About();
             about.Show();
         }
-
         private void installServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InstallServer install = new InstallServer(this);
             install.Show();
+        }
+        private void dgContextStart_Click(object sender, EventArgs e)
+        {
+            StartServer();
+        }
+        private void dgContextUpdate_Click(object sender, EventArgs e)
+        {
+            UpdateServer();
+        }
+
+        private void dgContextRestart_Click(object sender, EventArgs e)
+        {
+            RestartServer();
+        }
+
+        private void dgContextStop_Click(object sender, EventArgs e)
+        {
+            monArray[ServerList.SelectedRows[0].Index].Stop();
         }
     }
 }
