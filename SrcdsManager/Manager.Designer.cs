@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ServerList = new System.Windows.Forms.ListBox();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.name = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -59,20 +59,20 @@
             this.steamCmdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.installServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.installServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ServerList = new System.Windows.Forms.DataGridView();
+            this.state = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ServerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgUptime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgCrashes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgIPAddr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgPort = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ServerList)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ServerList
-            // 
-            this.ServerList.FormattingEnabled = true;
-            this.ServerList.Location = new System.Drawing.Point(12, 44);
-            this.ServerList.Name = "ServerList";
-            this.ServerList.Size = new System.Drawing.Size(76, 238);
-            this.ServerList.TabIndex = 1;
-            this.ServerList.SelectedIndexChanged += new System.EventHandler(this.ServerList_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -85,15 +85,15 @@
             // 
             // name
             // 
-            this.name.Location = new System.Drawing.Point(183, 84);
+            this.name.Location = new System.Drawing.Point(106, 308);
             this.name.Name = "name";
             this.name.Size = new System.Drawing.Size(100, 20);
-            this.name.TabIndex = 3;
+            this.name.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(180, 68);
+            this.label2.Location = new System.Drawing.Point(105, 292);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 4;
@@ -101,15 +101,15 @@
             // 
             // parms
             // 
-            this.parms.Location = new System.Drawing.Point(94, 170);
+            this.parms.Location = new System.Drawing.Point(298, 309);
             this.parms.Name = "parms";
             this.parms.Size = new System.Drawing.Size(189, 20);
-            this.parms.TabIndex = 5;
+            this.parms.TabIndex = 4;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(91, 154);
+            this.label3.Location = new System.Drawing.Point(295, 293);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(45, 13);
             this.label3.TabIndex = 6;
@@ -118,7 +118,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(91, 193);
+            this.label4.Location = new System.Drawing.Point(295, 332);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 13);
             this.label4.TabIndex = 7;
@@ -126,14 +126,14 @@
             // 
             // executable
             // 
-            this.executable.Location = new System.Drawing.Point(94, 209);
+            this.executable.Location = new System.Drawing.Point(298, 348);
             this.executable.Name = "executable";
             this.executable.Size = new System.Drawing.Size(189, 20);
-            this.executable.TabIndex = 8;
+            this.executable.TabIndex = 5;
             // 
             // browseExe
             // 
-            this.browseExe.Location = new System.Drawing.Point(158, 235);
+            this.browseExe.Location = new System.Drawing.Point(298, 374);
             this.browseExe.Name = "browseExe";
             this.browseExe.Size = new System.Drawing.Size(60, 20);
             this.browseExe.TabIndex = 9;
@@ -143,7 +143,7 @@
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(223, 281);
+            this.startButton.Location = new System.Drawing.Point(557, 373);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(60, 23);
             this.startButton.TabIndex = 11;
@@ -153,7 +153,7 @@
             // 
             // stopButton
             // 
-            this.stopButton.Location = new System.Drawing.Point(158, 281);
+            this.stopButton.Location = new System.Drawing.Point(492, 373);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(60, 23);
             this.stopButton.TabIndex = 12;
@@ -163,7 +163,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(94, 281);
+            this.saveButton.Location = new System.Drawing.Point(106, 371);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(58, 23);
             this.saveButton.TabIndex = 13;
@@ -179,7 +179,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(94, 44);
+            this.label5.Location = new System.Drawing.Point(501, 315);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(40, 13);
             this.label5.TabIndex = 14;
@@ -189,7 +189,7 @@
             // 
             this.status.AutoSize = true;
             this.status.ForeColor = System.Drawing.Color.Chartreuse;
-            this.status.Location = new System.Drawing.Point(140, 44);
+            this.status.Location = new System.Drawing.Point(547, 315);
             this.status.Name = "status";
             this.status.Size = new System.Drawing.Size(47, 13);
             this.status.TabIndex = 15;
@@ -198,7 +198,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(94, 68);
+            this.label7.Location = new System.Drawing.Point(501, 331);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(51, 13);
             this.label7.TabIndex = 16;
@@ -207,7 +207,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(94, 91);
+            this.label6.Location = new System.Drawing.Point(501, 354);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(46, 13);
             this.label6.TabIndex = 17;
@@ -216,7 +216,7 @@
             // crashes
             // 
             this.crashes.AutoSize = true;
-            this.crashes.Location = new System.Drawing.Point(140, 68);
+            this.crashes.Location = new System.Drawing.Point(547, 331);
             this.crashes.Name = "crashes";
             this.crashes.Size = new System.Drawing.Size(13, 13);
             this.crashes.TabIndex = 18;
@@ -225,7 +225,7 @@
             // uptime
             // 
             this.uptime.AutoSize = true;
-            this.uptime.Location = new System.Drawing.Point(140, 91);
+            this.uptime.Location = new System.Drawing.Point(547, 354);
             this.uptime.Name = "uptime";
             this.uptime.Size = new System.Drawing.Size(31, 13);
             this.uptime.TabIndex = 19;
@@ -233,7 +233,7 @@
             // 
             // newServ
             // 
-            this.newServ.Location = new System.Drawing.Point(12, 288);
+            this.newServ.Location = new System.Drawing.Point(15, 288);
             this.newServ.Name = "newServ";
             this.newServ.Size = new System.Drawing.Size(75, 23);
             this.newServ.TabIndex = 20;
@@ -243,7 +243,7 @@
             // 
             // deleteServ
             // 
-            this.deleteServ.Location = new System.Drawing.Point(96, 252);
+            this.deleteServ.Location = new System.Drawing.Point(170, 371);
             this.deleteServ.Name = "deleteServ";
             this.deleteServ.Size = new System.Drawing.Size(56, 23);
             this.deleteServ.TabIndex = 21;
@@ -254,7 +254,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(93, 113);
+            this.label8.Location = new System.Drawing.Point(102, 331);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(61, 13);
             this.label8.TabIndex = 22;
@@ -262,15 +262,15 @@
             // 
             // addr
             // 
-            this.addr.Location = new System.Drawing.Point(97, 129);
+            this.addr.Location = new System.Drawing.Point(106, 347);
             this.addr.Name = "addr";
             this.addr.Size = new System.Drawing.Size(90, 20);
-            this.addr.TabIndex = 23;
+            this.addr.TabIndex = 2;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(183, 113);
+            this.label9.Location = new System.Drawing.Point(192, 331);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(29, 13);
             this.label9.TabIndex = 24;
@@ -278,14 +278,14 @@
             // 
             // port
             // 
-            this.port.Location = new System.Drawing.Point(193, 129);
+            this.port.Location = new System.Drawing.Point(202, 347);
             this.port.Name = "port";
             this.port.Size = new System.Drawing.Size(90, 20);
-            this.port.TabIndex = 25;
+            this.port.TabIndex = 3;
             // 
             // restart
             // 
-            this.restart.Location = new System.Drawing.Point(223, 252);
+            this.restart.Location = new System.Drawing.Point(428, 373);
             this.restart.Name = "restart";
             this.restart.Size = new System.Drawing.Size(59, 23);
             this.restart.TabIndex = 26;
@@ -301,7 +301,7 @@
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(295, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(625, 24);
             this.menuStrip1.TabIndex = 27;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -332,9 +332,16 @@
             // updateServerToolStripMenuItem
             // 
             this.updateServerToolStripMenuItem.Name = "updateServerToolStripMenuItem";
-            this.updateServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.updateServerToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.updateServerToolStripMenuItem.Text = "Update Server";
             this.updateServerToolStripMenuItem.Click += new System.EventHandler(this.updateServerToolStripMenuItem_Click);
+            // 
+            // installServerToolStripMenuItem
+            // 
+            this.installServerToolStripMenuItem.Name = "installServerToolStripMenuItem";
+            this.installServerToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.installServerToolStripMenuItem.Text = "Install Server";
+            this.installServerToolStripMenuItem.Click += new System.EventHandler(this.installServerToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -348,18 +355,96 @@
             this.openFileDialog2.FileName = "steamCmdDialog";
             this.openFileDialog2.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog2_FileOk);
             // 
-            // installServerToolStripMenuItem
+            // ServerList
             // 
-            this.installServerToolStripMenuItem.Name = "installServerToolStripMenuItem";
-            this.installServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.installServerToolStripMenuItem.Text = "Install Server";
-            this.installServerToolStripMenuItem.Click += new System.EventHandler(this.installServerToolStripMenuItem_Click);
+            this.ServerList.AllowUserToAddRows = false;
+            this.ServerList.AllowUserToDeleteRows = false;
+            this.ServerList.AllowUserToResizeColumns = false;
+            this.ServerList.AllowUserToResizeRows = false;
+            this.ServerList.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.ServerList.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.ServerList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ServerList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.state,
+            this.ServerName,
+            this.dgStatus,
+            this.dgUptime,
+            this.dgCrashes,
+            this.dgIPAddr,
+            this.dgPort});
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ServerList.DefaultCellStyle = dataGridViewCellStyle1;
+            this.ServerList.EnableHeadersVisualStyles = false;
+            this.ServerList.Location = new System.Drawing.Point(12, 51);
+            this.ServerList.MultiSelect = false;
+            this.ServerList.Name = "ServerList";
+            this.ServerList.ReadOnly = true;
+            this.ServerList.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.ServerList.RowHeadersVisible = false;
+            this.ServerList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.ServerList.Size = new System.Drawing.Size(601, 231);
+            this.ServerList.TabIndex = 28;
+            this.ServerList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ServerList_Clicked);
+            // 
+            // state
+            // 
+            this.state.HeaderText = "";
+            this.state.Image = global::SrcdsManager.Properties.Resources.offline;
+            this.state.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.state.Name = "state";
+            this.state.ReadOnly = true;
+            this.state.Width = 35;
+            // 
+            // ServerName
+            // 
+            this.ServerName.HeaderText = "Server Name";
+            this.ServerName.Name = "ServerName";
+            this.ServerName.ReadOnly = true;
+            // 
+            // dgStatus
+            // 
+            this.dgStatus.HeaderText = "Status";
+            this.dgStatus.Name = "dgStatus";
+            this.dgStatus.ReadOnly = true;
+            this.dgStatus.Width = 75;
+            // 
+            // dgUptime
+            // 
+            this.dgUptime.HeaderText = "Uptime";
+            this.dgUptime.Name = "dgUptime";
+            this.dgUptime.ReadOnly = true;
+            // 
+            // dgCrashes
+            // 
+            this.dgCrashes.HeaderText = "Crashes";
+            this.dgCrashes.Name = "dgCrashes";
+            this.dgCrashes.ReadOnly = true;
+            // 
+            // dgIPAddr
+            // 
+            this.dgIPAddr.HeaderText = "IP Address";
+            this.dgIPAddr.Name = "dgIPAddr";
+            this.dgIPAddr.ReadOnly = true;
+            // 
+            // dgPort
+            // 
+            this.dgPort.HeaderText = "Port";
+            this.dgPort.Name = "dgPort";
+            this.dgPort.ReadOnly = true;
+            this.dgPort.Width = 85;
             // 
             // Manager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(295, 323);
+            this.ClientSize = new System.Drawing.Size(625, 407);
+            this.Controls.Add(this.ServerList);
             this.Controls.Add(this.restart);
             this.Controls.Add(this.port);
             this.Controls.Add(this.label9);
@@ -384,7 +469,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.name);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.ServerList);
             this.Controls.Add(this.menuStrip1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -394,6 +478,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ServerList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -401,7 +486,6 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox ServerList;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox name;
         private System.Windows.Forms.Label label2;
@@ -435,6 +519,14 @@
         private System.Windows.Forms.ToolStripMenuItem updateServerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem installServerToolStripMenuItem;
+        private System.Windows.Forms.DataGridView ServerList;
+        private System.Windows.Forms.DataGridViewImageColumn state;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ServerName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgUptime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgCrashes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgIPAddr;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgPort;
 
     }
 }

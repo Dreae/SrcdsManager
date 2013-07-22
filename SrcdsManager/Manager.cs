@@ -38,19 +38,19 @@ namespace SrcdsManager
                 }
             }
         }
-        private void ServerList_SelectedIndexChanged(object sender, EventArgs e)
+        private void ServerList_Clicked(object sender, MouseEventArgs e)
         {
-            if (ServerList.SelectedIndex >= 0 && ServerList.SelectedIndex < monArray.Count)
+            if (ServerList.SelectedRows[0].Index >= 0 && ServerList.SelectedRows[0].Index < monArray.Count)
             {
-                parms.Text = monArray[ServerList.SelectedIndex].getCmd();
-                executable.Text = monArray[ServerList.SelectedIndex].getExe();
-                name.Text = monArray[ServerList.SelectedIndex].getName();
-                crashes.Text = monArray[ServerList.SelectedIndex].getCrashes();
-                uptime.Text = monArray[ServerList.SelectedIndex].getUptime();
-                addr.Text = monArray[ServerList.SelectedIndex].getAddr();
-                port.Text = monArray[ServerList.SelectedIndex].getPort();
+                parms.Text = monArray[ServerList.SelectedRows[0].Index].getCmd();
+                executable.Text = monArray[ServerList.SelectedRows[0].Index].getExe();
+                name.Text = monArray[ServerList.SelectedRows[0].Index].getName();
+                crashes.Text = monArray[ServerList.SelectedRows[0].Index].getCrashes();
+                uptime.Text = monArray[ServerList.SelectedRows[0].Index].getUptime();
+                addr.Text = monArray[ServerList.SelectedRows[0].Index].getAddr();
+                port.Text = monArray[ServerList.SelectedRows[0].Index].getPort();
 
-                if (monArray[ServerList.SelectedIndex].isRunning())
+                if (monArray[ServerList.SelectedRows[0].Index].isRunning())
                 {
                     name.ReadOnly = true;
                     executable.ReadOnly = true;
@@ -102,7 +102,7 @@ namespace SrcdsManager
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            if (ServerList.SelectedItems.Count != 0)
+            if (ServerList.SelectedRows.Count != 0)
             {
                 SaveServer();
             }
@@ -156,7 +156,11 @@ namespace SrcdsManager
 
                     monArray.Add(mon);
 
-                    ServerList.Items.Add(mon.getName());
+                    ServerList.Rows.Add();
+                    ServerList.Rows[ServerList.Rows.Count - 1].Cells[0].Value = SrcdsManager.Properties.Resources.offline;
+                    ServerList.Rows[ServerList.Rows.Count - 1].Cells[1].Value = sName;
+                    ServerList.Rows[ServerList.Rows.Count - 1].Cells[5].Value = sAddr;
+                    ServerList.Rows[ServerList.Rows.Count - 1].Cells[6].Value = sPort;
                 }
             }
             using (XmlReader reader = new XmlTextReader("settings.xml"))
@@ -177,14 +181,14 @@ namespace SrcdsManager
         }
         private void sUpdateStatus(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (ServerList.SelectedItems.Count != 0)
+            if (ServerList.SelectedRows.Count != 0)
             {
                 try
                 {
-                    crashes.Text = monArray[ServerList.SelectedIndex].getCrashes();
-                    uptime.Text = monArray[ServerList.SelectedIndex].getUptime();
+                    crashes.Text = monArray[ServerList.SelectedRows[0].Index].getCrashes();
+                    uptime.Text = monArray[ServerList.SelectedRows[0].Index].getUptime();
 
-                    if (monArray[ServerList.SelectedIndex].isRunning())
+                    if (monArray[ServerList.SelectedRows[0].Index].isRunning())
                     {
                         name.ReadOnly = true;
                         executable.ReadOnly = true;
@@ -229,14 +233,79 @@ namespace SrcdsManager
                     }
                 }
             }
+            try
+            {
+                foreach (DataGridViewRow row in ServerList.Rows)
+                {
+                    foreach (DataGridViewCell cell in row.Cells)
+                    {
+                        switch (cell.ColumnIndex)
+                        {
+                            case 0:
+                                if (monArray[row.Index].isRunning())
+                                {
+                                    if (cell.Value != SrcdsManager.Properties.Resources.online)
+                                    {
+                                        cell.Value = SrcdsManager.Properties.Resources.online;
+                                    }
+                                }
+                                else if(cell.Value != SrcdsManager.Properties.Resources.offline)
+                                {
+                                    cell.Value = SrcdsManager.Properties.Resources.offline;
+                                }
+                                break;
+                            case 1:
+                                cell.Value = monArray[row.Index].getName();
+                                break;
+                            case 2:
+                                if (monArray[row.Index].isRunning())
+                                {
+                                    cell.Value = "Online";
+                                    cell.Style.ForeColor = Color.Green;
+                                    cell.Style.SelectionForeColor = Color.Green;
+                                }
+                                else
+                                {
+                                    cell.Value = "Offline";
+                                    cell.Style.ForeColor = Color.Red;
+                                    cell.Style.SelectionForeColor = Color.Red;
+                                }
+                                break;
+                            case 3:
+                                cell.Value = monArray[row.Index].getUptime();
+                                break;
+                            case 4:
+                                cell.Value = monArray[row.Index].getCrashes();
+                                break;
+                            case 5:
+                                cell.Value = monArray[row.Index].getAddr();
+                                break;
+                            case 6:
+                                cell.Value = monArray[row.Index].getPort();
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetType() == typeof(ObjectDisposedException))
+                {
+                    ((System.Timers.Timer)sender).Dispose();
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
         }
         private void startButton_Click(object sender, EventArgs e)
         {
-            if (ServerList.SelectedItems.Count != 0)
+            if (ServerList.SelectedRows.Count != 0)
             {
-                if (addr.Text != monArray[ServerList.SelectedIndex].getAddr() || port.Text != monArray[ServerList.SelectedIndex].getPort()
-                    || name.Text != monArray[ServerList.SelectedIndex].getName() || parms.Text != monArray[ServerList.SelectedIndex].getCmd()
-                    || executable.Text != monArray[ServerList.SelectedIndex].getExe())
+                if (addr.Text != monArray[ServerList.SelectedRows[0].Index].getAddr() || port.Text != monArray[ServerList.SelectedRows[0].Index].getPort()
+                    || name.Text != monArray[ServerList.SelectedRows[0].Index].getName() || parms.Text != monArray[ServerList.SelectedRows[0].Index].getCmd()
+                    || executable.Text != monArray[ServerList.SelectedRows[0].Index].getExe())
                 {
                     if (MessageBox.Show("Save changes to selected server?", "Server Modified", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
@@ -244,30 +313,30 @@ namespace SrcdsManager
                     }
                     else
                     {
-                        addr.Text = monArray[ServerList.SelectedIndex].getAddr();
-                        port.Text = monArray[ServerList.SelectedIndex].getPort();
-                        name.Text = monArray[ServerList.SelectedIndex].getName();
-                        parms.Text = monArray[ServerList.SelectedIndex].getCmd();
-                        executable.Text = monArray[ServerList.SelectedIndex].getExe();
+                        addr.Text = monArray[ServerList.SelectedRows[0].Index].getAddr();
+                        port.Text = monArray[ServerList.SelectedRows[0].Index].getPort();
+                        name.Text = monArray[ServerList.SelectedRows[0].Index].getName();
+                        parms.Text = monArray[ServerList.SelectedRows[0].Index].getCmd();
+                        executable.Text = monArray[ServerList.SelectedRows[0].Index].getExe();
                     }
                 }
-                monArray[ServerList.SelectedIndex].Start();
+                monArray[ServerList.SelectedRows[0].Index].Start();
             }
         }
         private void stopButton_Click(object sender, EventArgs e)
         {
-            if (ServerList.SelectedItems.Count != 0)
+            if (ServerList.SelectedRows.Count != 0)
             {
-                monArray[ServerList.SelectedIndex].Stop();
+                monArray[ServerList.SelectedRows[0].Index].Stop();
             }
         }
         private void restart_Click(object sender, EventArgs e)
         {
-            if (ServerList.SelectedItems.Count != 0)
+            if (ServerList.SelectedRows.Count != 0)
             {
-                monArray[ServerList.SelectedIndex].Stop();
+                monArray[ServerList.SelectedRows[0].Index].Stop();
                 System.Threading.Thread.Sleep(100);
-                monArray[ServerList.SelectedIndex].Start();
+                monArray[ServerList.SelectedRows[0].Index].Start();
             }
         }
         private void newServ_Click(object sender, EventArgs e)
@@ -280,7 +349,7 @@ namespace SrcdsManager
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load("servers.xml");
             XmlNode root = xmlDoc.DocumentElement;
-            XmlNode serv = root.SelectSingleNode(String.Format("descendant::server[@id='{0}']", monArray[ServerList.SelectedIndex].getId()));
+            XmlNode serv = root.SelectSingleNode(String.Format("descendant::server[@id='{0}']", monArray[ServerList.SelectedRows[0].Index].getId()));
             ((XmlElement)serv).SetAttribute("name", name.Text);
             ((XmlElement)serv).SetAttribute("address", addr.Text);
             ((XmlElement)serv).SetAttribute("port", port.Text);
@@ -301,34 +370,34 @@ namespace SrcdsManager
                 return;
             }
 
-            monArray[ServerList.SelectedIndex].setCmd(parms.Text);
-            monArray[ServerList.SelectedIndex].setExe(executable.Text);
-            monArray[ServerList.SelectedIndex].setName(name.Text);
-            monArray[ServerList.SelectedIndex].setIPAddr(addr.Text);
-            monArray[ServerList.SelectedIndex].setPort(port.Text);
+            monArray[ServerList.SelectedRows[0].Index].setCmd(parms.Text);
+            monArray[ServerList.SelectedRows[0].Index].setExe(executable.Text);
+            monArray[ServerList.SelectedRows[0].Index].setName(name.Text);
+            monArray[ServerList.SelectedRows[0].Index].setIPAddr(addr.Text);
+            monArray[ServerList.SelectedRows[0].Index].setPort(port.Text);
         }
         internal void addMonitor(SrcdsMonitor mon)
         {
             monArray.Add(mon);
-            ServerList.Items.Add(mon.getName());
+            ServerList.Rows.Add(mon.getName());
         }
 
         private void deleteServ_Click(object sender, EventArgs e)
         {
-            if (ServerList.SelectedItems.Count != 0)
+            if (ServerList.SelectedRows.Count != 0)
             {
                 if (MessageBox.Show("Are you sure you want to delete this server", "Delete server", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     XmlDocument xmlDoc = new XmlDocument();
                     xmlDoc.Load("servers.xml");
                     XmlNode root = xmlDoc.DocumentElement;
-                    XmlNode serv = root.SelectSingleNode(String.Format("descendant::server[@id='{0}']", monArray[ServerList.SelectedIndex].getId()));
+                    XmlNode serv = root.SelectSingleNode(String.Format("descendant::server[@id='{0}']", monArray[ServerList.SelectedRows[0].Index].getId()));
                     root.RemoveChild(serv);
                     xmlDoc.Save("servers.xml");
 
-                    monArray[ServerList.SelectedIndex].Dispose();
-                    monArray.Remove(monArray[ServerList.SelectedIndex]);
-                    ServerList.Items.RemoveAt(ServerList.SelectedIndex);
+                    monArray[ServerList.SelectedRows[0].Index].Dispose();
+                    monArray.Remove(monArray[ServerList.SelectedRows[0].Index]);
+                    ServerList.Rows.RemoveAt(ServerList.SelectedRows[0].Index);
                 }
             }
         }
@@ -365,17 +434,17 @@ namespace SrcdsManager
 
         private void updateServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (ServerList.SelectedItems.Count == 0)
+            if (ServerList.SelectedRows.Count == 0)
             {
                 MessageBox.Show("You must select a server","Select a server");
                 return;
             }
-            if (monArray[ServerList.SelectedIndex].isRunning())
+            if (monArray[ServerList.SelectedRows[0].Index].isRunning())
             {
                 MessageBox.Show("The selected server is running, you must stop it to update","Server is running");
                 return;
             }
-            string app_id = System.IO.File.ReadAllText(new System.IO.FileInfo(monArray[ServerList.SelectedIndex].getExe()).Directory.FullName + "/steam_appid.txt");
+            string app_id = System.IO.File.ReadAllText(new System.IO.FileInfo(monArray[ServerList.SelectedRows[0].Index].getExe()).Directory.FullName + "/steam_appid.txt");
             int id = 0;
             if (!int.TryParse(app_id, out id))
             {
@@ -429,7 +498,7 @@ namespace SrcdsManager
             System.Diagnostics.ProcessStartInfo startinfo = new System.Diagnostics.ProcessStartInfo();
             startinfo.FileName = steamCmd;
             startinfo.Arguments = String.Format("+login anonymous +force_install_dir {0} +app_update {1} validate +quit",
-                new System.IO.FileInfo(monArray[ServerList.SelectedIndex].getExe()).Directory.FullName, app);
+                new System.IO.FileInfo(monArray[ServerList.SelectedRows[0].Index].getExe()).Directory.FullName, app);
             System.Diagnostics.Process proc = new System.Diagnostics.Process();
             proc.StartInfo = startinfo;
             try
@@ -455,7 +524,7 @@ namespace SrcdsManager
         }
         internal SrcdsMonitor getSelectedMon()
         {
-            return monArray[ServerList.SelectedIndex];
+            return monArray[ServerList.SelectedRows[0].Index];
         }
         public void ErrorBox(int id)
         {
