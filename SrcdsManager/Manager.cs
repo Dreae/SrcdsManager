@@ -40,7 +40,7 @@ namespace SrcdsManager
         }
         private void ServerList_Clicked(object sender, MouseEventArgs e)
         {
-            if (ServerList.SelectedRows[0].Index >= 0 && ServerList.SelectedRows[0].Index < monArray.Count)
+            if (ServerList.SelectedRows.Count > 0 && ServerList.SelectedRows[0].Index >= 0 && ServerList.SelectedRows[0].Index < monArray.Count)
             {
                 parms.Text = monArray[ServerList.SelectedRows[0].Index].getCmd();
                 executable.Text = monArray[ServerList.SelectedRows[0].Index].getExe();
