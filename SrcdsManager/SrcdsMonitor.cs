@@ -16,6 +16,7 @@ namespace SrcdsManager
         private int port;
         private Manager caller;
 
+        public SrcdsStatus Status = SrcdsStatus.Offline;
         private bool running = false;
         private bool cleanExit = true;
 
@@ -69,11 +70,12 @@ namespace SrcdsManager
                 }
             }
 
-            WaitForExit oWait = new WaitForExit(proc, this);
+            WaitForExit oWait = new WaitForExit(proc, this, 0);
             Thread oThread = new Thread(new ThreadStart(oWait.Waiting));
             oThread.Start();
 
             running = true;
+            this.Status = SrcdsStatus.Online;
             cleanExit = false;
 
             startTime = DateTime.Now;
@@ -100,11 +102,12 @@ namespace SrcdsManager
                 }
             }
 
-            WaitForExit oWait = new WaitForExit(proc, this);
+            WaitForExit oWait = new WaitForExit(proc, this, 0);
             Thread oThread = new Thread(new ThreadStart(oWait.Waiting));
             oThread.Start();
 
             startTime = DateTime.Now;
+            this.Status = SrcdsStatus.Online;
         }
         public void Stop()
         {
@@ -113,6 +116,7 @@ namespace SrcdsManager
             proc.Kill();
 
             running = false;
+            this.Status = SrcdsStatus.Offline;
         }
         public void Exited()
         {
@@ -120,6 +124,28 @@ namespace SrcdsManager
             {
                 Crashed();
             }
+        }
+        public void WaitForUpdate(Process proc)
+        {
+            this.Status = SrcdsStatus.Updating;
+            WaitForExit oWait = new WaitForExit(proc, this, 1);
+            Thread wThread = new Thread(new ThreadStart(oWait.Waiting));
+            wThread.Start();
+        }
+        public void DoneUpdating()
+        {
+            this.Status = SrcdsStatus.Offline;
+        }
+        public void WaitForInstall(Process proc)
+        {
+            this.Status = SrcdsStatus.Installing;
+            WaitForExit oWait = new WaitForExit(proc, this, 2);
+            Thread wThread = new Thread(new ThreadStart(oWait.Waiting));
+            wThread.Start();
+        }
+        public void DoneInstalling()
+        {
+            this.Status = SrcdsStatus.Offline;
         }
 
         public String getCmd()
@@ -206,16 +232,29 @@ namespace SrcdsManager
     {
         private Process proc;
         private SrcdsMonitor caller;
+        private int procType;
 
-        public WaitForExit(Process proc, object caller)
+        public WaitForExit(Process proc, object caller, int procType)
         {
             this.proc = proc;
             this.caller = (SrcdsMonitor)caller;
+            this.procType = procType;
         }
         public void Waiting()
         {
             proc.WaitForExit();
-            caller.Exited();
+            switch (procType)
+            {
+                case 0:
+                    caller.Exited();
+                    break;
+                case 1:
+                    caller.DoneUpdating();
+                    break;
+                case 2:
+                    caller.DoneInstalling();
+                    break;
+            }
         }
     }
 
@@ -270,6 +309,7 @@ namespace SrcdsManager
                 if (ex.SocketErrorCode == SocketError.TimedOut)
                 {
                     timeouts++;
+                    caller.Status = SrcdsStatus.NoReply;
                     pingTimer.Enabled = false;
                     pingTimer.Stop();
 
@@ -312,6 +352,7 @@ namespace SrcdsManager
                 }
                 return;
             }
+            caller.Status = SrcdsStatus.Online;
             timer.Enabled = false;
             timer.Stop();
             timer.Dispose();

@@ -12,6 +12,14 @@ using System.Windows.Forms;
 
 namespace SrcdsManager
 {
+    enum SrcdsStatus
+    {
+        NoReply,
+        Updating,
+        Installing,
+        Online,
+        Offline
+    }
     public partial class Manager : Form
     {
 
@@ -57,42 +65,86 @@ namespace SrcdsManager
                 addr.Text = monArray[ServerList.SelectedRows[0].Index].getAddr();
                 port.Text = monArray[ServerList.SelectedRows[0].Index].getPort();
 
-                if (monArray[ServerList.SelectedRows[0].Index].isRunning())
+                    
+                switch (monArray[ServerList.SelectedRows[0].Index].Status)
                 {
-                    name.ReadOnly = true;
-                    executable.ReadOnly = true;
-                    parms.ReadOnly = true;
-                    addr.ReadOnly = true;
-                    port.ReadOnly = true;
-
-                    browseExe.Enabled = false;
-                    startButton.Enabled = false;
-                    saveButton.Enabled = false;
-                    stopButton.Enabled = true;
-                    deleteServ.Enabled = false;
-                    restart.Enabled = true;
-
-                    status.Text = "Running";
-                    status.ForeColor = Color.Chartreuse;
+                    case SrcdsStatus.Online:
+                        status.Text = "Running";
+                        status.ForeColor = Color.Green;
+                        name.ReadOnly = true;
+                        executable.ReadOnly = true;
+                        parms.ReadOnly = true;
+                        addr.ReadOnly = true;
+                        port.ReadOnly = true;
+                        browseExe.Enabled = false;
+                        startButton.Enabled = false;
+                        saveButton.Enabled = false;
+                        stopButton.Enabled = true;
+                        deleteServ.Enabled = false;
+                        restart.Enabled = true;
+                        break;
+                    case SrcdsStatus.Offline:
+                        status.Text = "Offline";
+                        status.ForeColor = Color.Red;
+                        name.ReadOnly = false;
+                        executable.ReadOnly = false;
+                        parms.ReadOnly = false;
+                        port.ReadOnly = false;
+                        addr.ReadOnly = false;
+                        browseExe.Enabled = true;
+                        startButton.Enabled = true;
+                        saveButton.Enabled = true;
+                        stopButton.Enabled = false;
+                        deleteServ.Enabled = true;
+                        restart.Enabled = false;
+                        break;
+                    case SrcdsStatus.NoReply:
+                        status.Text = "No Reply";
+                        status.ForeColor = Color.Red;
+                        name.ReadOnly = true;
+                        executable.ReadOnly = true;
+                        parms.ReadOnly = true;
+                        addr.ReadOnly = true;
+                        port.ReadOnly = true;
+                        browseExe.Enabled = false;
+                        startButton.Enabled = false;
+                        saveButton.Enabled = false;
+                        stopButton.Enabled = true;
+                        deleteServ.Enabled = false;
+                        restart.Enabled = true;
+                        break;
+                    case SrcdsStatus.Updating:
+                        status.Text = "Updating";
+                        status.ForeColor = Color.Blue;
+                        name.ReadOnly = false;
+                        executable.ReadOnly = false;
+                        parms.ReadOnly = false;
+                        port.ReadOnly = false;
+                        addr.ReadOnly = false;
+                        browseExe.Enabled = true;
+                        startButton.Enabled = false;
+                        saveButton.Enabled = true;
+                        stopButton.Enabled = false;
+                        deleteServ.Enabled = false;
+                        restart.Enabled = false;
+                        break;
+                    case SrcdsStatus.Installing:
+                        status.Text = "Installing";
+                        status.ForeColor = Color.Blue;
+                        name.ReadOnly = false;
+                        executable.ReadOnly = false;
+                        parms.ReadOnly = false;
+                        port.ReadOnly = false;
+                        addr.ReadOnly = false;
+                        browseExe.Enabled = true;
+                        startButton.Enabled = false;
+                        saveButton.Enabled = true;
+                        stopButton.Enabled = false;
+                        deleteServ.Enabled = false;
+                        restart.Enabled = false;
+                        break;
                 }
-                else
-                {
-                    name.ReadOnly = false;
-                    executable.ReadOnly = false;
-                    parms.ReadOnly = false;
-                    port.ReadOnly = false;
-                    addr.ReadOnly = false;
 
-                    browseExe.Enabled = true;
-                    startButton.Enabled = true;
-                    saveButton.Enabled = true;
-                    stopButton.Enabled = false;
-                    deleteServ.Enabled = true;
-                    restart.Enabled = false;
-
-                    status.Text = "Offline";
-                    status.ForeColor = Color.Red;
-                }
             }
         }
         private void ServerList_Clicked(object sender, MouseEventArgs e)
@@ -104,19 +156,38 @@ namespace SrcdsManager
                 if (hti.Type != DataGridViewHitTestType.None)
                 {
                     ServerList.Rows[hti.RowIndex].Selected = true;
-                    if (monArray[hti.RowIndex].isRunning())
+                    switch(monArray[hti.RowIndex].Status)
                     {
-                        dgContextStart.Enabled = false;
-                        dgContextStop.Enabled = true;
-                        dgContextRestart.Enabled = true;
-                        dgContextUpdate.Enabled = false;
-                    }
-                    else
-                    {
-                        dgContextStart.Enabled = true;
-                        dgContextStop.Enabled = false;
-                        dgContextRestart.Enabled = false;
-                        dgContextUpdate.Enabled = true;
+                        case SrcdsStatus.Online:
+                            dgContextStart.Enabled = false;
+                            dgContextStop.Enabled = true;
+                            dgContextRestart.Enabled = true;
+                            dgContextUpdate.Enabled = false;
+                            break;
+                        case SrcdsStatus.Offline:
+                            dgContextStart.Enabled = true;
+                            dgContextStop.Enabled = false;
+                            dgContextRestart.Enabled = false;
+                            dgContextUpdate.Enabled = true;
+                            break;
+                        case SrcdsStatus.Updating:
+                            dgContextStart.Enabled = false;
+                            dgContextStop.Enabled = false;
+                            dgContextRestart.Enabled = false;
+                            dgContextUpdate.Enabled = false;
+                            break;
+                        case SrcdsStatus.Installing:
+                            dgContextStart.Enabled = false;
+                            dgContextStop.Enabled = false;
+                            dgContextRestart.Enabled = false;
+                            dgContextUpdate.Enabled = false;
+                            break;
+                        case SrcdsStatus.NoReply:
+                            dgContextStart.Enabled = false;
+                            dgContextStop.Enabled = true;
+                            dgContextRestart.Enabled = true;
+                            dgContextUpdate.Enabled = false;
+                            break;
                     }
                     dataGridContext.Show(new Point(Cursor.Position.X, Cursor.Position.Y));
                 }
@@ -221,41 +292,83 @@ namespace SrcdsManager
                     crashes.Text = monArray[ServerList.SelectedRows[0].Index].getCrashes();
                     uptime.Text = monArray[ServerList.SelectedRows[0].Index].getUptime();
 
-                    if (monArray[ServerList.SelectedRows[0].Index].isRunning())
+                    switch (monArray[ServerList.SelectedRows[0].Index].Status)
                     {
-                        name.ReadOnly = true;
-                        executable.ReadOnly = true;
-                        parms.ReadOnly = true;
-                        port.ReadOnly = true;
-                        addr.ReadOnly = true;
-
-                        browseExe.Enabled = false;
-                        startButton.Enabled = false;
-                        saveButton.Enabled = false;
-                        stopButton.Enabled = true;
-                        deleteServ.Enabled = false;
-                        restart.Enabled = true;
-
-                        status.Text = "Running";
-                        status.ForeColor = Color.Chartreuse;
-                    }
-                    else
-                    {
-                        name.ReadOnly = false;
-                        executable.ReadOnly = false;
-                        parms.ReadOnly = false;
-                        addr.ReadOnly = false;
-                        port.ReadOnly = false;
-
-                        browseExe.Enabled = true;
-                        startButton.Enabled = true;
-                        saveButton.Enabled = true;
-                        stopButton.Enabled = false;
-                        deleteServ.Enabled = true;
-                        restart.Enabled = false;
-
-                        status.Text = "Offline";
-                        status.ForeColor = Color.Red;
+                        case SrcdsStatus.Online:
+                            status.Text = "Running";
+                            status.ForeColor = Color.Green;
+                            name.ReadOnly = true;
+                            executable.ReadOnly = true;
+                            parms.ReadOnly = true;
+                            addr.ReadOnly = true;
+                            port.ReadOnly = true;
+                            browseExe.Enabled = false;
+                            startButton.Enabled = false;
+                            saveButton.Enabled = false;
+                            stopButton.Enabled = true;
+                            deleteServ.Enabled = false;
+                            restart.Enabled = true;
+                            break;
+                        case SrcdsStatus.Offline:
+                            status.Text = "Offline";
+                            status.ForeColor = Color.Red;
+                            name.ReadOnly = false;
+                            executable.ReadOnly = false;
+                            parms.ReadOnly = false;
+                            port.ReadOnly = false;
+                            addr.ReadOnly = false;
+                            browseExe.Enabled = true;
+                            startButton.Enabled = true;
+                            saveButton.Enabled = true;
+                            stopButton.Enabled = false;
+                            deleteServ.Enabled = true;
+                            restart.Enabled = false;
+                            break;
+                        case SrcdsStatus.NoReply:
+                            status.Text = "No Reply";
+                            status.ForeColor = Color.Red;
+                            name.ReadOnly = true;
+                            executable.ReadOnly = true;
+                            parms.ReadOnly = true;
+                            addr.ReadOnly = true;
+                            port.ReadOnly = true;
+                            browseExe.Enabled = false;
+                            startButton.Enabled = false;
+                            saveButton.Enabled = false;
+                            stopButton.Enabled = true;
+                            deleteServ.Enabled = false;
+                            restart.Enabled = true;
+                            break;
+                        case SrcdsStatus.Updating:
+                            status.Text = "Updating";
+                            status.ForeColor = Color.Blue;
+                            name.ReadOnly = false;
+                            executable.ReadOnly = false;
+                            parms.ReadOnly = false;
+                            port.ReadOnly = false;
+                            addr.ReadOnly = false;
+                            browseExe.Enabled = true;
+                            startButton.Enabled = false;
+                            saveButton.Enabled = true;
+                            stopButton.Enabled = false;
+                            deleteServ.Enabled = false;
+                            restart.Enabled = false;
+                            break;
+                        case SrcdsStatus.Installing:
+                            status.Text = "Installing";
+                            status.ForeColor = Color.Blue;
+                            name.ReadOnly = false;
+                            executable.ReadOnly = false;
+                            parms.ReadOnly = false;
+                            port.ReadOnly = false;
+                            addr.ReadOnly = false;
+                            browseExe.Enabled = true;
+                            startButton.Enabled = false;
+                            saveButton.Enabled = true;
+                            stopButton.Enabled = false;
+                            deleteServ.Enabled = false;
+                            restart.Enabled = false;
+                            break;
                     }
                 }
                 catch (Exception ex)
@@ -278,17 +391,33 @@ namespace SrcdsManager
                                 cell.Value = monArray[row.Index].getName();
                                 break;
                             case 2:
-                                if (monArray[row.Index].isRunning())
+                                switch(monArray[row.Index].Status)
                                 {
-                                    cell.Value = "Online";
-                                    cell.Style.ForeColor = Color.Green;
-                                    cell.Style.SelectionForeColor = Color.Green;
-                                }
-                                else
-                                {
-                                    cell.Value = "Offline";
-                                    cell.Style.ForeColor = Color.Red;
-                                    cell.Style.SelectionForeColor = Color.Red;
+                                    case SrcdsStatus.Online:
+                                        cell.Value = "Online";
+                                        cell.Style.ForeColor = Color.Green;
+                                        cell.Style.SelectionForeColor = Color.Green;
+                                        break;
+                                    case SrcdsStatus.Offline:
+                                        cell.Value = "Offline";
+                                        cell.Style.ForeColor = Color.Red;
+                                        cell.Style.SelectionForeColor = Color.Red;
+                                        break;
+                                    case SrcdsStatus.NoReply:
+                                        cell.Value = "No Reply";
+                                        cell.Style.ForeColor = Color.Red;
+                                        cell.Style.SelectionForeColor = Color.Red;
+                                        break;
+                                    case SrcdsStatus.Updating:
+                                        cell.Value = "Updating";
+                                        cell.Style.ForeColor = Color.Blue;
+                                        cell.Style.SelectionForeColor = Color.Blue;
+                                        break;
+                                    case SrcdsStatus.Installing:
+                                        cell.Value = "Installing";
+                                        cell.Style.ForeColor = Color.Blue;
+                                        cell.Style.SelectionForeColor = Color.Blue;
+                                        break;
                                 }
                                 break;
                             case 3:
@@ -570,6 +699,7 @@ namespace SrcdsManager
                     throw ex;
                 }
             }
+            monArray[ServerList.SelectedRows[0].Index].WaitForUpdate(proc);
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {

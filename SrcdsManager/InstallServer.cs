@@ -144,7 +144,8 @@ namespace SrcdsManager
                 {
                     throw ex;
                 }
-            }   
+            }
+            mon.WaitForInstall(proc);
             this.Dispose();
         }
     }
