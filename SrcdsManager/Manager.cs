@@ -9,6 +9,8 @@ using System.Text;
 using System.Xml;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
+using System.Security.Principal;
 
 namespace SrcdsManager
 {
@@ -24,7 +26,7 @@ namespace SrcdsManager
     {
 
         private List<SrcdsMonitor> monArray = new List<SrcdsMonitor>();
-        private String steamCmd = "";
+        private String steamCmd = "invalid";
 
         public Manager()
         {
@@ -34,6 +36,41 @@ namespace SrcdsManager
         private void Form1_Load(object sender, EventArgs e)
         {
             ReadXml();
+            RegistryKey rkApp;
+            if (Environment.Is64BitOperatingSystem)
+            {
+                RegistryKey rkCurrentUser = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64);
+                rkApp = rkCurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", false);
+            }
+            else
+            {
+                rkApp = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", false);
+            }
+            if (rkApp.GetValue("SrcdsManager") != null)
+            {
+                runOnStartToolStripMenuItem.Image = SrcdsManager.Properties.Resources.bluecheck;
+            }
+            else
+            {
+                runOnStartToolStripMenuItem.Image = SrcdsManager.Properties.Resources.deleteicon;
+            }
+            RegistryKey rkSrcdsManager = Registry.CurrentUser.OpenSubKey("Software\\SrcdsManager", true);
+
+            if (rkSrcdsManager == null)
+            {
+                Registry.CurrentUser.CreateSubKey("Software\\SrcdsManager");
+            }
+            else
+            {
+                steamCmd = (string)rkSrcdsManager.GetValue("steamcmd");
+                if (steamCmd == "")
+                {
+                    steamCmd = "invalid";
+                }
+            }
+            
+
+
         }
         private void ManagerClosing(object sender, EventArgs e)
         {
@@ -224,15 +261,6 @@ namespace SrcdsManager
 
                 xmlDoc.Save("servers.xml");
             }
-            if (!System.IO.File.Exists("settings.xml"))
-            {
-                XmlDocument xmlDoc = new XmlDocument();
-                XmlElement root = xmlDoc.CreateElement("settings");
-
-                xmlDoc.AppendChild(root);
-
-                xmlDoc.Save("settings.xml");
-            }
 
             using(XmlReader reader = new XmlTextReader("servers.xml"))
             {
@@ -256,6 +284,9 @@ namespace SrcdsManager
                     reader.ReadToFollowing("params");
                     sCmd = reader.ReadElementContentAsString();
 
+                    reader.ReadToFollowing("autostart");
+                    string autoStart = reader.ReadElementContentAsString();
+
                     SrcdsMonitor mon = new SrcdsMonitor(sExe, sCmd, sName, sID, sAddr, sPort, this);
 
                     monArray.Add(mon);
@@ -265,15 +296,15 @@ namespace SrcdsManager
                     ServerList.Rows[ServerList.Rows.Count - 1].Cells[1].Value = sName;
                     ServerList.Rows[ServerList.Rows.Count - 1].Cells[5].Value = sAddr;
                     ServerList.Rows[ServerList.Rows.Count - 1].Cells[6].Value = sPort;
+
+                    if (bool.Parse(autoStart))
+                    {
+                        mon.Start();
+                        this.autoStart.Checked = true;
+                    }
                 }
             }
-            using (XmlReader reader = new XmlTextReader("settings.xml"))
-            {
-                if (reader.ReadToFollowing("steamcmd"))
-                {
-                    steamCmd = reader.ReadElementContentAsString();
-                }
-            }
+            
             System.Timers.Timer status = new System.Timers.Timer(1000);
             status.SynchronizingObject = this;
             status.Elapsed += new System.Timers.ElapsedEventHandler(sUpdateStatus);
@@ -492,6 +523,7 @@ namespace SrcdsManager
             ((XmlElement)serv).SetAttribute("port", port.Text);
             serv.SelectSingleNode("descendant::executable").InnerText = executable.Text;
             serv.SelectSingleNode("descendant::params").InnerText = parms.Text;
+            serv.SelectSingleNode("descendant::autostart").InnerText = autoStart.Checked.ToString();
             xmlDoc.Save("servers.xml");
 
             System.Net.IPAddress ip;
@@ -551,26 +583,9 @@ namespace SrcdsManager
         private void openFileDialog2_FileOk(object sender, CancelEventArgs e)
         {
             steamCmd = openFileDialog2.FileName;
-            
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load("settings.xml");
-            XmlNode root = xmlDoc.DocumentElement;
-            XmlNode path = root.SelectSingleNode("descendant::steamcmd");
-            //There's probably a better way of doing this
-            try
-            {
-                path.InnerText = steamCmd;
-            }
-            catch (Exception ex)
-            {
-                if (ex.GetType() == typeof(NullReferenceException))
-                {
-                    path = xmlDoc.CreateElement("steamcmd");
-                    path.InnerText = steamCmd;
-                    root.AppendChild(path);
-                }
-            }
-            xmlDoc.Save("settings.xml");
+
+            RegistryKey rkSrcdsManager = Registry.CurrentUser.OpenSubKey("Software\\SrcdsManager", true);
+            rkSrcdsManager.SetValue("steamcmd", steamCmd);
         }
 
         private void updateServerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -689,7 +704,7 @@ namespace SrcdsManager
             }
             catch (Exception ex)
             {
-                if (ex.GetType() == typeof(System.ComponentModel.Win32Exception))
+                if (ex.GetType() == typeof(System.ComponentModel.Win32Exception) || ex.GetType() == typeof(InvalidOperationException))
                 {
                     MessageBox.Show("The path to the steamcmd executable was invalid", "SteamCMD not foud");
                     return;
@@ -729,6 +744,30 @@ namespace SrcdsManager
         {
             monArray[ServerList.SelectedRows[0].Index].Stop();
             ServerList.SelectedRows[0].Cells[0].Value = SrcdsManager.Properties.Resources.offline;
+        }
+
+        private void runOnStartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RegistryKey rkApp;
+            if (Environment.Is64BitOperatingSystem)
+            {
+                RegistryKey rkCurrentUser = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64);
+                rkApp = rkCurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+            }
+            else
+            {
+                rkApp = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+            }
+            if (rkApp.GetValue("SrcdsManager") == null)
+            {
+                rkApp.SetValue("SrcdsManager", Application.ExecutablePath.ToString());
+                runOnStartToolStripMenuItem.Image = SrcdsManager.Properties.Resources.bluecheck;
+            }
+            else
+            {
+                rkApp.DeleteValue("SrcdsManager", false);
+                runOnStartToolStripMenuItem.Image = SrcdsManager.Properties.Resources.deleteicon;
+            }
         }
     }
 }

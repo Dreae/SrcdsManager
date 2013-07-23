@@ -44,6 +44,7 @@ namespace SrcdsManager
             XmlAttribute name = xmlDoc.CreateAttribute("name");
             XmlAttribute addr = xmlDoc.CreateAttribute("address");
             XmlAttribute port = xmlDoc.CreateAttribute("port");
+            XmlAttribute auto = xmlDoc.CreateAttribute("autostart");
             XmlNode root = xmlDoc.DocumentElement;
 
             System.Net.IPAddress ip;
@@ -69,6 +70,9 @@ namespace SrcdsManager
 
             XmlNode param = xmlDoc.CreateElement("params");
             param.InnerText = servParams.Text;
+
+            XmlNode autostart = xmlDoc.CreateElement("autostart");
+            autostart.InnerText = checkBox1.Checked.ToString();
             
 
             XmlNode serv = xmlDoc.CreateElement("server");
@@ -78,6 +82,7 @@ namespace SrcdsManager
             serv.Attributes.Append(port);
             serv.AppendChild(executable);
             serv.AppendChild(param);
+            serv.AppendChild(autostart);
 
             root.AppendChild(serv);
 

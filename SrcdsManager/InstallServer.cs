@@ -57,29 +57,6 @@ namespace SrcdsManager
                 return;
             }
 
-            name.Value = servName.Text;
-            id.Value = servId.Text;
-            addr.Value = servAddr.Text;
-            port.Value = servPort.Text;
-
-            XmlNode executable = xmlDoc.CreateElement("executable");
-            executable.InnerText = servDir.Text + "\\srcds.exe";
-            XmlNode param = xmlDoc.CreateElement("params");
-            param.InnerText = servParams.Text;
-
-
-            XmlNode serv = xmlDoc.CreateElement("server");
-            serv.Attributes.Append(id);
-            serv.Attributes.Append(name);
-            serv.Attributes.Append(addr);
-            serv.Attributes.Append(port);
-            serv.AppendChild(executable);
-            serv.AppendChild(param);
-
-            root.AppendChild(serv);
-
-            xmlDoc.Save("servers.xml");
-
             String exe = "srcds.exe";
             String app = "";
             switch (comboBox1.SelectedIndex)
@@ -119,6 +96,32 @@ namespace SrcdsManager
                     app = "232250";
                     break;
             }
+
+            name.Value = servName.Text;
+            id.Value = servId.Text;
+            addr.Value = servAddr.Text;
+            port.Value = servPort.Text;
+
+            XmlNode executable = xmlDoc.CreateElement("executable");
+            executable.InnerText = servDir.Text + "\\" + exe;
+            XmlNode param = xmlDoc.CreateElement("params");
+            param.InnerText = servParams.Text;
+            XmlNode autostart = xmlDoc.CreateElement("autostart");
+            autostart.InnerText = checkBox1.Checked.ToString();
+
+
+            XmlNode serv = xmlDoc.CreateElement("server");
+            serv.Attributes.Append(id);
+            serv.Attributes.Append(name);
+            serv.Attributes.Append(addr);
+            serv.Attributes.Append(port);
+            serv.AppendChild(executable);
+            serv.AppendChild(param);
+            serv.AppendChild(autostart);
+
+            root.AppendChild(serv);
+
+            xmlDoc.Save("servers.xml");
 
             SrcdsMonitor mon = new SrcdsMonitor(servDir.Text + "\\" + exe, servParams.Text, servName.Text, servId.Text, servAddr.Text, servPort.Text, this.caller);
             this.caller.addMonitor(mon);

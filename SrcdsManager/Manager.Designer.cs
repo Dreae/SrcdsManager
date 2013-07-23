@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.name = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -58,17 +58,13 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.steamCmdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.runOnStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.installServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.ServerList = new System.Windows.Forms.DataGridView();
-            this.dataGridContext = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.dgContextStart = new System.Windows.Forms.ToolStripMenuItem();
-            this.dgContextStop = new System.Windows.Forms.ToolStripMenuItem();
-            this.dgContextRestart = new System.Windows.Forms.ToolStripMenuItem();
-            this.dgContextUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.state = new System.Windows.Forms.DataGridViewImageColumn();
             this.ServerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -76,6 +72,12 @@
             this.dgCrashes = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgIPAddr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgPort = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.dgContextStart = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgContextStop = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgContextRestart = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgContextUpdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.autoStart = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ServerList)).BeginInit();
             this.dataGridContext.SuspendLayout();
@@ -108,15 +110,15 @@
             // 
             // parms
             // 
-            this.parms.Location = new System.Drawing.Point(298, 309);
+            this.parms.Location = new System.Drawing.Point(314, 308);
             this.parms.Name = "parms";
-            this.parms.Size = new System.Drawing.Size(189, 20);
+            this.parms.Size = new System.Drawing.Size(181, 20);
             this.parms.TabIndex = 4;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(295, 293);
+            this.label3.Location = new System.Drawing.Point(311, 292);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(45, 13);
             this.label3.TabIndex = 6;
@@ -125,7 +127,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(295, 332);
+            this.label4.Location = new System.Drawing.Point(311, 331);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 13);
             this.label4.TabIndex = 7;
@@ -133,14 +135,14 @@
             // 
             // executable
             // 
-            this.executable.Location = new System.Drawing.Point(298, 348);
+            this.executable.Location = new System.Drawing.Point(314, 347);
             this.executable.Name = "executable";
-            this.executable.Size = new System.Drawing.Size(189, 20);
+            this.executable.Size = new System.Drawing.Size(181, 20);
             this.executable.TabIndex = 5;
             // 
             // browseExe
             // 
-            this.browseExe.Location = new System.Drawing.Point(298, 374);
+            this.browseExe.Location = new System.Drawing.Point(314, 373);
             this.browseExe.Name = "browseExe";
             this.browseExe.Size = new System.Drawing.Size(60, 20);
             this.browseExe.TabIndex = 9;
@@ -315,7 +317,8 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.steamCmdToolStripMenuItem});
+            this.steamCmdToolStripMenuItem,
+            this.runOnStartToolStripMenuItem});
             this.settingsToolStripMenuItem.Image = global::SrcdsManager.Properties.Resources.Visualpharm_Ios7_Settings;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
@@ -325,9 +328,16 @@
             // 
             this.steamCmdToolStripMenuItem.Image = global::SrcdsManager.Properties.Resources.steam;
             this.steamCmdToolStripMenuItem.Name = "steamCmdToolStripMenuItem";
-            this.steamCmdToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.steamCmdToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.steamCmdToolStripMenuItem.Text = "SteamCmd";
             this.steamCmdToolStripMenuItem.Click += new System.EventHandler(this.steamCmdToolStripMenuItem_Click);
+            // 
+            // runOnStartToolStripMenuItem
+            // 
+            this.runOnStartToolStripMenuItem.Name = "runOnStartToolStripMenuItem";
+            this.runOnStartToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.runOnStartToolStripMenuItem.Text = "Run on Start";
+            this.runOnStartToolStripMenuItem.Click += new System.EventHandler(this.runOnStartToolStripMenuItem_Click);
             // 
             // toolsToolStripMenuItem
             // 
@@ -386,14 +396,14 @@
             this.dgCrashes,
             this.dgIPAddr,
             this.dgPort});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.ServerList.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ServerList.DefaultCellStyle = dataGridViewCellStyle2;
             this.ServerList.EnableHeadersVisualStyles = false;
             this.ServerList.Location = new System.Drawing.Point(12, 51);
             this.ServerList.MultiSelect = false;
@@ -407,48 +417,6 @@
             this.ServerList.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.ServerList_NewRow);
             this.ServerList.SelectionChanged += new System.EventHandler(this.ServerList_SelectionChanged);
             this.ServerList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ServerList_Clicked);
-            // 
-            // dataGridContext
-            // 
-            this.dataGridContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dgContextStart,
-            this.dgContextStop,
-            this.dgContextRestart,
-            this.dgContextUpdate});
-            this.dataGridContext.Name = "contextMenuStrip1";
-            this.dataGridContext.Size = new System.Drawing.Size(113, 92);
-            // 
-            // dgContextStart
-            // 
-            this.dgContextStart.Image = global::SrcdsManager.Properties.Resources.online;
-            this.dgContextStart.Name = "dgContextStart";
-            this.dgContextStart.Size = new System.Drawing.Size(112, 22);
-            this.dgContextStart.Text = "Start";
-            this.dgContextStart.Click += new System.EventHandler(this.dgContextStart_Click);
-            // 
-            // dgContextStop
-            // 
-            this.dgContextStop.Image = global::SrcdsManager.Properties.Resources.offline;
-            this.dgContextStop.Name = "dgContextStop";
-            this.dgContextStop.Size = new System.Drawing.Size(112, 22);
-            this.dgContextStop.Text = "Stop";
-            this.dgContextStop.Click += new System.EventHandler(this.dgContextStop_Click);
-            // 
-            // dgContextRestart
-            // 
-            this.dgContextRestart.Image = global::SrcdsManager.Properties.Resources.restart_icon_0016057b8f364cd6cbee64b83ac281de_Medium;
-            this.dgContextRestart.Name = "dgContextRestart";
-            this.dgContextRestart.Size = new System.Drawing.Size(112, 22);
-            this.dgContextRestart.Text = "Restart";
-            this.dgContextRestart.Click += new System.EventHandler(this.dgContextRestart_Click);
-            // 
-            // dgContextUpdate
-            // 
-            this.dgContextUpdate.Image = global::SrcdsManager.Properties.Resources.Custom_Icon_Design_Pretty_Office_4_Upload;
-            this.dgContextUpdate.Name = "dgContextUpdate";
-            this.dgContextUpdate.Size = new System.Drawing.Size(112, 22);
-            this.dgContextUpdate.Text = "Update";
-            this.dgContextUpdate.Click += new System.EventHandler(this.dgContextUpdate_Click);
             // 
             // state
             // 
@@ -497,12 +465,66 @@
             this.dgPort.ReadOnly = true;
             this.dgPort.Width = 85;
             // 
+            // dataGridContext
+            // 
+            this.dataGridContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dgContextStart,
+            this.dgContextStop,
+            this.dgContextRestart,
+            this.dgContextUpdate});
+            this.dataGridContext.Name = "contextMenuStrip1";
+            this.dataGridContext.Size = new System.Drawing.Size(113, 92);
+            // 
+            // dgContextStart
+            // 
+            this.dgContextStart.Image = global::SrcdsManager.Properties.Resources.online;
+            this.dgContextStart.Name = "dgContextStart";
+            this.dgContextStart.Size = new System.Drawing.Size(112, 22);
+            this.dgContextStart.Text = "Start";
+            this.dgContextStart.Click += new System.EventHandler(this.dgContextStart_Click);
+            // 
+            // dgContextStop
+            // 
+            this.dgContextStop.Image = global::SrcdsManager.Properties.Resources.offline;
+            this.dgContextStop.Name = "dgContextStop";
+            this.dgContextStop.Size = new System.Drawing.Size(112, 22);
+            this.dgContextStop.Text = "Stop";
+            this.dgContextStop.Click += new System.EventHandler(this.dgContextStop_Click);
+            // 
+            // dgContextRestart
+            // 
+            this.dgContextRestart.Image = global::SrcdsManager.Properties.Resources.restart_icon_0016057b8f364cd6cbee64b83ac281de_Medium;
+            this.dgContextRestart.Name = "dgContextRestart";
+            this.dgContextRestart.Size = new System.Drawing.Size(112, 22);
+            this.dgContextRestart.Text = "Restart";
+            this.dgContextRestart.Click += new System.EventHandler(this.dgContextRestart_Click);
+            // 
+            // dgContextUpdate
+            // 
+            this.dgContextUpdate.Image = global::SrcdsManager.Properties.Resources.Custom_Icon_Design_Pretty_Office_4_Upload;
+            this.dgContextUpdate.Name = "dgContextUpdate";
+            this.dgContextUpdate.Size = new System.Drawing.Size(112, 22);
+            this.dgContextUpdate.Text = "Update";
+            this.dgContextUpdate.Click += new System.EventHandler(this.dgContextUpdate_Click);
+            // 
+            // autoStart
+            // 
+            this.autoStart.AutoSize = true;
+            this.autoStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.autoStart.Location = new System.Drawing.Point(212, 310);
+            this.autoStart.Name = "autoStart";
+            this.autoStart.Size = new System.Drawing.Size(95, 17);
+            this.autoStart.TabIndex = 29;
+            this.autoStart.Text = "AutomaticStart";
+            this.autoStart.UseVisualStyleBackColor = true;
+            // 
             // Manager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(625, 407);
+            this.Controls.Add(this.autoStart);
             this.Controls.Add(this.ServerList);
             this.Controls.Add(this.restart);
             this.Controls.Add(this.port);
@@ -592,6 +614,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgCrashes;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgIPAddr;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgPort;
+        private System.Windows.Forms.ToolStripMenuItem runOnStartToolStripMenuItem;
+        private System.Windows.Forms.CheckBox autoStart;
 
     }
 }

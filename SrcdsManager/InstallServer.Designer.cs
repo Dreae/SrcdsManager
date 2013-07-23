@@ -46,6 +46,7 @@
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.label7 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -69,7 +70,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 94);
+            this.label3.Location = new System.Drawing.Point(14, 132);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(61, 13);
             this.label3.TabIndex = 2;
@@ -77,7 +78,7 @@
             // 
             // servAddr
             // 
-            this.servAddr.Location = new System.Drawing.Point(15, 110);
+            this.servAddr.Location = new System.Drawing.Point(17, 148);
             this.servAddr.Name = "servAddr";
             this.servAddr.Size = new System.Drawing.Size(119, 20);
             this.servAddr.TabIndex = 3;
@@ -85,7 +86,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(140, 113);
+            this.label4.Location = new System.Drawing.Point(142, 151);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(29, 13);
             this.label4.TabIndex = 4;
@@ -93,7 +94,7 @@
             // 
             // servPort
             // 
-            this.servPort.Location = new System.Drawing.Point(175, 110);
+            this.servPort.Location = new System.Drawing.Point(177, 148);
             this.servPort.Name = "servPort";
             this.servPort.Size = new System.Drawing.Size(82, 20);
             this.servPort.TabIndex = 5;
@@ -101,7 +102,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 133);
+            this.label5.Location = new System.Drawing.Point(14, 171);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(86, 13);
             this.label5.TabIndex = 6;
@@ -109,14 +110,14 @@
             // 
             // servDir
             // 
-            this.servDir.Location = new System.Drawing.Point(15, 149);
+            this.servDir.Location = new System.Drawing.Point(17, 187);
             this.servDir.Name = "servDir";
             this.servDir.Size = new System.Drawing.Size(242, 20);
             this.servDir.TabIndex = 7;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(182, 175);
+            this.button1.Location = new System.Drawing.Point(184, 213);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 8;
@@ -141,7 +142,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 185);
+            this.label6.Location = new System.Drawing.Point(14, 223);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(97, 13);
             this.label6.TabIndex = 11;
@@ -149,14 +150,14 @@
             // 
             // servParams
             // 
-            this.servParams.Location = new System.Drawing.Point(15, 201);
+            this.servParams.Location = new System.Drawing.Point(17, 239);
             this.servParams.Name = "servParams";
             this.servParams.Size = new System.Drawing.Size(242, 20);
             this.servParams.TabIndex = 12;
             // 
             // installButton
             // 
-            this.installButton.Location = new System.Drawing.Point(182, 227);
+            this.installButton.Location = new System.Drawing.Point(184, 265);
             this.installButton.Name = "installButton";
             this.installButton.Size = new System.Drawing.Size(75, 23);
             this.installButton.TabIndex = 13;
@@ -166,7 +167,7 @@
             // 
             // cancel
             // 
-            this.cancel.Location = new System.Drawing.Point(101, 227);
+            this.cancel.Location = new System.Drawing.Point(103, 265);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(75, 23);
             this.cancel.TabIndex = 14;
@@ -177,7 +178,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 66);
+            this.label7.Location = new System.Drawing.Point(14, 104);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(38, 13);
             this.label7.TabIndex = 15;
@@ -198,16 +199,27 @@
             "Half-Life",
             "Left 4 Dead 2",
             "Team Fortress 2"});
-            this.comboBox1.Location = new System.Drawing.Point(56, 63);
+            this.comboBox1.Location = new System.Drawing.Point(58, 101);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(201, 21);
             this.comboBox1.TabIndex = 16;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(93, 56);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(113, 17);
+            this.checkBox1.TabIndex = 17;
+            this.checkBox1.Text = "Automatically Start";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // InstallServer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(271, 262);
+            this.ClientSize = new System.Drawing.Size(271, 300);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cancel);
@@ -252,5 +264,6 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

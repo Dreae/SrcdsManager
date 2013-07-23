@@ -45,6 +45,7 @@
             this.ipAddr = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.iPort = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -68,7 +69,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 94);
+            this.label3.Location = new System.Drawing.Point(12, 138);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(97, 13);
             this.label3.TabIndex = 2;
@@ -77,7 +78,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 148);
+            this.label4.Location = new System.Drawing.Point(12, 192);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(97, 13);
             this.label4.TabIndex = 3;
@@ -99,21 +100,21 @@
             // 
             // servExe
             // 
-            this.servExe.Location = new System.Drawing.Point(15, 109);
+            this.servExe.Location = new System.Drawing.Point(15, 153);
             this.servExe.Name = "servExe";
             this.servExe.Size = new System.Drawing.Size(217, 20);
             this.servExe.TabIndex = 6;
             // 
             // servParams
             // 
-            this.servParams.Location = new System.Drawing.Point(15, 164);
+            this.servParams.Location = new System.Drawing.Point(15, 208);
             this.servParams.Name = "servParams";
             this.servParams.Size = new System.Drawing.Size(217, 20);
             this.servParams.TabIndex = 7;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(157, 192);
+            this.button1.Location = new System.Drawing.Point(157, 236);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 8;
@@ -123,7 +124,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(73, 192);
+            this.button2.Location = new System.Drawing.Point(73, 236);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 9;
@@ -133,7 +134,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(157, 135);
+            this.button3.Location = new System.Drawing.Point(157, 179);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 10;
@@ -149,7 +150,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 54);
+            this.label5.Location = new System.Drawing.Point(12, 98);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(61, 13);
             this.label5.TabIndex = 11;
@@ -157,7 +158,7 @@
             // 
             // ipAddr
             // 
-            this.ipAddr.Location = new System.Drawing.Point(15, 70);
+            this.ipAddr.Location = new System.Drawing.Point(15, 114);
             this.ipAddr.Name = "ipAddr";
             this.ipAddr.Size = new System.Drawing.Size(97, 20);
             this.ipAddr.TabIndex = 12;
@@ -165,7 +166,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(119, 73);
+            this.label6.Location = new System.Drawing.Point(119, 117);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(29, 13);
             this.label6.TabIndex = 13;
@@ -173,16 +174,27 @@
             // 
             // iPort
             // 
-            this.iPort.Location = new System.Drawing.Point(154, 70);
+            this.iPort.Location = new System.Drawing.Point(154, 114);
             this.iPort.Name = "iPort";
             this.iPort.Size = new System.Drawing.Size(75, 20);
             this.iPort.TabIndex = 14;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(90, 58);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(113, 17);
+            this.checkBox1.TabIndex = 15;
+            this.checkBox1.Text = "Automatically Start";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // NewServer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(244, 227);
+            this.ClientSize = new System.Drawing.Size(243, 271);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.iPort);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.ipAddr);
@@ -225,5 +237,6 @@
         private System.Windows.Forms.TextBox ipAddr;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox iPort;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
