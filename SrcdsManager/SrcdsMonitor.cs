@@ -39,6 +39,7 @@ namespace SrcdsManager
             startInfo = new ProcessStartInfo();
             startInfo.FileName = exePath;
 
+
             this.ipAddr = IPAddress.Parse(ipAddr);
             this.port = int.Parse(port);
 
@@ -47,7 +48,6 @@ namespace SrcdsManager
             this.caller = (Manager)caller;
 
             pinger = new SrcdsPinger(this, this.ipAddr, this.port, proc);
-            pinger.StartPinging();
         }
 
         public void Start()
@@ -69,6 +69,7 @@ namespace SrcdsManager
                     throw ex;
                 }
             }
+            pinger.StartPinging();
 
             WaitForExit oWait = new WaitForExit(proc, this, 0);
             Thread oThread = new Thread(new ThreadStart(oWait.Waiting));
@@ -275,14 +276,15 @@ namespace SrcdsManager
             serverEP = new IPEndPoint(addr, port);
             this.caller = (SrcdsMonitor)source;
             this.proc = proc;
-
+        }
+        public void StartPinging()
+        {
+            sock = new Socket(SocketType.Dgram, ProtocolType.Udp);
             sock.Bind(new IPEndPoint(IPAddress.Any, 0));
 
             sock.ReceiveTimeout = 1500;
             sock.SendTimeout = 1500;
-        }
-        public void StartPinging()
-        {
+
             pingTimer = new System.Timers.Timer(15000);
             pingTimer.SynchronizingObject = null;
             pingTimer.Elapsed += new System.Timers.ElapsedEventHandler(PingServer);
@@ -320,8 +322,6 @@ namespace SrcdsManager
         }
         private void Timedout(object source, System.Timers.ElapsedEventArgs e)
         {
-            System.Timers.Timer timer = (System.Timers.Timer)source;
-
             sock.SendTo(query, serverEP);
             byte[] rec = new byte[265];
 
@@ -338,9 +338,8 @@ namespace SrcdsManager
                     if (timeouts > 3)
                     {
                         proc.Kill();
-                        timer.Enabled = false;
-                        timer.Stop();
-                        timer.Dispose();
+                        timeoutTimer.Enabled = false;
+                        timeoutTimer.Stop();
 
                         pingTimer.Enabled = true;
                         pingTimer.AutoReset = true;
@@ -353,9 +352,8 @@ namespace SrcdsManager
                 return;
             }
             caller.Status = SrcdsStatus.Online;
-            timer.Enabled = false;
-            timer.Stop();
-            timer.Dispose();
+            timeoutTimer.Enabled = false;
+            timeoutTimer.Stop();
 
             pingTimer.Enabled = true;
             pingTimer.AutoReset = true;
