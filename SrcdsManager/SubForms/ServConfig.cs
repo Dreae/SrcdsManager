@@ -66,7 +66,7 @@ namespace SrcdsManager
             mon.setIPAddr(addr.Text);
             mon.setPort(port.Text);
 
-            caller.LogMessage(mon, "Server details updated");
+            mon.LogMessage("Server details updated");
         }
 
         private void button2_Click(object sender, EventArgs e)

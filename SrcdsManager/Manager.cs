@@ -32,7 +32,6 @@ namespace SrcdsManager
     public partial class Manager : Form
     {
         private List<SrcdsMonitor> monArray = new List<SrcdsMonitor>();
-        private List<String> monConsole = new List<String>();
         public String steamCmd = "invalid";
         public static readonly Regex regexBinary = new Regex("^[01]{1,32}$", RegexOptions.Compiled);
 
@@ -107,7 +106,7 @@ namespace SrcdsManager
         {
             if (ServerList.SelectedRows.Count > 0 && ServerList.SelectedRows[0].Index >= 0 && ServerList.SelectedRows[0].Index < monArray.Count)
             {
-                logBox.Text = monConsole[ServerList.SelectedRows[0].Index];
+                logBox.Text = monArray[ServerList.SelectedRows[0].Index].Log;
             }
         }
         private void ServerList_Clicked(object sender, MouseEventArgs e)
@@ -197,7 +196,8 @@ namespace SrcdsManager
                     SrcdsMonitor mon = new SrcdsMonitor(sExe, sCmd, sName, sID, sAddr, sPort, this);
 
                     monArray.Add(mon);
-                    monConsole.Add(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + ": " + "Server info loaded \r\n");
+                    monArray[monArray.Count - 1].Log += 
+                        (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + ": " + "Server info loaded \r\n");
 
                     ServerList.Rows.Add();
                     ServerList.Rows[ServerList.Rows.Count - 1].Cells[0].Value = SrcdsManager.Properties.Resources.offline;
@@ -228,9 +228,12 @@ namespace SrcdsManager
             {
                 try
                 {
-                    logBox.Text = monConsole[ServerList.SelectedRows[0].Index];
-                    logBox.SelectionStart = logBox.Text.Length - 1;
-                    logBox.ScrollToCaret();
+                    logBox.Text = monArray[ServerList.SelectedRows[0].Index].Log;
+                    if (autoScroll.Checked)
+                    {
+                        logBox.SelectionStart = logBox.Text.Length - 1;
+                        logBox.ScrollToCaret();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -322,7 +325,7 @@ namespace SrcdsManager
             {
                 monArray[ServerList.SelectedRows[0].Index].Stop();
                 ServerList.SelectedRows[0].Cells[0].Value = SrcdsManager.Properties.Resources.offline;
-                LogMessage(monArray[ServerList.SelectedRows[0].Index], "Server stopped");
+                monArray[ServerList.SelectedRows[0].Index].LogMessage("Server stopped");
                 stopButton.Enabled = false;
                 restart.Enabled = false;
                 startButton.Enabled = true;
@@ -340,7 +343,7 @@ namespace SrcdsManager
             monArray[ServerList.SelectedRows[0].Index].Stop();
             System.Threading.Thread.Sleep(100);
             monArray[ServerList.SelectedRows[0].Index].Start();
-            LogMessage(monArray[ServerList.SelectedRows[0].Index], "Server restarted");
+            monArray[ServerList.SelectedRows[0].Index].LogMessage("Server restarted");
         }
         private void newServ_Click(object sender, EventArgs e)
         {
@@ -350,7 +353,8 @@ namespace SrcdsManager
         internal void addMonitor(SrcdsMonitor mon)
         {
             monArray.Add(mon);
-            monConsole.Add(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + ": " + "Server created \r\n");
+            monArray[monArray.Count - 1].Log +=
+                        (DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + ": " + "Server created \r\n");
             ServerList.Rows.Add();
             ServerList.Rows[ServerList.Rows.Count - 1].Cells[0].Value = SrcdsManager.Properties.Resources.offline;
             ServerList.Rows[ServerList.Rows.Count - 1].Cells[1].Value = mon.getName();
@@ -368,7 +372,6 @@ namespace SrcdsManager
 
             int i = monArray.IndexOf(mon);
             monArray.Remove(mon);
-            monConsole.RemoveAt(i);
             ServerList.Rows.RemoveAt(i);
         }
         private void steamCmdToolStripMenuItem_Click(object sender, EventArgs e)
@@ -408,7 +411,7 @@ namespace SrcdsManager
             restart.Enabled = true;
             ServerList.SelectedRows[0].Cells[0].Value = SrcdsManager.Properties.Resources.online;
             monArray[ServerList.SelectedRows[0].Index].Start();
-            LogMessage(monArray[ServerList.SelectedRows[0].Index], "Server started");
+            monArray[ServerList.SelectedRows[0].Index].LogMessage("Server started");
         }
         private void UpdateServer()
         {
@@ -551,20 +554,7 @@ namespace SrcdsManager
             ServConfig cfg = new ServConfig(this, monArray[ServerList.SelectedRows[0].Index]);
             cfg.Show();
         }
-        internal void LogMessage(SrcdsMonitor mon, String msg)
-        {
-            msg = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + ": " + msg + "\r\n";
-            monConsole[monArray.IndexOf(mon)] += msg;
-
-            if (!System.IO.File.Exists(@"logs\serv_" + mon.getId() + ".log"))
-            {
-                var stream = System.IO.File.CreateText(@"logs\serv_" + mon.getId() + ".log");
-                stream.Dispose();
-            }
-            var append = System.IO.File.AppendText(@"logs\serv_" + mon.getId() + ".log");
-            append.Write(msg);
-            append.Dispose();
-        }
+        
 
         private void ServerList_MouseDown(object sender, MouseEventArgs e)
         {
@@ -582,7 +572,7 @@ namespace SrcdsManager
                     stopButton.Enabled = false;
                     restart.Enabled = false;
                 }
-                logBox.Text = monConsole[ServerList.SelectedRows[0].Index];
+                logBox.Text = monArray[ServerList.SelectedRows[0].Index].Log;
             }
         }
 
@@ -596,6 +586,15 @@ namespace SrcdsManager
                     return;
                 }
                 System.Diagnostics.Process.Start(@"logs\serv_" + monArray[ServerList.SelectedRows[0].Index].getId() + ".log");
+            }
+        }
+
+        private void clearConsole_Click(object sender, EventArgs e)
+        {
+            if (ServerList.SelectedRows.Count != 0)
+            {
+                monArray[ServerList.SelectedRows[0].Index].Log = "";
+                monArray[ServerList.SelectedRows[0].Index].LogMessage("Log console cleared");
             }
         }
     }

@@ -67,6 +67,8 @@
             this.logBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.autoScroll = new System.Windows.Forms.CheckBox();
+            this.clearConsole = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ServerList)).BeginInit();
             this.dataGridContext.SuspendLayout();
@@ -456,12 +458,40 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // autoScroll
+            // 
+            this.autoScroll.AutoSize = true;
+            this.autoScroll.Checked = true;
+            this.autoScroll.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.autoScroll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.autoScroll.Location = new System.Drawing.Point(96, 373);
+            this.autoScroll.Name = "autoScroll";
+            this.autoScroll.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.autoScroll.Size = new System.Drawing.Size(72, 17);
+            this.autoScroll.TabIndex = 32;
+            this.autoScroll.Text = ":Autoscroll";
+            this.autoScroll.UseVisualStyleBackColor = true;
+            // 
+            // clearConsole
+            // 
+            this.clearConsole.FlatAppearance.BorderSize = 0;
+            this.clearConsole.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.clearConsole.Location = new System.Drawing.Point(124, 328);
+            this.clearConsole.Name = "clearConsole";
+            this.clearConsole.Size = new System.Drawing.Size(44, 23);
+            this.clearConsole.TabIndex = 33;
+            this.clearConsole.Text = "Clear";
+            this.clearConsole.UseVisualStyleBackColor = true;
+            this.clearConsole.Click += new System.EventHandler(this.clearConsole_Click);
+            // 
             // Manager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(625, 402);
+            this.Controls.Add(this.clearConsole);
+            this.Controls.Add(this.autoScroll);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.logBox);
@@ -527,6 +557,8 @@
         private System.Windows.Forms.ToolStripMenuItem updateServerToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem installServerToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
+        private System.Windows.Forms.CheckBox autoScroll;
+        private System.Windows.Forms.Button clearConsole;
 
     }
 }

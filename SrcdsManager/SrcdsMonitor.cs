@@ -8,6 +8,10 @@ namespace SrcdsManager
 {
     class SrcdsMonitor : IDisposable
     {
+        public SrcdsStatus Status = SrcdsStatus.Offline;
+        public bool isAutoStart = false;
+        public String Log = "";
+
         private String exePath;
         private String commandLine;
         private String Name;
@@ -15,19 +19,12 @@ namespace SrcdsManager
         private IPAddress ipAddr;
         private int port;
         private Manager caller;
-
-        public SrcdsStatus Status = SrcdsStatus.Offline;
         private bool running = false;
         private bool cleanExit = true;
-        public bool isAutoStart = false;
-
         private Process proc = new Process();
         private ProcessStartInfo startInfo;
-
         private int crashes = 0;
-
         private DateTime startTime;
-
         private SrcdsPinger pinger;
 
         public SrcdsMonitor(String exePath, String commandLine, String Name, String sID, String ipAddr, String port, object caller)
@@ -86,7 +83,7 @@ namespace SrcdsManager
         {
             this.crashes++;
 
-            caller.LogMessage(this, "Server crashed, attempting to restart");
+            this.LogMessage("Server crashed, attempting to restart");
 
             startInfo.Arguments = commandLine + String.Format(" -ip {0} -port {1}", ipAddr, port); ;
             try
@@ -230,10 +227,19 @@ namespace SrcdsManager
             proc.Dispose();
             pinger.Dispose();
         }
-        //Pretty lame, I know
-        public void Log(String msg)
+        public void LogMessage(String msg)
         {
-            caller.LogMessage(this, msg);
+            msg = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + ": " + msg + "\r\n";
+            this.Log += msg;
+
+            if (!System.IO.File.Exists(@"logs\serv_" + this.getId() + ".log"))
+            {
+                var stream = System.IO.File.CreateText(@"logs\serv_" + this.getId() + ".log");
+                stream.Dispose();
+            }
+            var append = System.IO.File.AppendText(@"logs\serv_" + this.getId() + ".log");
+            append.Write(msg);
+            append.Dispose();
         }
     }
 
@@ -343,7 +349,7 @@ namespace SrcdsManager
                 {
                     timeouts++;
 
-                    caller.Log("Server timedout, retry in 3 seconds");
+                    caller.LogMessage("Server timedout, retry in 3 seconds");
 
                     if (timeouts > 3)
                     {
@@ -357,7 +363,7 @@ namespace SrcdsManager
 
                         timeouts = 0;
 
-                        caller.Log("Max timeouts reached, restarting");
+                        caller.LogMessage("Max timeouts reached, restarting");
                     }
 
                 }
