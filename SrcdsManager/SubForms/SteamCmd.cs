@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using System.IO.Compression;
 
 namespace SrcdsManager.SubForms
 {
@@ -50,13 +51,8 @@ namespace SrcdsManager.SubForms
         }
         private void downloadFinished(object sender, EventArgs e)
         {
-            using (Ionic.Zip.ZipFile zip = Ionic.Zip.ZipFile.Read(path.Text + @"\steamcmd.zip"))
-            {
-                foreach (Ionic.Zip.ZipEntry file in zip)
-                {
-                    file.Extract(path.Text, Ionic.Zip.ExtractExistingFileAction.OverwriteSilently);
-                }
-            }
+
+            ZipFile.ExtractToDirectory(path.Text + @"\steamcmd.zip", path.Text);
             System.IO.File.Delete(path.Text + @"\steamcmd.zip");
 
             caller.steamCmd = path.Text + @"\steamcmd.exe";
