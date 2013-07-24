@@ -100,6 +100,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -112,16 +116,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="About.cs">
+    <Compile Include="SubForms\About.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="About.Designer.cs">
+    <Compile Include="SubForms\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="InstallServer.cs">
+    <Compile Include="SubForms\InstallServer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InstallServer.Designer.cs">
+    <Compile Include="SubForms\InstallServer.Designer.cs">
       <DependentUpon>InstallServer.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -129,22 +133,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ServConfig.cs">
+    <Compile Include="SubForms\ServConfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServConfig.Designer.cs">
+    <Compile Include="SubForms\ServConfig.Designer.cs">
       <DependentUpon>ServConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="UnknownApp.cs">
+    <Compile Include="SubForms\SteamCmd.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UnknownApp.Designer.cs">
+    <Compile Include="SubForms\SteamCmd.Designer.cs">
+      <DependentUpon>SteamCmd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForms\UnknownApp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForms\UnknownApp.Designer.cs">
       <DependentUpon>UnknownApp.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewServer.cs">
+    <Compile Include="SubForms\NewServer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewServer.Designer.cs">
+    <Compile Include="SubForms\NewServer.Designer.cs">
       <DependentUpon>NewServer.cs</DependentUpon>
     </Compile>
     <Compile Include="SrcdsMonitor.cs" />
@@ -156,22 +166,25 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="About.resx">
+    <EmbeddedResource Include="SubForms\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InstallServer.resx">
+    <EmbeddedResource Include="SubForms\InstallServer.resx">
       <DependentUpon>InstallServer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ServConfig.resx">
+    <EmbeddedResource Include="SubForms\ServConfig.resx">
       <DependentUpon>ServConfig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UnknownApp.resx">
+    <EmbeddedResource Include="SubForms\SteamCmd.resx">
+      <DependentUpon>SteamCmd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForms\UnknownApp.resx">
       <DependentUpon>UnknownApp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Manager.resx">
       <DependentUpon>Manager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewServer.resx">
+    <EmbeddedResource Include="SubForms\NewServer.resx">
       <DependentUpon>NewServer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -179,6 +192,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

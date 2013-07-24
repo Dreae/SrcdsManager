@@ -120,6 +120,8 @@
             // 
             // button1
             // 
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Location = new System.Drawing.Point(184, 213);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
@@ -164,6 +166,8 @@
             // 
             // installButton
             // 
+            this.installButton.FlatAppearance.BorderSize = 0;
+            this.installButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.installButton.Location = new System.Drawing.Point(184, 265);
             this.installButton.Name = "installButton";
             this.installButton.Size = new System.Drawing.Size(75, 23);
@@ -174,6 +178,8 @@
             // 
             // cancel
             // 
+            this.cancel.FlatAppearance.BorderSize = 0;
+            this.cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cancel.Location = new System.Drawing.Point(103, 265);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(75, 23);

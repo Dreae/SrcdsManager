@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.startButton = new System.Windows.Forms.Button();
             this.stopButton = new System.Windows.Forms.Button();
@@ -50,7 +50,6 @@
             this.updateServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.installServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.ServerList = new System.Windows.Forms.DataGridView();
             this.state = new System.Windows.Forms.DataGridViewImageColumn();
             this.ServerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -176,14 +175,14 @@
             // 
             this.steamCmdToolStripMenuItem1.Image = global::SrcdsManager.Properties.Resources.steam;
             this.steamCmdToolStripMenuItem1.Name = "steamCmdToolStripMenuItem1";
-            this.steamCmdToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.steamCmdToolStripMenuItem1.Size = new System.Drawing.Size(139, 22);
             this.steamCmdToolStripMenuItem1.Text = "SteamCmd";
             this.steamCmdToolStripMenuItem1.Click += new System.EventHandler(this.steamCmdToolStripMenuItem_Click);
             // 
             // startWithWindowsToolStripMenuItem
             // 
             this.startWithWindowsToolStripMenuItem.Name = "startWithWindowsToolStripMenuItem";
-            this.startWithWindowsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.startWithWindowsToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.startWithWindowsToolStripMenuItem.Text = "Run on Start";
             this.startWithWindowsToolStripMenuItem.Click += new System.EventHandler(this.runOnStartToolStripMenuItem_Click);
             // 
@@ -201,7 +200,7 @@
             // 
             this.updateServerToolStripMenuItem1.Image = global::SrcdsManager.Properties.Resources.updateicon;
             this.updateServerToolStripMenuItem1.Name = "updateServerToolStripMenuItem1";
-            this.updateServerToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.updateServerToolStripMenuItem1.Size = new System.Drawing.Size(147, 22);
             this.updateServerToolStripMenuItem1.Text = "Update Server";
             this.updateServerToolStripMenuItem1.Click += new System.EventHandler(this.updateServerToolStripMenuItem_Click);
             // 
@@ -209,7 +208,7 @@
             // 
             this.installServerToolStripMenuItem1.Image = global::SrcdsManager.Properties.Resources.update_icon;
             this.installServerToolStripMenuItem1.Name = "installServerToolStripMenuItem1";
-            this.installServerToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.installServerToolStripMenuItem1.Size = new System.Drawing.Size(147, 22);
             this.installServerToolStripMenuItem1.Text = "Install Server";
             this.installServerToolStripMenuItem1.Click += new System.EventHandler(this.installServerToolStripMenuItem_Click);
             // 
@@ -280,11 +279,6 @@
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // openFileDialog2
-            // 
-            this.openFileDialog2.FileName = "steamCmdDialog";
-            this.openFileDialog2.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog2_FileOk);
-            // 
             // ServerList
             // 
             this.ServerList.AllowUserToAddRows = false;
@@ -304,14 +298,14 @@
             this.dgIPAddr,
             this.dgPort});
             this.ServerList.Cursor = System.Windows.Forms.Cursors.Arrow;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.ServerList.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ServerList.DefaultCellStyle = dataGridViewCellStyle1;
             this.ServerList.EnableHeadersVisualStyles = false;
             this.ServerList.Location = new System.Drawing.Point(12, 51);
             this.ServerList.MultiSelect = false;
@@ -504,7 +498,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem steamCmdToolStripMenuItem;
-        private System.Windows.Forms.OpenFileDialog openFileDialog2;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateServerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;

@@ -33,7 +33,7 @@ namespace SrcdsManager
     {
         private List<SrcdsMonitor> monArray = new List<SrcdsMonitor>();
         private List<String> monConsole = new List<String>();
-        private String steamCmd = "invalid";
+        public String steamCmd = "invalid";
         public static readonly Regex regexBinary = new Regex("^[01]{1,32}$", RegexOptions.Compiled);
 
         public Manager()
@@ -373,15 +373,8 @@ namespace SrcdsManager
         }
         private void steamCmdToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog2.ShowDialog();
-        }
-
-        private void openFileDialog2_FileOk(object sender, CancelEventArgs e)
-        {
-            steamCmd = openFileDialog2.FileName;
-
-            RegistryKey rkSrcdsManager = Registry.CurrentUser.OpenSubKey("Software\\SrcdsManager", true);
-            rkSrcdsManager.SetValue("steamcmd", steamCmd);
+            SubForms.SteamCmd cmd = new SubForms.SteamCmd(this);
+            cmd.Show();
         }
 
         private void updateServerToolStripMenuItem_Click(object sender, EventArgs e)
