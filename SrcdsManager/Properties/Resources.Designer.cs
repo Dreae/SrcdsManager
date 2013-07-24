@@ -73,16 +73,6 @@ namespace SrcdsManager.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Custom_Icon_Design_Pretty_Office_4_Upload {
-            get {
-                object obj = ResourceManager.GetObject("Custom-Icon-Design-Pretty-Office-4-Upload", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap deleteicon {
             get {
                 object obj = ResourceManager.GetObject("deleteicon", resourceCulture);
@@ -93,19 +83,9 @@ namespace SrcdsManager.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap download_icon {
+        internal static System.Drawing.Bitmap infoicon {
             get {
-                object obj = ResourceManager.GetObject("download-icon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Kyo_Tux_Delikate_Info {
-            get {
-                object obj = ResourceManager.GetObject("Kyo-Tux-Delikate-Info", resourceCulture);
+                object obj = ResourceManager.GetObject("infoicon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -131,11 +111,41 @@ namespace SrcdsManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon redx {
+            get {
+                object obj = ResourceManager.GetObject("redx", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap restart_icon_0016057b8f364cd6cbee64b83ac281de_Medium {
+        internal static System.Drawing.Bitmap restart {
             get {
-                object obj = ResourceManager.GetObject("restart-icon_0016057b8f364cd6cbee64b83ac281de_Medium", resourceCulture);
+                object obj = ResourceManager.GetObject("restart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap settings_gear {
+            get {
+                object obj = ResourceManager.GetObject("settings_gear", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap settings_wrench {
+            get {
+                object obj = ResourceManager.GetObject("settings_wrench", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +163,9 @@ namespace SrcdsManager.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Visualpharm_Ios7_Settings {
+        internal static System.Drawing.Bitmap update_icon {
             get {
-                object obj = ResourceManager.GetObject("Visualpharm-Ios7-Settings", resourceCulture);
+                object obj = ResourceManager.GetObject("update-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +173,9 @@ namespace SrcdsManager.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Visualpharm_Ios7_Settings_2 {
+        internal static System.Drawing.Bitmap updateicon {
             get {
-                object obj = ResourceManager.GetObject("Visualpharm-Ios7-Settings-2", resourceCulture);
+                object obj = ResourceManager.GetObject("updateicon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

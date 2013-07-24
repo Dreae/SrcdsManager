@@ -85,6 +85,8 @@ namespace SrcdsManager
         {
             this.crashes++;
 
+            caller.LogMessage(this, "Server crashed, attempting to restart");
+
             startInfo.Arguments = commandLine + String.Format(" -ip {0} -port {1}", ipAddr, port); ;
             try
             {
@@ -227,6 +229,11 @@ namespace SrcdsManager
             proc.Dispose();
             pinger.Dispose();
         }
+        //Pretty lame, I know
+        public void Log(String msg)
+        {
+            caller.LogMessage(this, msg);
+        }
     }
 
     class WaitForExit
@@ -335,6 +342,8 @@ namespace SrcdsManager
                 {
                     timeouts++;
 
+                    caller.Log("Server timedout, retry in 3 seconds");
+
                     if (timeouts > 3)
                     {
                         proc.Kill();
@@ -346,6 +355,8 @@ namespace SrcdsManager
                         pingTimer.Start();
 
                         timeouts = 0;
+
+                        caller.Log("Max timeouts reached, restarting");
                     }
 
                 }
