@@ -38,6 +38,7 @@
             // 
             // appId
             // 
+            this.appId.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.appId.Location = new System.Drawing.Point(12, 64);
             this.appId.Name = "appId";
             this.appId.Size = new System.Drawing.Size(122, 20);
@@ -45,6 +46,7 @@
             // 
             // button1
             // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Location = new System.Drawing.Point(12, 90);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(72, 25);
@@ -55,6 +57,7 @@
             // 
             // button2
             // 
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Location = new System.Drawing.Point(90, 90);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(44, 25);
@@ -94,6 +97,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(146, 118);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);

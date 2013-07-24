@@ -23,6 +23,8 @@ namespace SrcdsManager
 
             autoStart.Checked = this.mon.isAutoStart;
 
+            this.Text = this.mon.getName() + " - Configuration";
+
             addr.Text = this.mon.getAddr();
             parms.Text = this.mon.getCmd();
             executable.Text = this.mon.getExe();

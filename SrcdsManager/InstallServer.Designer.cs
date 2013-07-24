@@ -78,6 +78,7 @@
             // 
             // servAddr
             // 
+            this.servAddr.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.servAddr.Location = new System.Drawing.Point(17, 148);
             this.servAddr.Name = "servAddr";
             this.servAddr.Size = new System.Drawing.Size(119, 20);
@@ -94,6 +95,7 @@
             // 
             // servPort
             // 
+            this.servPort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.servPort.Location = new System.Drawing.Point(177, 148);
             this.servPort.Name = "servPort";
             this.servPort.Size = new System.Drawing.Size(82, 20);
@@ -110,6 +112,7 @@
             // 
             // servDir
             // 
+            this.servDir.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.servDir.Location = new System.Drawing.Point(17, 187);
             this.servDir.Name = "servDir";
             this.servDir.Size = new System.Drawing.Size(242, 20);
@@ -127,6 +130,7 @@
             // 
             // servId
             // 
+            this.servId.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.servId.Location = new System.Drawing.Point(73, 6);
             this.servId.Name = "servId";
             this.servId.Size = new System.Drawing.Size(184, 20);
@@ -134,6 +138,8 @@
             // 
             // servName
             // 
+            this.servName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.servName.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.servName.Location = new System.Drawing.Point(93, 30);
             this.servName.Name = "servName";
             this.servName.Size = new System.Drawing.Size(164, 20);
@@ -150,6 +156,7 @@
             // 
             // servParams
             // 
+            this.servParams.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.servParams.Location = new System.Drawing.Point(17, 239);
             this.servParams.Name = "servParams";
             this.servParams.Size = new System.Drawing.Size(242, 20);
@@ -186,7 +193,9 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "Counter-Strike",
@@ -207,9 +216,10 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
+            this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox1.Location = new System.Drawing.Point(93, 56);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(113, 17);
+            this.checkBox1.Size = new System.Drawing.Size(110, 17);
             this.checkBox1.TabIndex = 17;
             this.checkBox1.Text = "Automatically Start";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -218,6 +228,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(271, 300);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.comboBox1);
@@ -237,6 +248,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "InstallServer";
             this.Text = "Install Server";
             this.ResumeLayout(false);

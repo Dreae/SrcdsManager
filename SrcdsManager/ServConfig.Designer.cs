@@ -48,6 +48,8 @@
             // 
             // name
             // 
+            this.name.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.name.Location = new System.Drawing.Point(90, 12);
             this.name.Name = "name";
             this.name.Size = new System.Drawing.Size(211, 20);
@@ -82,6 +84,7 @@
             // 
             // addr
             // 
+            this.addr.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.addr.Location = new System.Drawing.Point(79, 44);
             this.addr.Name = "addr";
             this.addr.Size = new System.Drawing.Size(100, 20);
@@ -89,6 +92,7 @@
             // 
             // port
             // 
+            this.port.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.port.Location = new System.Drawing.Point(223, 44);
             this.port.Name = "port";
             this.port.Size = new System.Drawing.Size(78, 20);
@@ -105,6 +109,7 @@
             // 
             // executable
             // 
+            this.executable.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.executable.Location = new System.Drawing.Point(15, 133);
             this.executable.Name = "executable";
             this.executable.Size = new System.Drawing.Size(286, 20);
@@ -112,7 +117,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(226, 159);
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(223, 156);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 8;
@@ -130,6 +137,7 @@
             // 
             // parms
             // 
+            this.parms.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.parms.Location = new System.Drawing.Point(15, 185);
             this.parms.Name = "parms";
             this.parms.Size = new System.Drawing.Size(286, 20);
@@ -137,6 +145,8 @@
             // 
             // button2
             // 
+            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Location = new System.Drawing.Point(226, 211);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
@@ -147,6 +157,8 @@
             // 
             // button3
             // 
+            this.button3.FlatAppearance.BorderSize = 0;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Location = new System.Drawing.Point(145, 211);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
@@ -157,6 +169,8 @@
             // 
             // button4
             // 
+            this.button4.FlatAppearance.BorderSize = 0;
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button4.Location = new System.Drawing.Point(15, 211);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
@@ -168,9 +182,11 @@
             // autoStart
             // 
             this.autoStart.AutoSize = true;
+            this.autoStart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.autoStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.autoStart.Location = new System.Drawing.Point(15, 83);
             this.autoStart.Name = "autoStart";
-            this.autoStart.Size = new System.Drawing.Size(147, 17);
+            this.autoStart.Size = new System.Drawing.Size(144, 17);
             this.autoStart.TabIndex = 14;
             this.autoStart.Text = "Automatically Start Server";
             this.autoStart.UseVisualStyleBackColor = true;
@@ -179,6 +195,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(313, 246);
             this.Controls.Add(this.autoStart);
             this.Controls.Add(this.button4);
@@ -196,7 +213,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.name);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ServConfig";
             this.Text = "ServConfig";

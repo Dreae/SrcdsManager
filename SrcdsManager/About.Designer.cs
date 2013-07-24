@@ -85,12 +85,13 @@
             this.version.Name = "version";
             this.version.Size = new System.Drawing.Size(52, 16);
             this.version.TabIndex = 4;
-            this.version.Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            this.version.Text = "11.0.0.0";
             // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(233, 107);
             this.Controls.Add(this.version);
             this.Controls.Add(this.linkLabel1);
