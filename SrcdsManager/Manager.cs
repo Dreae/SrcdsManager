@@ -197,6 +197,7 @@ namespace SrcdsManager
                     if (bool.Parse(autoStart))
                     {
                         mon.Start();
+                        mon.isAutoStart = true;
                     }
                 }
             }

@@ -19,6 +19,7 @@ namespace SrcdsManager
         public SrcdsStatus Status = SrcdsStatus.Offline;
         private bool running = false;
         private bool cleanExit = true;
+        public bool isAutoStart = false;
 
         private Process proc = new Process();
         private ProcessStartInfo startInfo;

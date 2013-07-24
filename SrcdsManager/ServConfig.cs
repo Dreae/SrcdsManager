@@ -21,6 +21,8 @@ namespace SrcdsManager
             this.caller = (Manager)caller;
             this.mon = (SrcdsMonitor)mon;
 
+            autoStart.Checked = this.mon.isAutoStart;
+
             addr.Text = this.mon.getAddr();
             parms.Text = this.mon.getCmd();
             executable.Text = this.mon.getExe();
@@ -55,6 +57,7 @@ namespace SrcdsManager
                 return;
             }
 
+            mon.isAutoStart = autoStart.Checked;
             mon.setCmd(parms.Text);
             mon.setExe(executable.Text);
             mon.setName(name.Text);
