@@ -29,13 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.startButton = new System.Windows.Forms.Button();
             this.stopButton = new System.Windows.Forms.Button();
             this.newServ = new System.Windows.Forms.Button();
             this.restart = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.steamCmdToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.startWithWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.updateServerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.installServerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.steamCmdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runOnStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,13 +90,16 @@
             this.startButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
             this.startButton.FlatAppearance.BorderSize = 0;
             this.startButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.startButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.startButton.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.startButton.Image = global::SrcdsManager.Properties.Resources.online_tiny1;
+            this.startButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.startButton.Location = new System.Drawing.Point(553, 288);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(60, 23);
             this.startButton.TabIndex = 11;
             this.startButton.Text = "Start";
+            this.startButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.startButton_Click);
             // 
@@ -97,11 +107,15 @@
             // 
             this.stopButton.FlatAppearance.BorderSize = 0;
             this.stopButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.stopButton.Image = global::SrcdsManager.Properties.Resources.offline_tiny;
+            this.stopButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.stopButton.Location = new System.Drawing.Point(553, 328);
             this.stopButton.Name = "stopButton";
+            this.stopButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.stopButton.Size = new System.Drawing.Size(60, 23);
             this.stopButton.TabIndex = 12;
             this.stopButton.Text = "Stop";
+            this.stopButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.stopButton.UseVisualStyleBackColor = true;
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
@@ -109,11 +123,14 @@
             // 
             this.newServ.FlatAppearance.BorderSize = 0;
             this.newServ.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.newServ.Image = global::SrcdsManager.Properties.Resources.plus_tiny;
+            this.newServ.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.newServ.Location = new System.Drawing.Point(12, 283);
             this.newServ.Name = "newServ";
-            this.newServ.Size = new System.Drawing.Size(75, 23);
+            this.newServ.Size = new System.Drawing.Size(103, 23);
             this.newServ.TabIndex = 20;
             this.newServ.Text = "New Server";
+            this.newServ.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.newServ.UseVisualStyleBackColor = true;
             this.newServ.Click += new System.EventHandler(this.newServ_Click);
             // 
@@ -121,26 +138,88 @@
             // 
             this.restart.FlatAppearance.BorderSize = 0;
             this.restart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.restart.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.restart.Image = global::SrcdsManager.Properties.Resources.restart_tiny;
             this.restart.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.restart.Location = new System.Drawing.Point(553, 367);
             this.restart.Name = "restart";
-            this.restart.Size = new System.Drawing.Size(59, 23);
+            this.restart.Size = new System.Drawing.Size(60, 23);
             this.restart.TabIndex = 26;
             this.restart.Text = "Restart";
+            this.restart.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.restart.UseVisualStyleBackColor = true;
             this.restart.Click += new System.EventHandler(this.restart_Click);
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.settingsToolStripMenuItem,
-            this.toolsToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.settingsToolStripMenuItem1,
+            this.toolsToolStripMenuItem1,
+            this.aboutToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(625, 24);
             this.menuStrip1.TabIndex = 27;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // settingsToolStripMenuItem1
+            // 
+            this.settingsToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.steamCmdToolStripMenuItem1,
+            this.startWithWindowsToolStripMenuItem});
+            this.settingsToolStripMenuItem1.Image = global::SrcdsManager.Properties.Resources.settings_gear;
+            this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(77, 20);
+            this.settingsToolStripMenuItem1.Text = "Settings";
+            // 
+            // steamCmdToolStripMenuItem1
+            // 
+            this.steamCmdToolStripMenuItem1.Image = global::SrcdsManager.Properties.Resources.steam;
+            this.steamCmdToolStripMenuItem1.Name = "steamCmdToolStripMenuItem1";
+            this.steamCmdToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.steamCmdToolStripMenuItem1.Text = "SteamCmd";
+            this.steamCmdToolStripMenuItem1.Click += new System.EventHandler(this.steamCmdToolStripMenuItem_Click);
+            // 
+            // startWithWindowsToolStripMenuItem
+            // 
+            this.startWithWindowsToolStripMenuItem.Name = "startWithWindowsToolStripMenuItem";
+            this.startWithWindowsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.startWithWindowsToolStripMenuItem.Text = "Run on Start";
+            this.startWithWindowsToolStripMenuItem.Click += new System.EventHandler(this.runOnStartToolStripMenuItem_Click);
+            // 
+            // toolsToolStripMenuItem1
+            // 
+            this.toolsToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.updateServerToolStripMenuItem1,
+            this.installServerToolStripMenuItem1});
+            this.toolsToolStripMenuItem1.Image = global::SrcdsManager.Properties.Resources.settings_wrench;
+            this.toolsToolStripMenuItem1.Name = "toolsToolStripMenuItem1";
+            this.toolsToolStripMenuItem1.Size = new System.Drawing.Size(64, 20);
+            this.toolsToolStripMenuItem1.Text = "Tools";
+            // 
+            // updateServerToolStripMenuItem1
+            // 
+            this.updateServerToolStripMenuItem1.Image = global::SrcdsManager.Properties.Resources.updateicon;
+            this.updateServerToolStripMenuItem1.Name = "updateServerToolStripMenuItem1";
+            this.updateServerToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.updateServerToolStripMenuItem1.Text = "Update Server";
+            this.updateServerToolStripMenuItem1.Click += new System.EventHandler(this.updateServerToolStripMenuItem_Click);
+            // 
+            // installServerToolStripMenuItem1
+            // 
+            this.installServerToolStripMenuItem1.Image = global::SrcdsManager.Properties.Resources.update_icon;
+            this.installServerToolStripMenuItem1.Name = "installServerToolStripMenuItem1";
+            this.installServerToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.installServerToolStripMenuItem1.Text = "Install Server";
+            this.installServerToolStripMenuItem1.Click += new System.EventHandler(this.installServerToolStripMenuItem_Click);
+            // 
+            // aboutToolStripMenuItem1
+            // 
+            this.aboutToolStripMenuItem1.Image = global::SrcdsManager.Properties.Resources.infoicon;
+            this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(68, 20);
+            this.aboutToolStripMenuItem1.Text = "About";
+            this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -225,14 +304,14 @@
             this.dgIPAddr,
             this.dgPort});
             this.ServerList.Cursor = System.Windows.Forms.Cursors.Arrow;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.ServerList.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ServerList.DefaultCellStyle = dataGridViewCellStyle2;
             this.ServerList.EnableHeadersVisualStyles = false;
             this.ServerList.Location = new System.Drawing.Point(12, 51);
             this.ServerList.MultiSelect = false;
@@ -448,6 +527,13 @@
         private System.Windows.Forms.ToolStripMenuItem configurationToolStripMenuItem;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem steamCmdToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem startWithWindowsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem updateServerToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem installServerToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
 
     }
 }

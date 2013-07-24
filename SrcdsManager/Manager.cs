@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Security.Principal;
+using System.Text.RegularExpressions;
 
 
 /*
@@ -33,6 +34,7 @@ namespace SrcdsManager
         private List<SrcdsMonitor> monArray = new List<SrcdsMonitor>();
         private List<String> monConsole = new List<String>();
         private String steamCmd = "invalid";
+        public static readonly Regex regexBinary = new Regex("^[01]{1,32}$", RegexOptions.Compiled);
 
         public Manager()
         {

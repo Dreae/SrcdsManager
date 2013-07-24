@@ -220,34 +220,7 @@
     <None Include="Resources\steam.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\steam1.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\restart-icon_0016057b8f364cd6cbee64b83ac281de_Medium.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\update-icon.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\download-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Kyo-Tux-Delikate-Info.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Visualpharm-Ios7-Settings.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Visualpharm-Ios7-Settings-2.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Deleket-Soft-Scraps-Button-Upload.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Custom-Icon-Design-Pretty-Office-4-Upload.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\redx.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bluecheck.ico" />
@@ -274,10 +247,16 @@
     <None Include="Resources\restart.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\log.ico" />
+    <None Include="Resources\restart_tiny.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\log_tiny.png" />
+    <None Include="Resources\online_tiny1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\offline_tiny.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plus_tiny.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

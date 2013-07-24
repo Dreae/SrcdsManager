@@ -93,29 +93,19 @@ namespace SrcdsManager.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap log {
-            get {
-                object obj = ResourceManager.GetObject("log", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap log_tiny {
-            get {
-                object obj = ResourceManager.GetObject("log_tiny", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap offline {
             get {
                 object obj = ResourceManager.GetObject("offline", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap offline_tiny {
+            get {
+                object obj = ResourceManager.GetObject("offline_tiny", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -131,12 +121,22 @@ namespace SrcdsManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Icon redx {
+        internal static System.Drawing.Bitmap online_tiny1 {
             get {
-                object obj = ResourceManager.GetObject("redx", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
+                object obj = ResourceManager.GetObject("online_tiny1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap plus_tiny {
+            get {
+                object obj = ResourceManager.GetObject("plus_tiny", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -146,6 +146,16 @@ namespace SrcdsManager.Properties {
         internal static System.Drawing.Bitmap restart {
             get {
                 object obj = ResourceManager.GetObject("restart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap restart_tiny {
+            get {
+                object obj = ResourceManager.GetObject("restart_tiny", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
