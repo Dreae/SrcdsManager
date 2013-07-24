@@ -40,6 +40,10 @@ namespace SrcdsManager
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            startButton.Enabled = false;
+            restart.Enabled = false;
+            stopButton.Enabled = false;
+
             ReadXml();
             RegistryKey rkApp;
             if (Environment.Is64BitOperatingSystem)
@@ -72,6 +76,11 @@ namespace SrcdsManager
                 {
                     steamCmd = "invalid";
                 }
+            }
+
+            if(!System.IO.Directory.Exists("logs"))
+            {
+                System.IO.Directory.CreateDirectory("logs");
             }
         }
         private void ManagerClosing(object sender, EventArgs e)
@@ -186,7 +195,7 @@ namespace SrcdsManager
                     SrcdsMonitor mon = new SrcdsMonitor(sExe, sCmd, sName, sID, sAddr, sPort, this);
 
                     monArray.Add(mon);
-                    monConsole.Add(DateTime.Now.ToShortTimeString() + ": " + "Server info loaded \r\n");
+                    monConsole.Add(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + ": " + "Server info loaded \r\n");
 
                     ServerList.Rows.Add();
                     ServerList.Rows[ServerList.Rows.Count - 1].Cells[0].Value = SrcdsManager.Properties.Resources.offline;
@@ -312,6 +321,9 @@ namespace SrcdsManager
                 monArray[ServerList.SelectedRows[0].Index].Stop();
                 ServerList.SelectedRows[0].Cells[0].Value = SrcdsManager.Properties.Resources.offline;
                 LogMessage(monArray[ServerList.SelectedRows[0].Index], "Server stopped");
+                stopButton.Enabled = false;
+                restart.Enabled = false;
+                startButton.Enabled = true;
             }
         }
         private void restart_Click(object sender, EventArgs e)
@@ -336,7 +348,7 @@ namespace SrcdsManager
         internal void addMonitor(SrcdsMonitor mon)
         {
             monArray.Add(mon);
-            monConsole.Add(DateTime.Now.ToShortTimeString() + ": " + "Server created \r\n");
+            monConsole.Add(DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + ": " + "Server created \r\n");
             ServerList.Rows.Add();
             ServerList.Rows[ServerList.Rows.Count - 1].Cells[0].Value = SrcdsManager.Properties.Resources.offline;
             ServerList.Rows[ServerList.Rows.Count - 1].Cells[1].Value = mon.getName();
@@ -396,6 +408,9 @@ namespace SrcdsManager
         }
         private void StartServer()
         {
+            startButton.Enabled = false;
+            stopButton.Enabled = true;
+            restart.Enabled = true;
             ServerList.SelectedRows[0].Cells[0].Value = SrcdsManager.Properties.Resources.online;
             monArray[ServerList.SelectedRows[0].Index].Start();
             LogMessage(monArray[ServerList.SelectedRows[0].Index], "Server started");
@@ -543,8 +558,50 @@ namespace SrcdsManager
         }
         internal void LogMessage(SrcdsMonitor mon, String msg)
         {
-            msg = DateTime.Now.ToShortTimeString() + ": " + msg + "\r\n";
+            msg = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + ": " + msg + "\r\n";
             monConsole[monArray.IndexOf(mon)] += msg;
+
+            if (!System.IO.File.Exists(@"logs\serv_" + mon.getId() + ".log"))
+            {
+                var stream = System.IO.File.CreateText(@"logs\serv_" + mon.getId() + ".log");
+                stream.Dispose();
+            }
+            var append = System.IO.File.AppendText(@"logs\serv_" + mon.getId() + ".log");
+            append.Write(msg);
+            append.Dispose();
+        }
+
+        private void ServerList_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (ServerList.SelectedRows.Count != 0)
+            {
+                if (monArray[ServerList.SelectedRows[0].Index].isRunning())
+                {
+                    startButton.Enabled = false;
+                    stopButton.Enabled = true;
+                    restart.Enabled = true;
+                }
+                else
+                {
+                    startButton.Enabled = true;
+                    stopButton.Enabled = false;
+                    restart.Enabled = false;
+                }
+                logBox.Text = monConsole[ServerList.SelectedRows[0].Index];
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (ServerList.SelectedRows.Count != 0)
+            {
+                if (!System.IO.File.Exists(@"logs\serv_" + monArray[ServerList.SelectedRows[0].Index].getId() + ".log"))
+                {
+                    MessageBox.Show("No log file exists for this server", "No Log File");
+                    return;
+                }
+                System.Diagnostics.Process.Start(@"logs\serv_" + monArray[ServerList.SelectedRows[0].Index].getId() + ".log");
+            }
         }
     }
 }
