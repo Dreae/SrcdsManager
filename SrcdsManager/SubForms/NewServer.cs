@@ -214,11 +214,11 @@ namespace SrcdsManager
         {
             if (cpuAll.Checked)
             {
-                return new String('1', 32);
+                return new String('1', Environment.ProcessorCount);
             }
             else
             {
-                StringBuilder mask = new StringBuilder(new String('0', 32));
+                StringBuilder mask = new StringBuilder(new String('0', Environment.ProcessorCount));
                 for (int c = 0; c < Environment.ProcessorCount; c++)
                 {
                     if (cpuList[c].Checked)
