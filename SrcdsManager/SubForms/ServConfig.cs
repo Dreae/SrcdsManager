@@ -58,10 +58,10 @@ namespace SrcdsManager
             {
                 cpuList[c].Visible = true;
             }
-            if (this.mon.AffinityMask != new String('1', 32))
+            if (this.mon.AffinityMask != new String('1', Environment.ProcessorCount))
             {
                 cpuAll.Checked = false;
-                for (int c = 0; c < 15; c++)
+                for (int c = 0; c < Environment.ProcessorCount; c++)
                 {
                     if (this.mon.AffinityMask[c] == '1')
                     {
