@@ -125,12 +125,6 @@
     <Compile Include="SubForms\Downloading.Designer.cs">
       <DependentUpon>Downloading.cs</DependentUpon>
     </Compile>
-    <Compile Include="SubForms\InstallServer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubForms\InstallServer.Designer.cs">
-      <DependentUpon>InstallServer.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -174,9 +168,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SubForms\Downloading.resx">
       <DependentUpon>Downloading.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SubForms\InstallServer.resx">
-      <DependentUpon>InstallServer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubForms\ServConfig.resx">
       <DependentUpon>ServConfig.cs</DependentUpon>

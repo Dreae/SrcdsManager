@@ -41,6 +41,8 @@ namespace SrcdsManager
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            ServerList.ClearSelection();
+
             startButton.Enabled = false;
             restart.Enabled = false;
             stopButton.Enabled = false;
@@ -157,7 +159,7 @@ namespace SrcdsManager
         }
         private void ReadXml()
         {
-            String sName, sExe, sCmd, sID, sAddr, sPort;
+            String sName, sExe, sCmd, sID, sAddr, sPort, sAffn;
             if (!System.IO.File.Exists("servers.xml"))
             {
                 XmlDocument xmlDoc = new XmlDocument();
@@ -185,7 +187,7 @@ namespace SrcdsManager
                     sPort = reader.Value;
 
                     reader.ReadToFollowing("executable");
-                    sExe = reader.ReadElementContentAsString();
+                    sExe = @reader.ReadElementContentAsString();
 
                     reader.ReadToFollowing("params");
                     sCmd = reader.ReadElementContentAsString();
@@ -193,7 +195,11 @@ namespace SrcdsManager
                     reader.ReadToFollowing("autostart");
                     string autoStart = reader.ReadElementContentAsString();
 
+                    reader.ReadToFollowing("affinity");
+                    sAffn = reader.ReadElementContentAsString();
+
                     SrcdsMonitor mon = new SrcdsMonitor(sExe, sCmd, sName, sID, sAddr, sPort, this);
+                    mon.AffinityMask = sAffn;
 
                     monArray.Add(mon);
                     monArray[monArray.Count - 1].Log += 
@@ -415,12 +421,38 @@ namespace SrcdsManager
         }
         private void UpdateServer()
         {
+            if (ServerList.SelectedRows.Count <= 0)
+            {
+                MessageBox.Show("You must select a server");
+                return;
+            }
+
             if (monArray[ServerList.SelectedRows[0].Index].isRunning())
             {
                 MessageBox.Show("The selected server is running, you must stop it to update", "Server is running");
                 return;
             }
-            string app_id = System.IO.File.ReadAllText(new System.IO.FileInfo(monArray[ServerList.SelectedRows[0].Index].getExe()).Directory.FullName + "/steam_appid.txt");
+
+            string app_id = "";
+
+            try
+            {
+                app_id =
+                    System.IO.File.ReadAllText(new System.IO.FileInfo(monArray[ServerList.SelectedRows[0].Index].getExe()).Directory.FullName + "/steam_appid.txt");
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetType() == typeof(System.IO.FileNotFoundException) || ex.GetType() == typeof(System.IO.DirectoryNotFoundException))
+                {
+                    MessageBox.Show("Could not find an installation of SRCDS, please check the directory in server configuration");
+                    return;
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+            
             int id = 0;
             if (!int.TryParse(app_id, out id))
             {
@@ -502,8 +534,8 @@ namespace SrcdsManager
         }
         private void installServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InstallServer install = new InstallServer(this);
-            install.Show();
+            NewServer newServer = new NewServer(this);
+            newServ.Show();
         }
         private void dgContextStart_Click(object sender, EventArgs e)
         {

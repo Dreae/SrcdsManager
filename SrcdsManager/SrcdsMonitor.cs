@@ -11,6 +11,7 @@ namespace SrcdsManager
         public SrcdsStatus Status = SrcdsStatus.Offline;
         public bool isAutoStart = false;
         public String Log = "";
+        public String AffinityMask = new String('1', 32);
 
         private String exePath;
         private String commandLine;
@@ -50,10 +51,16 @@ namespace SrcdsManager
 
         public void Start()
         {
-            startInfo.Arguments = commandLine + String.Format(" -ip {0} -port {1}", ipAddr, port); ;
+            startInfo.Arguments = commandLine + String.Format(" -ip {0} -port {1}", ipAddr, port);
+
+            //Change endian because our string is built left to right
+            char[] temp = AffinityMask.ToCharArray();
+            Array.Reverse(temp);
+            
             try
             {
                 proc.Start();
+                proc.ProcessorAffinity = new IntPtr(Convert.ToInt32(new String(temp), 2));
             }
             catch (Exception ex)
             {
@@ -88,7 +95,7 @@ namespace SrcdsManager
             startInfo.Arguments = commandLine + String.Format(" -ip {0} -port {1}", ipAddr, port); ;
             try
             {
-                proc.Start();
+                this.Start();
             }
             catch (Exception ex)
             {
@@ -121,6 +128,7 @@ namespace SrcdsManager
         }
         public void Exited()
         {
+            //CleanExit bool to prevent messy Thread.Abort()
             if (cleanExit != true)
             {
                 Crashed();

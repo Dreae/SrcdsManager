@@ -202,16 +202,16 @@
             // 
             this.updateServerToolStripMenuItem1.Image = global::SrcdsManager.Properties.Resources.updateicon;
             this.updateServerToolStripMenuItem1.Name = "updateServerToolStripMenuItem1";
-            this.updateServerToolStripMenuItem1.Size = new System.Drawing.Size(147, 22);
+            this.updateServerToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.updateServerToolStripMenuItem1.Text = "Update Server";
             this.updateServerToolStripMenuItem1.Click += new System.EventHandler(this.updateServerToolStripMenuItem_Click);
             // 
             // installServerToolStripMenuItem1
             // 
-            this.installServerToolStripMenuItem1.Image = global::SrcdsManager.Properties.Resources.update_icon;
+            this.installServerToolStripMenuItem1.Image = global::SrcdsManager.Properties.Resources.plus_tiny;
             this.installServerToolStripMenuItem1.Name = "installServerToolStripMenuItem1";
-            this.installServerToolStripMenuItem1.Size = new System.Drawing.Size(147, 22);
-            this.installServerToolStripMenuItem1.Text = "Install Server";
+            this.installServerToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.installServerToolStripMenuItem1.Text = "New Server";
             this.installServerToolStripMenuItem1.Click += new System.EventHandler(this.installServerToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem1

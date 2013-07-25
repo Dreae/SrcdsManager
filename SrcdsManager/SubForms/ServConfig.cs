@@ -15,6 +15,9 @@ namespace SrcdsManager
     {
         private Manager caller;
         private SrcdsMonitor mon;
+
+        List<CheckBox> cpuList = new List<CheckBox>();
+
         public ServConfig(object caller, object mon)
         {
             InitializeComponent();
@@ -31,9 +34,51 @@ namespace SrcdsManager
             name.Text = this.mon.getName();
             port.Text = this.mon.getPort();
 
+            //There has GOT to be a better way of doing this...
+            cpuList.Add(cpu1);
+            cpuList.Add(cpu2);
+            cpuList.Add(cpu3);
+            cpuList.Add(cpu4);
+            cpuList.Add(cpu5);
+            cpuList.Add(cpu6);
+            cpuList.Add(cpu7);
+            cpuList.Add(cpu8);
+            cpuList.Add(cpu9);
+            cpuList.Add(cpu10);
+            cpuList.Add(cpu12);
+            cpuList.Add(cpu13);
+            cpuList.Add(cpu14);
+            cpuList.Add(cpu15);
+            cpuList.Add(cpu16);
+            foreach (CheckBox box in cpuList)
+            {
+                box.CheckStateChanged += new EventHandler(cpu_CheckedChanged);
+            }
+            for (int c = 0; c < Environment.ProcessorCount; c++)
+            {
+                cpuList[c].Visible = true;
+            }
+            if (this.mon.AffinityMask != new String('1', 32))
+            {
+                cpuAll.Checked = false;
+                for (int c = 0; c < 15; c++)
+                {
+                    if (this.mon.AffinityMask[c] == '1')
+                    {
+                        cpuList[c].Checked = true;
+                    }
+                    else
+                    {
+                        cpuList[c].Checked = false;
+                    }
+                }
+            }
         }
         private void SaveServer()
         {
+            //Doing this up here to keep from building twice
+            mon.AffinityMask = BuildAffinityString();
+
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load("servers.xml");
             XmlNode root = xmlDoc.DocumentElement;
@@ -44,6 +89,7 @@ namespace SrcdsManager
             serv.SelectSingleNode("descendant::executable").InnerText = executable.Text;
             serv.SelectSingleNode("descendant::params").InnerText = parms.Text;
             serv.SelectSingleNode("descendant::autostart").InnerText = autoStart.Checked.ToString();
+            serv.SelectSingleNode("descendant::affinity").InnerText = mon.AffinityMask;
             xmlDoc.Save("servers.xml");
 
             System.Net.IPAddress ip;
@@ -69,6 +115,14 @@ namespace SrcdsManager
             mon.LogMessage("Server details updated");
         }
 
+        private void cpu_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cpuAll.Checked)
+            {
+                cpuAll.Checked = false;
+            }
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             SaveServer();
@@ -85,6 +139,44 @@ namespace SrcdsManager
             if (MessageBox.Show("Are you sure you want to delete this server", "Delete server", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 caller.DeleteServer(mon);
+            }
+        }
+
+        private void cpuAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cpuAll.Checked)
+            {
+                foreach (CheckBox box in cpuList)
+                {
+                    box.CheckStateChanged -= new EventHandler(cpu_CheckedChanged);
+                }
+                foreach (CheckBox box in cpuList)
+                {
+                    box.Checked = cpuAll.Checked;
+                }
+                foreach (CheckBox box in cpuList)
+                {
+                    box.CheckStateChanged += new EventHandler(cpu_CheckedChanged);
+                }
+            }
+        }
+        private string BuildAffinityString()
+        {
+            if (cpuAll.Checked)
+            {
+                return new String('1', 32);
+            }
+            else
+            {
+                StringBuilder mask = new StringBuilder(new String('0', 32));
+                for (int c = 0; c < Environment.ProcessorCount; c++)
+                {
+                    if (cpuList[c].Checked)
+                    {
+                        mask[c] = '1';
+                    }
+                }
+                return mask.ToString();
             }
         }
     }
