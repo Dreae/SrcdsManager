@@ -136,10 +136,29 @@ namespace SrcdsManager
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to delete this server", "Delete server", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            SubForms.DeleteForm delete = new SubForms.DeleteForm();
+            delete.ShowDialog(this);
+            if (delete.DialogResult == DialogResult.OK)
             {
+                if (delete.DeleteFiles)
+                {
+                    String path = new System.IO.FileInfo(mon.getExe()).DirectoryName;
+                    try
+                    {
+                        System.IO.Directory.Delete(path, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.GetType() != typeof(System.IO.DirectoryNotFoundException))
+                        {
+                            throw ex;
+                        }
+                    }
+                }
                 caller.DeleteServer(mon);
             }
+            delete.Dispose();
+            this.Dispose();
         }
 
         private void cpuAll_CheckedChanged(object sender, EventArgs e)

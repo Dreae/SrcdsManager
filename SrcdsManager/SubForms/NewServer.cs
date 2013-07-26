@@ -140,7 +140,6 @@ namespace SrcdsManager
             XmlNode affn = xmlDoc.CreateElement("affinity");
             affn.InnerText = BuildAffinityString();
 
-
             XmlNode serv = xmlDoc.CreateElement("server");
             serv.Attributes.Append(id);
             serv.Attributes.Append(name);

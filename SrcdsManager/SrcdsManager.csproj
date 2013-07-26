@@ -119,6 +119,12 @@
     <Compile Include="SubForms\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="SubForms\DeleteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForms\DeleteForm.Designer.cs">
+      <DependentUpon>DeleteForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubForms\Downloading.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -165,6 +171,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="SubForms\About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForms\DeleteForm.resx">
+      <DependentUpon>DeleteForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubForms\Downloading.resx">
       <DependentUpon>Downloading.cs</DependentUpon>
@@ -268,6 +277,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\plus_tiny.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-return-down-left-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-return-down-left-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Folder-Open-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Actions-dialog-ok-apply-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete-icon1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
