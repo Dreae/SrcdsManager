@@ -44,6 +44,23 @@ namespace SrcdsManager
             {
                 cpuList[c].Visible = true;
             }
+
+            Random rand = new Random((int)DateTime.Now.Ticks);
+            StringBuilder str = new StringBuilder();
+            char ch;
+            for (int i = 0; i < 6; i++)
+            {
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * rand.NextDouble() + 65)));
+                str.Append(ch);
+            }
+            str.Append('-');
+            for (int i = 0; i < 8; i++)
+            {
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * rand.NextDouble() + 65)));
+                str.Append(ch);
+            }
+            servID.Text = str.ToString();
+            servID.ReadOnly = true;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -90,24 +107,30 @@ namespace SrcdsManager
 
             String exe = "srcds.exe";
             String app = "";
+            String game = "";
             switch (comboBox1.SelectedIndex)
             {
                 case 0:
                     app = "90";
                     exe = "hlds.exe";
+                    game = "cstrike";
                     break;
                 case 1:
                     app = "740";
+                    game = "csgo";
                     break;
                 case 2:
                     app = "90 +app_set_config \"90 mod czero\"";
                     exe = "hlds.exe";
+                    game = "czero";
                     break;
                 case 3:
                     app = "232330";
+                    game = "cstrike";
                     break;
                 case 4:
                     app = "232290";
+                    game = "dods";
                     break;
                 case 5:
                     app = "90 +app_set_config \"90 mod dmc\"";
@@ -115,18 +138,25 @@ namespace SrcdsManager
                     break;
                 case 6:
                     app = "4020";
+                    game = "garrysmod";
                     break;
                 case 7:
                     app = "90";
                     exe = "hlds.exe";
+                    game = "cstrike";
                     break;
                 case 8:
                     app = "222860";
+                    game = "left4dead";
                     break;
                 case 9:
                     app = "232250";
+                    game = "tf";
                     break;
             }
+
+            XmlAttribute xgame = xmlDoc.CreateAttribute("game");
+            xgame.Value = game;
 
             XmlNode executable = xmlDoc.CreateElement("executable");
             executable.InnerText = servExe.Text + @"\" + exe;
@@ -143,8 +173,10 @@ namespace SrcdsManager
             XmlNode serv = xmlDoc.CreateElement("server");
             serv.Attributes.Append(id);
             serv.Attributes.Append(name);
+            serv.Attributes.Append(xgame);
             serv.Attributes.Append(addr);
             serv.Attributes.Append(port);
+            
             serv.AppendChild(executable);
             serv.AppendChild(param);
             serv.AppendChild(autostart);
@@ -154,7 +186,7 @@ namespace SrcdsManager
 
             xmlDoc.Save("servers.xml");
 
-            SrcdsMonitor mon = new SrcdsMonitor(servExe.Text, servParams.Text, servName.Text, servID.Text, ipAddr.Text, iPort.Text, this.sender);
+            SrcdsMonitor mon = new SrcdsMonitor(servExe.Text + "\\" + exe, game, servParams.Text, servName.Text, servID.Text, ipAddr.Text, iPort.Text, affn.InnerText, this.sender);
             this.sender.addMonitor(mon);
             if (download.Checked)
             {

@@ -86,15 +86,21 @@ namespace SrcdsManager
                 System.IO.Directory.CreateDirectory("logs");
             }
         }
-        private void ManagerClosing(object sender, EventArgs e)
+        private void ManagerClosing(object sender, FormClosingEventArgs e)
         {
-
-            foreach (SrcdsMonitor mon in monArray)
+            if (MessageBox.Show("This will stop all servers", "Close Application", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                if (mon.isRunning())
+                foreach (SrcdsMonitor mon in monArray)
                 {
-                    mon.Stop();
+                    if (mon.isRunning())
+                    {
+                        mon.Stop();
+                    }
                 }
+            }
+            else
+            {
+                e.Cancel = true;
             }
         }
         private void ServerList_NewRow(object sender, EventArgs e)
@@ -159,7 +165,7 @@ namespace SrcdsManager
         }
         private void ReadXml()
         {
-            String sName, sExe, sCmd, sID, sAddr, sPort, sAffn;
+            String sName, sExe, sCmd, sID, sAddr, sPort, sAffn, game;
             if (!System.IO.File.Exists("servers.xml"))
             {
                 XmlDocument xmlDoc = new XmlDocument();
@@ -181,6 +187,9 @@ namespace SrcdsManager
                     sName = reader.Value;
 
                     reader.MoveToNextAttribute();
+                    game = reader.Value;
+
+                    reader.MoveToNextAttribute();
                     sAddr = reader.Value;
 
                     reader.MoveToNextAttribute();
@@ -198,8 +207,7 @@ namespace SrcdsManager
                     reader.ReadToFollowing("affinity");
                     sAffn = reader.ReadElementContentAsString();
 
-                    SrcdsMonitor mon = new SrcdsMonitor(sExe, sCmd, sName, sID, sAddr, sPort, this);
-                    mon.AffinityMask = sAffn;
+                    SrcdsMonitor mon = new SrcdsMonitor(sExe, game, sCmd, sName, sID, sAddr, sPort, sAffn, this);
 
                     monArray.Add(mon);
                     monArray[monArray.Count - 1].Log += 

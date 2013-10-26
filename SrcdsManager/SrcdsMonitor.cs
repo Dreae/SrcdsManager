@@ -11,12 +11,13 @@ namespace SrcdsManager
         public SrcdsStatus Status = SrcdsStatus.Offline;
         public bool isAutoStart = false;
         public String Log = "";
-        public String AffinityMask = new String('1', 32);
+        public String AffinityMask = new String('1', Environment.ProcessorCount);
 
         private String exePath;
         private String commandLine;
         private String Name;
         private String sID;
+        private String game;
         private IPAddress ipAddr;
         private int port;
         private Manager caller;
@@ -28,18 +29,35 @@ namespace SrcdsManager
         private DateTime startTime;
         private SrcdsPinger pinger;
 
-        public SrcdsMonitor(String exePath, String commandLine, String Name, String sID, String ipAddr, String port, object caller)
+        public SrcdsMonitor(String exePath, String game, String commandLine, String Name, String sID, String ipAddr, String port, String AffinityMask, object caller)
         {
             this.exePath = exePath;
             this.commandLine = commandLine;
             this.Name = Name;
             this.sID = sID;
+            this.game = game;
+            this.AffinityMask = AffinityMask;
 
             startInfo = new ProcessStartInfo();
             startInfo.FileName = exePath;
 
 
-            this.ipAddr = IPAddress.Parse(ipAddr);
+            if (ipAddr == "0.0.0.0")
+            {
+                IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+                foreach (IPAddress addr in host.AddressList)
+                {
+                    if (addr.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        this.ipAddr = addr;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                this.ipAddr = IPAddress.Parse(ipAddr);
+            }
             this.port = int.Parse(port);
 
             proc.StartInfo = startInfo;
@@ -51,7 +69,7 @@ namespace SrcdsManager
 
         public void Start()
         {
-            startInfo.Arguments = commandLine + String.Format(" -ip {0} -port {1}", ipAddr, port);
+            startInfo.Arguments = String.Format("-game {0} -console -ip {1} -port {2}", game, ipAddr, port) + " " + commandLine;
 
             //Change endian because our string is built left to right
             char[] temp = AffinityMask.ToCharArray();
@@ -92,7 +110,7 @@ namespace SrcdsManager
 
             this.LogMessage("Server crashed, attempting to restart");
 
-            startInfo.Arguments = commandLine + String.Format(" -ip {0} -port {1}", ipAddr, port); ;
+            startInfo.Arguments = String.Format("-game {0} -console -ip {1} -port {2}", game, ipAddr, port) + " " + commandLine;
             try
             {
                 this.Start();
@@ -389,9 +407,19 @@ namespace SrcdsManager
         }
         public void Dispose()
         {
-            pingTimer.Dispose();
-            timeoutTimer.Dispose();
-            sock.Dispose();
+            try
+            {
+                pingTimer.Dispose();
+                timeoutTimer.Dispose();
+                sock.Dispose();
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetType() != typeof(System.NullReferenceException))
+                {
+                    throw (ex);
+                }
+            }
         }
     }
 }

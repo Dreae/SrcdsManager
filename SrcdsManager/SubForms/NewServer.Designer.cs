@@ -484,7 +484,7 @@
             this.servID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.servID.Location = new System.Drawing.Point(117, 17);
             this.servID.Name = "servID";
-            this.servID.Size = new System.Drawing.Size(100, 20);
+            this.servID.Size = new System.Drawing.Size(154, 20);
             this.servID.TabIndex = 69;
             // 
             // label9
