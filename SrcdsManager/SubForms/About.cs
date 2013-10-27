@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Reflection;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -34,6 +36,11 @@ namespace SrcdsManager
                     throw ex;
                 }
             }
+        }
+
+        private void About_Load(object sender, EventArgs e)
+        {
+            version.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
     }
 }

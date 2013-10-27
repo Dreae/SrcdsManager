@@ -28,6 +28,7 @@ namespace SrcdsManager
         private int crashes = 0;
         private DateTime startTime;
         private SrcdsPinger pinger;
+        private Thread oThread;
 
         public SrcdsMonitor(String exePath, String game, String commandLine, String Name, String sID, String ipAddr, String port, String AffinityMask, object caller)
         {
@@ -95,7 +96,7 @@ namespace SrcdsManager
             pinger.StartPinging();
 
             WaitForExit oWait = new WaitForExit(proc, this, 0);
-            Thread oThread = new Thread(new ThreadStart(oWait.Waiting));
+            oThread = new Thread(new ThreadStart(oWait.Waiting));
             oThread.Start();
 
             running = true;
@@ -110,7 +111,11 @@ namespace SrcdsManager
 
             this.LogMessage("Server crashed, attempting to restart");
 
-            startInfo.Arguments = String.Format("-game {0} -console -ip {1} -port {2}", game, ipAddr, port) + " " + commandLine;
+            proc.Dispose();
+            proc = new Process();
+            proc.StartInfo = startInfo;
+
+
             try
             {
                 this.Start();
@@ -128,10 +133,6 @@ namespace SrcdsManager
                 }
             }
 
-            WaitForExit oWait = new WaitForExit(proc, this, 0);
-            Thread oThread = new Thread(new ThreadStart(oWait.Waiting));
-            oThread.Start();
-
             startTime = DateTime.Now;
             this.Status = SrcdsStatus.Online;
         }
@@ -144,11 +145,12 @@ namespace SrcdsManager
             running = false;
             this.Status = SrcdsStatus.Offline;
         }
-        public void Exited()
+        public void Exited(object caller)
         {
-            //CleanExit bool to prevent messy Thread.Abort()
+            caller = null;
             if (cleanExit != true)
             {
+                pinger.Dispose();
                 Crashed();
             }
         }
@@ -263,9 +265,16 @@ namespace SrcdsManager
                 var stream = System.IO.File.CreateText(@"logs\serv_" + this.getId() + ".log");
                 stream.Dispose();
             }
-            var append = System.IO.File.AppendText(@"logs\serv_" + this.getId() + ".log");
-            append.Write(msg);
-            append.Dispose();
+            try
+            {
+                var append = System.IO.File.AppendText(@"logs\serv_" + this.getId() + ".log");
+                append.Write(msg);
+                append.Dispose();
+            }
+            catch (System.IO.IOException)
+            {
+                Thread.Sleep(1000);
+            }
         }
     }
 
@@ -287,14 +296,14 @@ namespace SrcdsManager
             switch (procType)
             {
                 case 0:
-                    caller.Exited();
-                    break;
+                    caller.Exited(this);
+                    return;
                 case 1:
                     caller.DoneUpdating();
-                    break;
+                    return;
                 case 2:
                     caller.DoneInstalling();
-                    break;
+                    return;
             }
         }
     }
@@ -339,12 +348,26 @@ namespace SrcdsManager
         }
         private void PingServer(object source, System.Timers.ElapsedEventArgs e)
         {
-            sock.SendTo(query, serverEP);
+            try
+            {
+                sock.SendTo(query, serverEP);
+            }
+            catch (ObjectDisposedException)
+            {
+                this.Dispose();
+            }
             byte[] rec = new byte[256];
 
             try
             {
-                sock.Receive(rec);
+                try
+                {
+                    sock.Receive(rec);
+                }
+                catch (ObjectDisposedException)
+                {
+                    this.Dispose();
+                }
             }
             catch (SocketException ex)
             {
